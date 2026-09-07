@@ -1,0 +1,38 @@
+[
+  {
+    "fir_number": "FIR-0104/2026",
+    "police_station": "Shakirpur PS, North West Delhi",
+    "date_reported": "2026-03-12T10:30:00Z",
+    "bns_sections": ["111", "318(4)", "141"],
+    "description": "Complainant reported that an illegal recruitment front named Apex Placement Solutions defrauded young women under the promise of overseas hospitality careers. The primary operator identified himself as Ramesh Kumar, using mobile +91-9811100001 and operating a white sedan bearing registration DL01AB1234. Payments totaling Rs. 4,50,000 were demanded into Bank Account AC-98765432101 before the suspects vacated the office premises.",
+    "reported_by_officer": "INSP_VIKRAM_DL_104",
+    "metadata": {
+      "jurisdiction": "Delhi",
+      "crime_head": "Human Trafficking & Cheating"
+    }
+  },
+  {
+    "fir_number": "FIR-0342/2026",
+    "police_station": "DLF Phase-3 PS, Gurugram",
+    "date_reported": "2026-03-18T16:45:00Z",
+    "bns_sections": ["111", "308(2)", "61(2)"],
+    "description": "Complaint filed regarding organized extortion and harassment targeting working women in Gurugram. Victim was coerced by a caller named Sunil Verma using mobile number 9822200002. Sunil Verma claimed association with a vehicle rental network and demanded emergency payments to account AC-55443322110. Witnesses reported Sunil Verma being accompanied by an associate answering to 'R. Kumar'.",
+    "reported_by_officer": "SI_AMIT_HR_342",
+    "metadata": {
+      "jurisdiction": "Haryana",
+      "crime_head": "Organized Extortion & Cyber Blackmail"
+    }
+  },
+  {
+    "fir_number": "FIR-0089/2026",
+    "police_station": "Mahipalpur PS, South West Delhi",
+    "date_reported": "2026-03-24T09:15:00Z",
+    "bns_sections": ["141", "142"],
+    "description": "Surveillance memo regarding interstate transit accommodation located near Mahipalpur. Premises managed by a caretaker known locally as 'Devi Lal' using contact 9999900000. Suspected transit point for harboring victims and laundering travel documents under the aegis of Apex Placement Solutions.",
+    "reported_by_officer": "INSP_MEENA_DL_89",
+    "metadata": {
+      "jurisdiction": "Delhi",
+      "crime_head": "Trafficking Safehouse Logistics"
+    }
+  }
+]
