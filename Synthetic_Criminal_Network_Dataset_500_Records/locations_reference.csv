@@ -1,0 +1,9 @@
+location_id,name,city,synthetic_status
+L001,Central Market,Delhi,SYNTHETIC
+L002,Industrial Estate,Gurugram,SYNTHETIC
+L003,Metro Junction,Noida,SYNTHETIC
+L004,Transport Hub,Jaipur,SYNTHETIC
+L005,Commercial District,Lucknow,SYNTHETIC
+L006,Railway Complex,Chandigarh,SYNTHETIC
+L007,Tech Park,Kolkata,SYNTHETIC
+L008,Wholesale Market,Mumbai,SYNTHETIC

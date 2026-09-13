@@ -1,0 +1,23 @@
+{
+  "dataset": "Synthetic Criminal Network Investigation Dataset",
+  "version": "1.0",
+  "synthetic": true,
+  "source_records": 500,
+  "bridge_candidates": [
+    "P020",
+    "P040",
+    "P060",
+    "P080"
+  ],
+  "source_file_counts": {
+    "persons.csv": 100,
+    "phones.csv": 60,
+    "accounts.csv": 40,
+    "calls.csv": 100,
+    "transactions.csv": 80,
+    "vehicles.csv": 40,
+    "case_records.csv": 40,
+    "events.csv": 40
+  },
+  "derived_graph_edges": 480
+}

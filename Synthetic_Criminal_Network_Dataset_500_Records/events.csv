@@ -1,0 +1,41 @@
+event_id,event_type,date,location_id,location_name,city,person_1_id,person_2_id,description,source,synthetic_status
+EVT001,Meeting,2026-06-02,L001,Central Market,Delhi,P081,P080,Synthetic event linking P081 and P080.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT002,Surveillance Sighting,2026-06-07,L002,Industrial Estate,Gurugram,P042,P047,Synthetic event linking P042 and P047.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT003,Vehicle Sighting,2026-06-03,L003,Metro Junction,Noida,P041,P038,Synthetic event linking P041 and P038.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT004,Exchange,2026-06-06,L004,Transport Hub,Jaipur,P025,P029,Synthetic event linking P025 and P029.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT005,Incident,2026-06-13,L005,Commercial District,Lucknow,P049,P052,Synthetic event linking P049 and P052.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT006,Location Co-occurrence,2026-06-10,L006,Railway Complex,Chandigarh,P095,P099,Synthetic event linking P095 and P099.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT007,Meeting,2026-06-27,L007,Tech Park,Kolkata,P042,P047,Synthetic event linking P042 and P047.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT008,Surveillance Sighting,2026-06-16,L008,Wholesale Market,Mumbai,P097,P093,Synthetic event linking P097 and P093.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT009,Vehicle Sighting,2026-06-26,L001,Central Market,Delhi,P089,P090,Synthetic event linking P089 and P090.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT010,Exchange,2026-06-25,L002,Industrial Estate,Gurugram,P020,P033,Synthetic event linking P020 and P033.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT011,Incident,2026-06-28,L003,Metro Junction,Noida,P089,P093,Synthetic event linking P089 and P093.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT012,Location Co-occurrence,2026-06-18,L004,Transport Hub,Jaipur,P063,P068,Synthetic event linking P063 and P068.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT013,Meeting,2026-06-24,L005,Commercial District,Lucknow,P061,P064,Synthetic event linking P061 and P064.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT014,Surveillance Sighting,2026-06-05,L006,Railway Complex,Chandigarh,P016,P015,Synthetic event linking P016 and P015.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT015,Vehicle Sighting,2026-06-08,L007,Tech Park,Kolkata,P035,P025,Synthetic event linking P035 and P025.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT016,Exchange,2026-06-23,L008,Wholesale Market,Mumbai,P007,P004,Synthetic event linking P007 and P004.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT017,Incident,2026-06-13,L001,Central Market,Delhi,P058,P056,Synthetic event linking P058 and P056.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT018,Location Co-occurrence,2026-06-28,L002,Industrial Estate,Gurugram,P078,P084,Synthetic event linking P078 and P084.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT019,Meeting,2026-06-23,L003,Metro Junction,Noida,P057,P052,Synthetic event linking P057 and P052.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT020,Surveillance Sighting,2026-06-14,L004,Transport Hub,Jaipur,P040,P079,Synthetic event linking P040 and P079.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT021,Vehicle Sighting,2026-06-09,L005,Commercial District,Lucknow,P015,P019,Synthetic event linking P015 and P019.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT022,Exchange,2026-06-09,L006,Railway Complex,Chandigarh,P006,P008,Synthetic event linking P006 and P008.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT023,Incident,2026-06-27,L007,Tech Park,Kolkata,P097,P093,Synthetic event linking P097 and P093.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT024,Location Co-occurrence,2026-06-27,L008,Wholesale Market,Mumbai,P038,P037,Synthetic event linking P038 and P037.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT025,Meeting,2026-06-09,L001,Central Market,Delhi,P096,P086,Synthetic event linking P096 and P086.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT026,Surveillance Sighting,2026-06-17,L002,Industrial Estate,Gurugram,P001,P003,Synthetic event linking P001 and P003.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT027,Vehicle Sighting,2026-06-08,L003,Metro Junction,Noida,P012,P006,Synthetic event linking P012 and P006.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT028,Exchange,2026-06-02,L004,Transport Hub,Jaipur,P058,P052,Synthetic event linking P058 and P052.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT029,Incident,2026-06-18,L005,Commercial District,Lucknow,P011,P002,Synthetic event linking P011 and P002.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT030,Location Co-occurrence,2026-06-20,L006,Railway Complex,Chandigarh,P060,P090,Synthetic event linking P060 and P090.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT031,Meeting,2026-06-09,L007,Tech Park,Kolkata,P039,P048,Synthetic event linking P039 and P048.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT032,Surveillance Sighting,2026-06-12,L008,Wholesale Market,Mumbai,P041,P039,Synthetic event linking P041 and P039.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT033,Vehicle Sighting,2026-06-04,L001,Central Market,Delhi,P013,P016,Synthetic event linking P013 and P016.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT034,Exchange,2026-06-01,L002,Industrial Estate,Gurugram,P047,P038,Synthetic event linking P047 and P038.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT035,Incident,2026-06-14,L003,Metro Junction,Noida,P007,P004,Synthetic event linking P007 and P004.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT036,Location Co-occurrence,2026-06-13,L004,Transport Hub,Jaipur,P004,P005,Synthetic event linking P004 and P005.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT037,Meeting,2026-06-24,L005,Commercial District,Lucknow,P058,P054,Synthetic event linking P058 and P054.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT038,Surveillance Sighting,2026-06-10,L006,Railway Complex,Chandigarh,P052,P051,Synthetic event linking P052 and P051.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT039,Vehicle Sighting,2026-06-14,L007,Tech Park,Kolkata,P051,P059,Synthetic event linking P051 and P059.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC
+EVT040,Exchange,2026-06-21,L008,Wholesale Market,Mumbai,P080,P023,Synthetic event linking P080 and P023.,SYNTHETIC_SURVEILLANCE_EVENT,SYNTHETIC

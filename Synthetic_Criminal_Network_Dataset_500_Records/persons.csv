@@ -1,0 +1,101 @@
+person_id,name,alias,age,city,occupation,community_id,is_bridge_candidate,synthetic_status
+P001,Aarav Mehta,Alias-001,25,Delhi,Trader,C01,NO,SYNTHETIC
+P002,Vihaan Kapoor,Alias-002,49,Gurugram,Driver,C01,NO,SYNTHETIC
+P003,Kabir Sethi,Alias-003,45,Noida,Consultant,C01,NO,SYNTHETIC
+P004,Arjun Ahuja,Alias-004,37,Jaipur,Shop Owner,C01,NO,SYNTHETIC
+P005,Rohan Joshi,Alias-005,37,Lucknow,Freelancer,C01,NO,SYNTHETIC
+P006,Aditya Gupta,Alias-006,52,Chandigarh,Logistics Worker,C01,NO,SYNTHETIC
+P007,Kunal Menon,Alias-007,25,Kolkata,Accountant,C01,NO,SYNTHETIC
+P008,Nikhil Rao,Alias-008,47,Mumbai,Technician,C01,NO,SYNTHETIC
+P009,Manav Malhotra,Alias-009,29,Delhi,Trader,C01,NO,SYNTHETIC
+P010,Yash Verma,Alias-010,25,Gurugram,Driver,C01,NO,SYNTHETIC
+P011,Ishaan Singh,Alias-011,40,Noida,Consultant,C01,NO,SYNTHETIC
+P012,Dev Arora,Alias-012,57,Jaipur,Shop Owner,C01,NO,SYNTHETIC
+P013,Rahul Bansal,Alias-013,48,Lucknow,Freelancer,C02,NO,SYNTHETIC
+P014,Varun Das,Alias-014,49,Chandigarh,Logistics Worker,C02,NO,SYNTHETIC
+P015,Samar Sharma,Alias-015,47,Kolkata,Accountant,C02,NO,SYNTHETIC
+P016,Aniket Bhatia,Alias-016,50,Mumbai,Technician,C02,NO,SYNTHETIC
+P017,Rajat Khanna,Alias-017,40,Delhi,Trader,C02,NO,SYNTHETIC
+P018,Mohan Nair,Alias-018,26,Gurugram,Driver,C02,NO,SYNTHETIC
+P019,Neeraj Chopra,Alias-019,52,Noida,Consultant,C02,NO,SYNTHETIC
+P020,Vivek Iyer,Alias-020,38,Jaipur,Shop Owner,C02,YES,SYNTHETIC
+P021,Aarav Mehta,Alias-021,40,Lucknow,Freelancer,C02,NO,SYNTHETIC
+P022,Vihaan Kapoor,Alias-022,35,Chandigarh,Logistics Worker,C02,NO,SYNTHETIC
+P023,Kabir Sethi,Alias-023,28,Kolkata,Accountant,C02,NO,SYNTHETIC
+P024,Arjun Ahuja,Alias-024,55,Mumbai,Technician,C02,NO,SYNTHETIC
+P025,Rohan Joshi,Alias-025,50,Delhi,Trader,C03,NO,SYNTHETIC
+P026,Aditya Gupta,Alias-026,45,Gurugram,Driver,C03,NO,SYNTHETIC
+P027,Kunal Menon,Alias-027,36,Noida,Consultant,C03,NO,SYNTHETIC
+P028,Nikhil Rao,Alias-028,51,Jaipur,Shop Owner,C03,NO,SYNTHETIC
+P029,Manav Malhotra,Alias-029,41,Lucknow,Freelancer,C03,NO,SYNTHETIC
+P030,Yash Verma,Alias-030,37,Chandigarh,Logistics Worker,C03,NO,SYNTHETIC
+P031,Ishaan Singh,Alias-031,38,Kolkata,Accountant,C03,NO,SYNTHETIC
+P032,Dev Arora,Alias-032,30,Mumbai,Technician,C03,NO,SYNTHETIC
+P033,Rahul Bansal,Alias-033,25,Delhi,Trader,C03,NO,SYNTHETIC
+P034,Varun Das,Alias-034,41,Gurugram,Driver,C03,NO,SYNTHETIC
+P035,Samar Sharma,Alias-035,53,Noida,Consultant,C03,NO,SYNTHETIC
+P036,Aniket Bhatia,Alias-036,24,Jaipur,Shop Owner,C03,NO,SYNTHETIC
+P037,Rajat Khanna,Alias-037,52,Lucknow,Freelancer,C04,NO,SYNTHETIC
+P038,Mohan Nair,Alias-038,51,Chandigarh,Logistics Worker,C04,NO,SYNTHETIC
+P039,Neeraj Chopra,Alias-039,31,Kolkata,Accountant,C04,NO,SYNTHETIC
+P040,Vivek Iyer,Alias-040,44,Mumbai,Technician,C04,YES,SYNTHETIC
+P041,Aarav Mehta,Alias-041,27,Delhi,Trader,C04,NO,SYNTHETIC
+P042,Vihaan Kapoor,Alias-042,49,Gurugram,Driver,C04,NO,SYNTHETIC
+P043,Kabir Sethi,Alias-043,47,Noida,Consultant,C04,NO,SYNTHETIC
+P044,Arjun Ahuja,Alias-044,34,Jaipur,Shop Owner,C04,NO,SYNTHETIC
+P045,Rohan Joshi,Alias-045,24,Lucknow,Freelancer,C04,NO,SYNTHETIC
+P046,Aditya Gupta,Alias-046,56,Chandigarh,Logistics Worker,C04,NO,SYNTHETIC
+P047,Kunal Menon,Alias-047,38,Kolkata,Accountant,C04,NO,SYNTHETIC
+P048,Nikhil Rao,Alias-048,54,Mumbai,Technician,C04,NO,SYNTHETIC
+P049,Manav Malhotra,Alias-049,46,Delhi,Trader,C05,NO,SYNTHETIC
+P050,Yash Verma,Alias-050,50,Gurugram,Driver,C05,NO,SYNTHETIC
+P051,Ishaan Singh,Alias-051,49,Noida,Consultant,C05,NO,SYNTHETIC
+P052,Dev Arora,Alias-052,29,Jaipur,Shop Owner,C05,NO,SYNTHETIC
+P053,Rahul Bansal,Alias-053,35,Lucknow,Freelancer,C05,NO,SYNTHETIC
+P054,Varun Das,Alias-054,38,Chandigarh,Logistics Worker,C05,NO,SYNTHETIC
+P055,Samar Sharma,Alias-055,39,Kolkata,Accountant,C05,NO,SYNTHETIC
+P056,Aniket Bhatia,Alias-056,23,Mumbai,Technician,C05,NO,SYNTHETIC
+P057,Rajat Khanna,Alias-057,41,Delhi,Trader,C05,NO,SYNTHETIC
+P058,Mohan Nair,Alias-058,27,Gurugram,Driver,C05,NO,SYNTHETIC
+P059,Neeraj Chopra,Alias-059,48,Noida,Consultant,C05,NO,SYNTHETIC
+P060,Vivek Iyer,Alias-060,46,Jaipur,Shop Owner,C05,YES,SYNTHETIC
+P061,Aarav Mehta,Alias-061,55,Lucknow,Freelancer,C06,NO,SYNTHETIC
+P062,Vihaan Kapoor,Alias-062,48,Chandigarh,Logistics Worker,C06,NO,SYNTHETIC
+P063,Kabir Sethi,Alias-063,35,Kolkata,Accountant,C06,NO,SYNTHETIC
+P064,Arjun Ahuja,Alias-064,56,Mumbai,Technician,C06,NO,SYNTHETIC
+P065,Rohan Joshi,Alias-065,36,Delhi,Trader,C06,NO,SYNTHETIC
+P066,Aditya Gupta,Alias-066,33,Gurugram,Driver,C06,NO,SYNTHETIC
+P067,Kunal Menon,Alias-067,54,Noida,Consultant,C06,NO,SYNTHETIC
+P068,Nikhil Rao,Alias-068,35,Jaipur,Shop Owner,C06,NO,SYNTHETIC
+P069,Manav Malhotra,Alias-069,24,Lucknow,Freelancer,C06,NO,SYNTHETIC
+P070,Yash Verma,Alias-070,38,Chandigarh,Logistics Worker,C06,NO,SYNTHETIC
+P071,Ishaan Singh,Alias-071,50,Kolkata,Accountant,C06,NO,SYNTHETIC
+P072,Dev Arora,Alias-072,28,Mumbai,Technician,C06,NO,SYNTHETIC
+P073,Rahul Bansal,Alias-073,38,Delhi,Trader,C07,NO,SYNTHETIC
+P074,Varun Das,Alias-074,26,Gurugram,Driver,C07,NO,SYNTHETIC
+P075,Samar Sharma,Alias-075,46,Noida,Consultant,C07,NO,SYNTHETIC
+P076,Aniket Bhatia,Alias-076,39,Jaipur,Shop Owner,C07,NO,SYNTHETIC
+P077,Rajat Khanna,Alias-077,33,Lucknow,Freelancer,C07,NO,SYNTHETIC
+P078,Mohan Nair,Alias-078,30,Chandigarh,Logistics Worker,C07,NO,SYNTHETIC
+P079,Neeraj Chopra,Alias-079,42,Kolkata,Accountant,C07,NO,SYNTHETIC
+P080,Vivek Iyer,Alias-080,46,Mumbai,Technician,C07,YES,SYNTHETIC
+P081,Aarav Mehta,Alias-081,55,Delhi,Trader,C07,NO,SYNTHETIC
+P082,Vihaan Kapoor,Alias-082,37,Gurugram,Driver,C07,NO,SYNTHETIC
+P083,Kabir Sethi,Alias-083,27,Noida,Consultant,C07,NO,SYNTHETIC
+P084,Arjun Ahuja,Alias-084,51,Jaipur,Shop Owner,C07,NO,SYNTHETIC
+P085,Rohan Joshi,Alias-085,44,Lucknow,Freelancer,C08,NO,SYNTHETIC
+P086,Aditya Gupta,Alias-086,47,Chandigarh,Logistics Worker,C08,NO,SYNTHETIC
+P087,Kunal Menon,Alias-087,25,Kolkata,Accountant,C08,NO,SYNTHETIC
+P088,Nikhil Rao,Alias-088,33,Mumbai,Technician,C08,NO,SYNTHETIC
+P089,Manav Malhotra,Alias-089,49,Delhi,Trader,C08,NO,SYNTHETIC
+P090,Yash Verma,Alias-090,51,Gurugram,Driver,C08,NO,SYNTHETIC
+P091,Ishaan Singh,Alias-091,37,Noida,Consultant,C08,NO,SYNTHETIC
+P092,Dev Arora,Alias-092,50,Jaipur,Shop Owner,C08,NO,SYNTHETIC
+P093,Rahul Bansal,Alias-093,52,Lucknow,Freelancer,C08,NO,SYNTHETIC
+P094,Varun Das,Alias-094,35,Chandigarh,Logistics Worker,C08,NO,SYNTHETIC
+P095,Samar Sharma,Alias-095,54,Kolkata,Accountant,C08,NO,SYNTHETIC
+P096,Aniket Bhatia,Alias-096,32,Mumbai,Technician,C08,NO,SYNTHETIC
+P097,Rajat Khanna,Alias-097,30,Delhi,Trader,C08,NO,SYNTHETIC
+P098,Mohan Nair,Alias-098,46,Gurugram,Driver,C08,NO,SYNTHETIC
+P099,Neeraj Chopra,Alias-099,44,Noida,Consultant,C08,NO,SYNTHETIC
+P100,Vivek Iyer,Alias-100,27,Jaipur,Shop Owner,C08,NO,SYNTHETIC

@@ -1,0 +1,41 @@
+case_id,primary_person_id,crime_type,date,location_id,description,source,synthetic_status
+CASE001,P006,Cyber Fraud,2026-04-11,L001,Synthetic case involving cyber fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE002,P096,Identity Theft,2026-04-02,L002,Synthetic case involving identity theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE003,P037,Extortion,2026-04-04,L003,Synthetic case involving extortion and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE004,P094,Robbery,2026-04-19,L004,Synthetic case involving robbery and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE005,P077,Illegal Gambling,2026-04-20,L005,Synthetic case involving illegal gambling and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE006,P066,Financial Fraud,2026-04-22,L006,Synthetic case involving financial fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE007,P001,Data Theft,2026-04-25,L007,Synthetic case involving data theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE008,P020,Document Fraud,2026-04-21,L008,Synthetic case involving document fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE009,P040,Cyber Fraud,2026-04-23,L001,Synthetic case involving cyber fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE010,P039,Identity Theft,2026-04-02,L002,Synthetic case involving identity theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE011,P091,Extortion,2026-04-07,L003,Synthetic case involving extortion and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE012,P011,Robbery,2026-04-18,L004,Synthetic case involving robbery and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE013,P024,Illegal Gambling,2026-04-25,L005,Synthetic case involving illegal gambling and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE014,P045,Financial Fraud,2026-04-01,L006,Synthetic case involving financial fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE015,P096,Data Theft,2026-04-15,L007,Synthetic case involving data theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE016,P040,Document Fraud,2026-04-19,L008,Synthetic case involving document fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE017,P054,Cyber Fraud,2026-04-01,L001,Synthetic case involving cyber fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE018,P076,Identity Theft,2026-04-12,L002,Synthetic case involving identity theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE019,P070,Extortion,2026-04-26,L003,Synthetic case involving extortion and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE020,P062,Robbery,2026-04-19,L004,Synthetic case involving robbery and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE021,P026,Illegal Gambling,2026-04-07,L005,Synthetic case involving illegal gambling and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE022,P042,Financial Fraud,2026-04-24,L006,Synthetic case involving financial fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE023,P053,Data Theft,2026-04-10,L007,Synthetic case involving data theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE024,P060,Document Fraud,2026-04-24,L008,Synthetic case involving document fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE025,P091,Cyber Fraud,2026-04-09,L001,Synthetic case involving cyber fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE026,P071,Identity Theft,2026-04-17,L002,Synthetic case involving identity theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE027,P045,Extortion,2026-04-12,L003,Synthetic case involving extortion and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE028,P012,Robbery,2026-04-08,L004,Synthetic case involving robbery and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE029,P055,Illegal Gambling,2026-04-25,L005,Synthetic case involving illegal gambling and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE030,P087,Financial Fraud,2026-04-06,L006,Synthetic case involving financial fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE031,P068,Data Theft,2026-04-03,L007,Synthetic case involving data theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE032,P080,Document Fraud,2026-04-10,L008,Synthetic case involving document fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE033,P045,Cyber Fraud,2026-04-21,L001,Synthetic case involving cyber fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE034,P043,Identity Theft,2026-04-23,L002,Synthetic case involving identity theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE035,P054,Extortion,2026-04-28,L003,Synthetic case involving extortion and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE036,P064,Robbery,2026-04-09,L004,Synthetic case involving robbery and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE037,P078,Illegal Gambling,2026-04-12,L005,Synthetic case involving illegal gambling and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE038,P054,Financial Fraud,2026-04-04,L006,Synthetic case involving financial fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE039,P012,Data Theft,2026-04-17,L007,Synthetic case involving data theft and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
+CASE040,P020,Document Fraud,2026-04-28,L008,Synthetic case involving document fraud and linked entities.,SYNTHETIC_FIR_CASE_RECORD,SYNTHETIC
