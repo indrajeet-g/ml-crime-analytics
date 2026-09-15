@@ -12,7 +12,12 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#fafafa] text-[#0a0a0a] lg:flex-row lg:overflow-hidden">
+    /* lg:h-screen, not just min-h-screen. The shell pairs overflow-hidden
+       with an inner <main overflow-y-auto>, and that only scrolls when the
+       parent height is actually fixed. With min-h-screen the shell grows
+       past the viewport instead and overflow-hidden clips the overflow
+       with nothing able to scroll to it. Below lg the page scrolls normally. */
+    <div className="flex min-h-screen flex-col bg-[#fafafa] text-[#0a0a0a] lg:h-screen lg:flex-row lg:overflow-hidden">
       <DashboardSidebar 
         isOpen={sidebarOpen} 
         onClose={() => setSidebarOpen(false)} 

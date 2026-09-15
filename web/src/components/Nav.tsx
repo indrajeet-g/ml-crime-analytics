@@ -88,7 +88,7 @@ export default function Nav() {
               Source
             </a>
             <Link
-              href="/dashboard"
+              href="/login"
               className="inline-flex h-9 items-center justify-center rounded-full bg-[#ff3d00] px-4 text-xs font-bold font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-white transition-colors hover:bg-[#0a0a0a]"
             >
               Enter Dashboard
@@ -137,7 +137,7 @@ export default function Nav() {
               Source
             </a>
             <Link
-              href="/dashboard"
+              href="/login"
               onClick={() => setOpen(false)}
               className="flex w-full items-center justify-center rounded-md bg-[#ff3d00] px-4 py-3 text-sm font-bold font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-white hover:bg-[#0a0a0a]"
             >
