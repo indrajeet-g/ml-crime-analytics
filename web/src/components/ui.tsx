@@ -139,7 +139,11 @@ export function Reveal({
       className={className}
       initial={reduce ? false : "hidden"}
       whileInView="show"
-      viewport={{ once: true, amount: 0.15, margin: "-50px" }}
+      /* amount "some", not a fraction. A percentage threshold can never be
+         met by a wrapper taller than the scroll viewport (15% of a 9000px
+         block is 1350px, more than the visible area), which left tall
+         sections stuck at opacity 0 forever. */
+      viewport={{ once: true, amount: "some", margin: "-50px" }}
       variants={{
         hidden: { opacity: 0, y: 15, filter: "blur(8px)" },
         show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: EASE, delay } },
@@ -163,7 +167,11 @@ export function RevealGroup({
       className={className}
       initial={reduce ? false : "hidden"}
       whileInView="show"
-      viewport={{ once: true, amount: 0.15, margin: "-50px" }}
+      /* amount "some", not a fraction. A percentage threshold can never be
+         met by a wrapper taller than the scroll viewport (15% of a 9000px
+         block is 1350px, more than the visible area), which left tall
+         sections stuck at opacity 0 forever. */
+      viewport={{ once: true, amount: "some", margin: "-50px" }}
       variants={stagger}
     >
       {children}
