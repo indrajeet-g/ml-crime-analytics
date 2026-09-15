@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "motion/react";
 import { Container, Section, Reveal, RevealGroup, RevealItem, Label } from "@/components/ui";
 import { Check, Ban } from "lucide-react";
 
@@ -47,11 +50,13 @@ export default function Responsible() {
               {BY_DESIGN.map((line) => (
                 <RevealItem key={line}>
                   <li className="flex items-start gap-4">
-                    <Check
-                      aria-hidden="true"
-                      strokeWidth={1.5}
-                      className="mt-1 h-4 w-4 shrink-0 text-[--color-accent]"
-                    />
+                    <motion.div initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+                      <Check
+                        aria-hidden="true"
+                        strokeWidth={2}
+                        className="mt-1 h-5 w-5 shrink-0 text-[--color-accent]"
+                      />
+                    </motion.div>
                     <span className="max-w-2xl text-base leading-relaxed text-[--color-foreground]">
                       {line}
                     </span>
@@ -72,11 +77,13 @@ export default function Responsible() {
               {NEVER.map((line) => (
                 <RevealItem key={line}>
                   <li className="flex items-start gap-4">
-                    <Ban
-                      aria-hidden="true"
-                      strokeWidth={1.5}
-                      className="mt-1 h-4 w-4 shrink-0 text-[#737373]"
-                    />
+                    <motion.div initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+                      <Ban
+                        aria-hidden="true"
+                        strokeWidth={2}
+                        className="mt-1 h-5 w-5 shrink-0 text-[#737373]"
+                      />
+                    </motion.div>
                     <span className="max-w-2xl text-base leading-relaxed text-[--color-foreground]">
                       {line}
                     </span>

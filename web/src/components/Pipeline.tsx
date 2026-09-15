@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Inbox,
   ScanText,
@@ -8,6 +10,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
 import { Container, Section, Reveal, RevealGroup, RevealItem } from "@/components/ui";
 
 type Stage = {
@@ -64,6 +68,12 @@ const STAGES: Stage[] = [
 ];
 
 export default function Pipeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   return (
     <Section id="pipeline">
       <Container>
@@ -78,9 +88,15 @@ export default function Pipeline() {
 
         <div className="relative mt-16 md:mt-20">
           <div
+            ref={containerRef}
             aria-hidden="true"
             className="absolute top-0 bottom-0 left-12 hidden w-px bg-[--color-border] md:block"
-          />
+          >
+            <motion.div 
+              style={{ height }} 
+              className="w-full bg-[--color-accent] origin-top" 
+            />
+          </div>
 
           <RevealGroup className="relative">
             {STAGES.map(({ n, title, body, note, Icon }) => (

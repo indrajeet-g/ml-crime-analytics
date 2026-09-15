@@ -40,20 +40,20 @@ export default function ProductStory() {
               </div>
               <div className="w-full md:w-64 bg-[#f5f5f5] p-6">
                 <Label>Extracted Entities</Label>
-                <div className="mt-4 space-y-3">
-                  <div className="border border-blue-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
+                <RevealGroup className="mt-4 space-y-3">
+                  <RevealItem className="border border-blue-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
                     <span className="text-blue-700">PERSON</span>
                     <span className="text-[#0a0a0a]">Rahul Sharma</span>
-                  </div>
-                  <div className="border border-teal-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
+                  </RevealItem>
+                  <RevealItem className="border border-teal-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
                     <span className="text-teal-700">VEHICLE</span>
                     <span className="text-[#0a0a0a]">DL-8C-xxxx</span>
-                  </div>
-                  <div className="border border-amber-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
+                  </RevealItem>
+                  <RevealItem className="border border-amber-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
                     <span className="text-amber-700">PHONE</span>
                     <span className="text-[#0a0a0a]">9876543210</span>
-                  </div>
-                </div>
+                  </RevealItem>
+                </RevealGroup>
               </div>
             </div>
           </Reveal>
@@ -75,11 +75,31 @@ export default function ProductStory() {
                   </div>
                 </div>
                 
-                {/* Connecting lines */}
-                <div className="absolute top-[80px] left-1/2 -translate-x-1/2 w-48 h-16 border-b-2 border-l-2 border-r-2 border-[#ff3d00]/30 rounded-b-xl z-0" />
-                <div className="absolute top-[144px] left-1/2 -translate-x-1/2 w-px h-8 bg-[#ff3d00]/30 z-0" />
+                {/* Connecting lines animated */}
+                <div className="absolute top-[80px] left-1/2 -translate-x-1/2 w-48 h-16 border-b-2 border-l-2 border-r-2 border-[#ff3d00]/30 rounded-b-xl z-0 overflow-hidden">
+                  <motion.div 
+                    initial={{ x: "-100%" }}
+                    whileInView={{ x: "200%" }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                    className="w-full h-full bg-gradient-to-r from-transparent via-[#ff3d00]/40 to-transparent absolute top-0"
+                  />
+                </div>
+                <div className="absolute top-[144px] left-1/2 -translate-x-1/2 w-px h-8 bg-[#ff3d00]/30 z-0 overflow-hidden">
+                  <motion.div 
+                    initial={{ y: "-100%" }}
+                    whileInView={{ y: "100%" }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-full h-full bg-gradient-to-b from-transparent via-[#ff3d00] to-transparent"
+                  />
+                </div>
 
-                <div className="bg-white border-2 border-green-500 p-5 text-center relative z-10 mt-16 shadow-lg">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="bg-white border-2 border-green-500 p-5 text-center relative z-10 mt-16 shadow-lg"
+                >
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest">
                     Match Confirmed
                   </div>
@@ -88,7 +108,7 @@ export default function ProductStory() {
                   <div className="mt-3 flex justify-center gap-2">
                     <span className="px-2 py-1 bg-[#f5f5f5] text-[10px] font-[family-name:var(--font-mono)] text-[#737373]">Linked by Phone</span>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
             <div className="lg:col-span-4 order-1 lg:order-2">
@@ -128,9 +148,9 @@ export default function ProductStory() {
                                │
 CASE_C099                      │
     │                          │
-    ├──── [PRIMARY] PERSON_02  │
+    ├──── <motion.span animate={{ opacity: [1, 0.5, 1] }} transition={{ duration: 2, repeat: Infinity }} className="text-red-400 font-bold">[PRIMARY]</motion.span> PERSON_02  │
     │       │                  │
-    │       └──── VEHICLE_DL8C ┘  <-- BRIDGE DETECTED
+    │       └──── VEHICLE_DL8C ┘  <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }} className="text-[#ff3d00] font-bold">&lt;-- BRIDGE DETECTED</motion.span>
     │
     └──── PHONE_332`}
                 </pre>
@@ -153,20 +173,25 @@ CASE_C099                      │
               <div className="flex h-64 md:h-80">
                 <div className="flex-1 relative overflow-hidden bg-[#fafafa]">
                   {/* Decorative abstract network */}
-                  <svg className="absolute inset-0 w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="30%" y1="30%" x2="50%" y2="50%" stroke="#d4d4d4" strokeWidth="2" />
-                    <line x1="70%" y1="30%" x2="50%" y2="50%" stroke="#ff3d00" strokeWidth="3" />
-                    <line x1="50%" y1="70%" x2="50%" y2="50%" stroke="#d4d4d4" strokeWidth="2" />
+                  <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                    <motion.line initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, ease: "easeOut" }} x1="30%" y1="30%" x2="50%" y2="50%" stroke="#d4d4d4" strokeWidth="2" />
+                    <motion.line initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.3, ease: "easeOut" }} x1="70%" y1="30%" x2="50%" y2="50%" stroke="#ff3d00" strokeWidth="3" />
+                    <motion.line initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.6, ease: "easeOut" }} x1="50%" y1="70%" x2="50%" y2="50%" stroke="#d4d4d4" strokeWidth="2" />
                     
-                    <circle cx="30%" cy="30%" r="8" fill="#4a7fb5" />
-                    <circle cx="70%" cy="30%" r="10" fill="#ff0000" />
-                    <circle cx="50%" cy="70%" r="8" fill="#e67e22" />
+                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5 }} cx="30%" cy="30%" r="8" fill="#4a7fb5" />
+                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5, delay: 0.3 }} cx="70%" cy="30%" r="10" fill="#ff0000" />
+                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} cx="50%" cy="70%" r="8" fill="#e67e22" />
                     
-                    <circle cx="50%" cy="50%" r="12" fill="#d97706" />
+                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5, delay: 0.8 }} cx="50%" cy="50%" r="12" fill="#d97706" />
                   </svg>
-                  <div className="absolute top-1/2 left-1/2 translate-x-3 translate-y-3 bg-white border border-[#d4d4d4] p-1.5 shadow-sm pointer-events-none">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2, duration: 0.4 }}
+                    className="absolute top-1/2 left-1/2 translate-x-3 translate-y-3 bg-white border border-[#ff3d00] p-1.5 shadow-sm pointer-events-none"
+                  >
                     <p className="text-[10px] font-[family-name:var(--font-mono)] font-bold">SHARED_VEHICLE</p>
-                  </div>
+                  </motion.div>
                 </div>
                 {/* Fake Sidebar */}
                 <div className="w-48 md:w-64 bg-white border-l border-[#d4d4d4] p-4 hidden sm:block">
@@ -177,7 +202,7 @@ CASE_C099                      │
                     <p className="mt-1 text-xs text-[#737373] leading-relaxed">
                       This vehicle connects two separate cases and is directly linked to a primary target.
                     </p>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -217,26 +242,32 @@ CASE_C099                      │
                       <th className="px-6 py-4 font-normal uppercase tracking-wider text-right">Verification</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#d4d4d4] text-[#0a0a0a]">
-                    <tr className="hover:bg-[#f5f5f5]">
+                  <motion.tbody 
+                    initial="hidden" 
+                    whileInView="show" 
+                    viewport={{ once: true }} 
+                    variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }} 
+                    className="divide-y divide-[#d4d4d4] text-[#0a0a0a]"
+                  >
+                    <motion.tr variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }} className="hover:bg-[#f5f5f5]">
                       <td className="px-6 py-4 whitespace-nowrap">2026-09-14 10:15</td>
                       <td className="px-6 py-4">Node Created: PERSON_01</td>
                       <td className="px-6 py-4 hidden md:table-cell text-[#737373]">FIR_C014.pdf</td>
                       <td className="px-6 py-4 text-right text-green-600 font-bold">VALID</td>
-                    </tr>
-                    <tr className="hover:bg-[#f5f5f5]">
+                    </motion.tr>
+                    <motion.tr variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }} className="hover:bg-[#f5f5f5]">
                       <td className="px-6 py-4 whitespace-nowrap">2026-09-14 11:30</td>
                       <td className="px-6 py-4">Entity Match Approved</td>
                       <td className="px-6 py-4 hidden md:table-cell text-[#737373]">User: admin</td>
                       <td className="px-6 py-4 text-right text-green-600 font-bold">VALID</td>
-                    </tr>
-                    <tr className="hover:bg-[#f5f5f5] bg-red-50/30">
+                    </motion.tr>
+                    <motion.tr variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }} className="hover:bg-[#f5f5f5] bg-red-50/30">
                       <td className="px-6 py-4 whitespace-nowrap text-[#ff3d00]">2026-09-15 09:42</td>
                       <td className="px-6 py-4 text-[#ff3d00] font-bold">Bridge Identified</td>
                       <td className="px-6 py-4 hidden md:table-cell text-[#737373]">System Output</td>
                       <td className="px-6 py-4 text-right text-green-600 font-bold">VALID</td>
-                    </tr>
-                  </tbody>
+                    </motion.tr>
+                  </motion.tbody>
                 </table>
               </div>
             </div>
