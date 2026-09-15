@@ -1,278 +1,449 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { Container, Section, Reveal, RevealGroup, RevealItem, Label } from "@/components/ui";
+import {
+  Container,
+  Section,
+  Reveal,
+  RevealGroup,
+  RevealItem,
+  Label,
+} from "@/components/ui";
 import { Network, Database, Eye, ShieldCheck, GitMerge } from "lucide-react";
 
-export default function ProductStory() {
+/* Entity colours match the graph renderer and the Python visualiser, so a
+   PERSON is the same blue here, in the explorer, and in the exported report.
+   Colour is doing identification work, not decoration. */
+const ENTITY = {
+  person: "#4a7fb5",
+  vehicle: "#16a085",
+  phone: "#e67e22",
+  location: "#d4a017",
+  case: "#c0392b",
+};
+
+const ACCENT = "#ff3d00";
+const REVIEW = "#b45309";
+const CONFIRMED = "#15803d";
+
+/* One shared reveal for diagram geometry: draw once when it scrolls into
+   view, then stop. Nothing on this page loops. */
+function useDraw() {
   const reduce = useReducedMotion();
-  const transition = reduce ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: "linear" };
+  return (delay: number) =>
+    reduce
+      ? { initial: false as const }
+      : {
+          initial: { pathLength: 0, opacity: 0 },
+          whileInView: { pathLength: 1, opacity: 1 },
+          viewport: { once: true, amount: "some" as const },
+          transition: { duration: 0.7, delay, ease: [0.25, 0, 0, 1] as const },
+        };
+}
+
+function StepHeading({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon: typeof Network;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <div className="mb-4 flex items-center gap-3">
+        <Icon size={20} strokeWidth={1.5} className="text-[#ff3d00]" aria-hidden="true" />
+        <h3 className="text-2xl font-bold tracking-tight">{title}</h3>
+      </div>
+      <p className="text-base leading-relaxed text-[#737373]">{children}</p>
+    </>
+  );
+}
+
+export default function ProductStory() {
+  const draw = useDraw();
+  const reduce = useReducedMotion();
 
   return (
-    <Section id="story" className="bg-white border-t border-[#d4d4d4] py-24 md:py-32">
+    <Section id="story" className="border-t border-[#d4d4d4] bg-white py-24 md:py-32">
       <Container>
         <Reveal>
           <Label>System Capabilities</Label>
-          <h2 className="mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tighter md:text-5xl text-[#0a0a0a]">
+          <h2 className="mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tighter text-[#0a0a0a] md:text-5xl">
             Engineered for investigation.
           </h2>
         </Reveal>
 
         <div className="mt-20 space-y-32">
-          
-          {/* STEP 1: EXTRACTION */}
-          <Reveal className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* 1. EXTRACTION. Raw narrative on the left, what came out on the
+              right, colour keyed by entity type. */}
+          <Reveal className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <div className="flex items-center gap-3 mb-4">
-                <Database size={20} className="text-[#ff3d00]" />
-                <h3 className="text-2xl font-bold tracking-tight">Structured extraction.</h3>
-              </div>
-              <p className="text-base text-[#737373] leading-relaxed">
-                NEXUS ingests raw unstructured intelligence—FIRs, transcripts, financial logs—and automatically isolates critical entities like people, phones, and vehicles into a structured graph database.
-              </p>
+              <StepHeading icon={Database} title="Structured extraction.">
+                NEXUS reads unstructured case text, FIRs, transcripts and financial
+                logs, and pulls out the people, phones and vehicles named in them.
+              </StepHeading>
             </div>
-            <div className="lg:col-span-8 bg-[#f5f5f5] border border-[#d4d4d4] flex flex-col md:flex-row shadow-sm">
-              <div className="flex-1 p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#d4d4d4] bg-white">
-                <Label>Raw Case File</Label>
-                <p className="mt-4 text-sm font-[family-name:var(--font-mono)] leading-loose text-[#737373]">
-                  Suspect <span className="text-[#0a0a0a] bg-blue-50 border-b border-blue-200 px-1">Rahul Sharma</span> was seen near the location driving a <span className="text-[#0a0a0a] bg-teal-50 border-b border-teal-200 px-1">White Sedan (DL-8C-xxxx)</span>. Contact was made using phone number <span className="text-[#0a0a0a] bg-amber-50 border-b border-amber-200 px-1">+91-9876543210</span>.
+
+            <div className="flex flex-col border border-[#d4d4d4] bg-[#f5f5f5] md:flex-row lg:col-span-8">
+              <div className="flex-1 border-b border-[#d4d4d4] bg-white p-6 md:border-b-0 md:border-r md:p-8">
+                <Label>Raw case file</Label>
+                <p className="mt-4 font-[family-name:var(--font-mono)] text-sm leading-loose text-[#737373]">
+                  Suspect{" "}
+                  <span className="border-b-2 px-1 text-[#0a0a0a]" style={{ borderColor: ENTITY.person }}>
+                    Rahul Sharma
+                  </span>{" "}
+                  was seen near the location driving a{" "}
+                  <span className="border-b-2 px-1 text-[#0a0a0a]" style={{ borderColor: ENTITY.vehicle }}>
+                    White Sedan (DL-8C-xxxx)
+                  </span>
+                  . Contact was made using phone number{" "}
+                  <span className="border-b-2 px-1 text-[#0a0a0a]" style={{ borderColor: ENTITY.phone }}>
+                    +91-9876543210
+                  </span>
+                  .
                 </p>
               </div>
-              <div className="w-full md:w-64 bg-[#f5f5f5] p-6">
-                <Label>Extracted Entities</Label>
+
+              <div className="w-full bg-[#f5f5f5] p-6 md:w-64">
+                <Label>Extracted entities</Label>
                 <RevealGroup className="mt-4 space-y-3">
-                  <RevealItem className="border border-blue-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
-                    <span className="text-blue-700">PERSON</span>
-                    <span className="text-[#0a0a0a]">Rahul Sharma</span>
-                  </RevealItem>
-                  <RevealItem className="border border-teal-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
-                    <span className="text-teal-700">VEHICLE</span>
-                    <span className="text-[#0a0a0a]">DL-8C-xxxx</span>
-                  </RevealItem>
-                  <RevealItem className="border border-amber-200 bg-white p-2 text-xs font-[family-name:var(--font-mono)] flex justify-between">
-                    <span className="text-amber-700">PHONE</span>
-                    <span className="text-[#0a0a0a]">9876543210</span>
-                  </RevealItem>
+                  {[
+                    { type: "PERSON", value: "Rahul Sharma", color: ENTITY.person },
+                    { type: "VEHICLE", value: "DL-8C-xxxx", color: ENTITY.vehicle },
+                    { type: "PHONE", value: "9876543210", color: ENTITY.phone },
+                  ].map((e) => (
+                    <RevealItem
+                      key={e.type}
+                      className="flex items-center justify-between gap-2 border border-[#d4d4d4] bg-white p-2 font-[family-name:var(--font-mono)] text-xs"
+                    >
+                      <span className="flex items-center gap-2">
+                        <span
+                          aria-hidden="true"
+                          className="inline-block h-2 w-2 shrink-0"
+                          style={{ backgroundColor: e.color }}
+                        />
+                        <span style={{ color: e.color }}>{e.type}</span>
+                      </span>
+                      <span className="text-[#0a0a0a]">{e.value}</span>
+                    </RevealItem>
+                  ))}
                 </RevealGroup>
               </div>
             </div>
           </Reveal>
 
-          {/* STEP 2: ENTITY RESOLUTION */}
-          <Reveal className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-8 order-2 lg:order-1 bg-[#f5f5f5] border border-[#d4d4d4] p-8 lg:p-12 shadow-sm relative overflow-hidden">
-              <div className="max-w-md mx-auto">
-                <div className="flex justify-between gap-4 mb-8 relative z-10">
-                  <div className="flex-1 bg-white border border-[#d4d4d4] p-4 text-center">
-                    <p className="text-xs font-[family-name:var(--font-mono)] text-[#737373]">Record P-042</p>
-                    <p className="mt-1 font-semibold text-[#0a0a0a]">R. Sharma</p>
-                    <p className="mt-1 text-[10px] text-amber-600 font-bold uppercase tracking-widest">Needs Review</p>
-                  </div>
-                  <div className="flex-1 bg-white border border-[#d4d4d4] p-4 text-center">
-                    <p className="text-xs font-[family-name:var(--font-mono)] text-[#737373]">Record P-109</p>
-                    <p className="mt-1 font-semibold text-[#0a0a0a]">Rahul Sharma</p>
-                    <p className="mt-1 text-[10px] text-amber-600 font-bold uppercase tracking-widest">Needs Review</p>
-                  </div>
-                </div>
-                
-                {/* Connecting lines animated */}
-                <div className="absolute top-[80px] left-1/2 -translate-x-1/2 w-48 h-16 border-b-2 border-l-2 border-r-2 border-[#ff3d00]/30 rounded-b-xl z-0 overflow-hidden">
-                  <motion.div 
-                    initial={{ x: "-100%" }}
-                    whileInView={{ x: "200%" }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                    className="w-full h-full bg-gradient-to-r from-transparent via-[#ff3d00]/40 to-transparent absolute top-0"
-                  />
-                </div>
-                <div className="absolute top-[144px] left-1/2 -translate-x-1/2 w-px h-8 bg-[#ff3d00]/30 z-0 overflow-hidden">
-                  <motion.div 
-                    initial={{ y: "-100%" }}
-                    whileInView={{ y: "100%" }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-full h-full bg-gradient-to-b from-transparent via-[#ff3d00] to-transparent"
-                  />
+          {/* 2. RESOLUTION. Two records converge into one. The connector is
+              drawn once on scroll because it is showing a state change:
+              two candidates becoming a confirmed profile. */}
+          <Reveal className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+            <div className="order-2 border border-[#d4d4d4] bg-[#f5f5f5] p-8 lg:order-1 lg:col-span-8 lg:p-12">
+              <div className="mx-auto max-w-md">
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { id: "Record P-042", name: "R. Sharma" },
+                    { id: "Record P-109", name: "Rahul Sharma" },
+                  ].map((r) => (
+                    <div key={r.id} className="border border-[#d4d4d4] bg-white p-4 text-center">
+                      <p className="font-[family-name:var(--font-mono)] text-xs text-[#737373]">
+                        {r.id}
+                      </p>
+                      <p className="mt-1 font-semibold text-[#0a0a0a]">{r.name}</p>
+                      <p
+                        className="mt-2 font-[family-name:var(--font-mono)] text-[10px] font-bold uppercase tracking-widest"
+                        style={{ color: REVIEW }}
+                      >
+                        Needs review
+                      </p>
+                    </div>
+                  ))}
                 </div>
 
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="bg-white border-2 border-green-500 p-5 text-center relative z-10 mt-16 shadow-lg"
+                {/* Converging connector. Two stems meeting a stem down into
+                    the merged record. Drawn once, no loop. */}
+                <svg
+                  viewBox="0 0 320 64"
+                  className="mt-0 h-16 w-full"
+                  aria-hidden="true"
+                  preserveAspectRatio="none"
                 >
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest">
-                    Match Confirmed
-                  </div>
-                  <p className="text-xs font-[family-name:var(--font-mono)] text-[#737373] mt-2">Unified Profile P-999</p>
-                  <p className="mt-1 font-semibold text-xl text-[#0a0a0a]">Rahul Sharma</p>
-                  <div className="mt-3 flex justify-center gap-2">
-                    <span className="px-2 py-1 bg-[#f5f5f5] text-[10px] font-[family-name:var(--font-mono)] text-[#737373]">Linked by Phone</span>
-                  </div>
+                  <motion.path
+                    d="M80 0 V24 H240 V0"
+                    fill="none"
+                    stroke={ACCENT}
+                    strokeWidth="1.5"
+                    {...draw(0.1)}
+                  />
+                  <motion.path
+                    d="M160 24 V64"
+                    fill="none"
+                    stroke={ACCENT}
+                    strokeWidth="1.5"
+                    {...draw(0.45)}
+                  />
+                </svg>
+
+                <motion.div
+                  initial={reduce ? false : { opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: "some" }}
+                  transition={{ delay: 0.75, duration: 0.45, ease: [0.25, 0, 0, 1] }}
+                  className="relative border bg-white p-5 text-center"
+                  style={{ borderColor: CONFIRMED }}
+                >
+                  <span
+                    className="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 font-[family-name:var(--font-mono)] text-[10px] font-bold uppercase tracking-widest text-white"
+                    style={{ backgroundColor: CONFIRMED }}
+                  >
+                    Match confirmed
+                  </span>
+                  <p className="mt-2 font-[family-name:var(--font-mono)] text-xs text-[#737373]">
+                    Unified profile P-999
+                  </p>
+                  <p className="mt-1 text-xl font-semibold text-[#0a0a0a]">Rahul Sharma</p>
+                  <p className="mt-3 inline-block bg-[#f5f5f5] px-2 py-1 font-[family-name:var(--font-mono)] text-[10px] text-[#737373]">
+                    Linked by shared phone 9876543210
+                  </p>
                 </motion.div>
               </div>
             </div>
-            <div className="lg:col-span-4 order-1 lg:order-2">
-              <div className="flex items-center gap-3 mb-4">
-                <GitMerge size={20} className="text-[#ff3d00]" />
-                <h3 className="text-2xl font-bold tracking-tight">Entity Resolution.</h3>
-              </div>
-              <p className="text-base text-[#737373] leading-relaxed">
-                The system analyzes fragmented data and suggests potential matches. Investigators can review the evidence—like a shared phone number or identical aliases—and merge them into a single, unified profile.
-              </p>
+
+            <div className="order-1 lg:order-2 lg:col-span-4">
+              <StepHeading icon={GitMerge} title="Entity resolution.">
+                The system proposes a match and shows the signal behind it. An
+                investigator confirms or rejects. Nothing merges on its own.
+              </StepHeading>
             </div>
           </Reveal>
 
-          {/* STEP 3: NETWORK DIAGRAM */}
-          <Reveal className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* 3. NETWORK. An editorial tree diagram on the page ground, not a
+              terminal. Two cases that share one vehicle, which is the whole
+              point of the section. */}
+          <Reveal className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <div className="flex items-center gap-3 mb-4">
-                <Network size={20} className="text-[#ff3d00]" />
-                <h3 className="text-2xl font-bold tracking-tight">Visualizing links.</h3>
-              </div>
-              <p className="text-base text-[#737373] leading-relaxed">
-                Isolated incidents are brought together into a single cohesive network map. Investigators can instantly spot bridge entities—like a single vehicle used across three separate cases.
-              </p>
+              <StepHeading icon={Network} title="Visualising links.">
+                Separate cases are drawn as one map. A vehicle appearing in two
+                unrelated files is the kind of bridge that is invisible on paper.
+              </StepHeading>
             </div>
-            <div className="lg:col-span-8 bg-[#0a0a0a] p-8 lg:p-12 shadow-sm font-[family-name:var(--font-mono)] text-[#d4d4d4] overflow-x-auto relative">
-              <div className="min-w-[500px]">
-                <pre className="text-sm leading-[1.8]">
-{`CASE_C014
-    │
-    ├──── [PRIMARY] PERSON_01
-    │       │
-    │       └──── PHONE_987
-    │
-    ├──── VEHICLE_DL8C ────────┐
-    │                          │
-    └──── LOCATION_MAIN        │
-                               │
-CASE_C099                      │
-    │                          │
-    ├──── <motion.span animate={{ opacity: [1, 0.5, 1] }} transition={{ duration: 2, repeat: Infinity }} className="text-red-400 font-bold">[PRIMARY]</motion.span> PERSON_02  │
-    │       │                  │
-    │       └──── VEHICLE_DL8C ┘  <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }} className="text-[#ff3d00] font-bold">&lt;-- BRIDGE DETECTED</motion.span>
-    │
-    └──── PHONE_332`}
-                </pre>
-              </div>
+
+            <div className="overflow-x-auto border border-[#d4d4d4] bg-[#f5f5f5] p-6 md:p-10 lg:col-span-8">
+              <svg viewBox="0 0 560 300" className="h-auto w-full min-w-[460px]" role="img"
+                aria-label="Case C014 and case C099 each connect to their own people and phones, and both connect to the same vehicle DL-8C, which bridges them.">
+                {[
+                  { d: "M70 44 V250 ", delay: 0.05 },
+                  { d: "M70 92 H150", delay: 0.12 },
+                  { d: "M150 92 V128 H210", delay: 0.2 },
+                  { d: "M70 168 H150", delay: 0.28 },
+                  { d: "M70 250 H150", delay: 0.34 },
+                  { d: "M420 44 V250", delay: 0.42 },
+                  { d: "M420 92 H340", delay: 0.5 },
+                  { d: "M340 92 V128 H280", delay: 0.56 },
+                  { d: "M420 250 H340", delay: 0.62 },
+                ].map((seg) => (
+                  <motion.path
+                    key={seg.d}
+                    d={seg.d}
+                    fill="none"
+                    stroke="#c4c4c4"
+                    strokeWidth="1.25"
+                    {...draw(seg.delay)}
+                  />
+                ))}
+
+                {/* The bridge. Accent weight because it is the finding. */}
+                <motion.path
+                  d="M150 168 H410"
+                  fill="none"
+                  stroke={ACCENT}
+                  strokeWidth="2"
+                  {...draw(0.72)}
+                />
+
+                {([
+                  { x: 70, y: 44, label: "CASE_C014", c: ENTITY.case, anchor: "start" },
+                  { x: 150, y: 92, label: "PERSON_01", c: ENTITY.person, anchor: "start" },
+                  { x: 210, y: 128, label: "PHONE_987", c: ENTITY.phone, anchor: "start" },
+                  { x: 150, y: 250, label: "LOCATION_MAIN", c: ENTITY.location, anchor: "start" },
+                  { x: 420, y: 44, label: "CASE_C099", c: ENTITY.case, anchor: "end" },
+                  { x: 340, y: 92, label: "PERSON_02", c: ENTITY.person, anchor: "end" },
+                  { x: 280, y: 128, label: "PHONE_332", c: ENTITY.phone, anchor: "end" },
+                ] as const).map((n, i) => (
+                  <motion.g
+                    key={n.label}
+                    initial={reduce ? false : { opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: "some" }}
+                    transition={{ delay: 0.1 + i * 0.07, duration: 0.35 }}
+                  >
+                    <rect x={n.x - 4} y={n.y - 4} width="8" height="8" fill={n.c} />
+                    <text
+                      x={n.anchor === "start" ? n.x + 12 : n.x - 12}
+                      y={n.y + 4}
+                      textAnchor={n.anchor}
+                      fill="#0a0a0a"
+                      fontSize="12"
+                      fontFamily="var(--font-jetbrains), monospace"
+                    >
+                      {n.label}
+                    </text>
+                  </motion.g>
+                ))}
+
+                {/* Shared vehicle, sitting on the bridge line. */}
+                <motion.g
+                  initial={reduce ? false : { opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: "some" }}
+                  transition={{ delay: 0.85, duration: 0.4 }}
+                >
+                  <rect x="228" y="152" width="104" height="32" fill="#ffffff" stroke={ACCENT} strokeWidth="1.5" />
+                  <rect x="236" y="164" width="8" height="8" fill={ENTITY.vehicle} />
+                  <text x="252" y="172" fill="#0a0a0a" fontSize="12" fontFamily="var(--font-jetbrains), monospace">
+                    VEHICLE_DL8C
+                  </text>
+                  <text x="280" y="206" textAnchor="middle" fill={ACCENT} fontSize="11" fontWeight="700"
+                    fontFamily="var(--font-jetbrains), monospace">
+                    SHARED ACROSS TWO CASES
+                  </text>
+                </motion.g>
+              </svg>
             </div>
           </Reveal>
 
-          {/* STEP 4: EXPLORATION (DASHBOARD) */}
-          <Reveal className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-8 bg-[#f5f5f5] border border-[#d4d4d4] shadow-sm">
-              {/* Fake Top Bar */}
-              <div className="border-b border-[#d4d4d4] bg-white px-4 py-2 flex items-center justify-between">
+          {/* 4. EXPLORATION. A framed preview of the explorer with numbered
+              annotations, the way a product page presents a real screen. */}
+          <Reveal className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
+            <div className="border border-[#d4d4d4] bg-[#f5f5f5] lg:col-span-8">
+              <div className="flex items-center justify-between border-b border-[#d4d4d4] bg-white px-4 py-2">
                 <div className="flex gap-2">
-                  <div className="px-2 py-1 text-[10px] bg-[#0a0a0a] text-white font-bold uppercase tracking-widest">Hide Unrelated</div>
-                  <div className="px-2 py-1 text-[10px] bg-[#e5e5e5] text-[#0a0a0a] font-bold uppercase tracking-widest">Focus: 2 Hops</div>
+                  <span className="bg-[#0a0a0a] px-2 py-1 font-[family-name:var(--font-mono)] text-[10px] font-bold uppercase tracking-widest text-white">
+                    Hide unrelated
+                  </span>
+                  <span className="bg-[#e5e5e5] px-2 py-1 font-[family-name:var(--font-mono)] text-[10px] font-bold uppercase tracking-widest text-[#0a0a0a]">
+                    Focus: 2 hops
+                  </span>
                 </div>
-                <div className="text-[10px] text-[#737373] font-[family-name:var(--font-mono)]">NETWORK EXPLORER</div>
+                <span className="font-[family-name:var(--font-mono)] text-[10px] text-[#737373]">
+                  NETWORK EXPLORER
+                </span>
               </div>
-              {/* Fake Layout */}
+
               <div className="flex h-64 md:h-80">
-                <div className="flex-1 relative overflow-hidden bg-[#fafafa]">
-                  {/* Decorative abstract network */}
-                  <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                    <motion.line initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, ease: "easeOut" }} x1="30%" y1="30%" x2="50%" y2="50%" stroke="#d4d4d4" strokeWidth="2" />
-                    <motion.line initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.3, ease: "easeOut" }} x1="70%" y1="30%" x2="50%" y2="50%" stroke="#ff3d00" strokeWidth="3" />
-                    <motion.line initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.6, ease: "easeOut" }} x1="50%" y1="70%" x2="50%" y2="50%" stroke="#d4d4d4" strokeWidth="2" />
-                    
-                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5 }} cx="30%" cy="30%" r="8" fill="#4a7fb5" />
-                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5, delay: 0.3 }} cx="70%" cy="30%" r="10" fill="#ff0000" />
-                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} cx="50%" cy="70%" r="8" fill="#e67e22" />
-                    
-                    <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5, delay: 0.8 }} cx="50%" cy="50%" r="12" fill="#d97706" />
+                <div className="relative flex-1 overflow-hidden bg-[#fafafa]">
+                  <svg className="absolute inset-0 h-full w-full" viewBox="0 0 400 300" aria-hidden="true">
+                    <motion.path d="M120 90 L200 150" fill="none" stroke="#d4d4d4" strokeWidth="1.5" {...draw(0.1)} />
+                    <motion.path d="M280 90 L200 150" fill="none" stroke={ACCENT} strokeWidth="2.5" {...draw(0.3)} />
+                    <motion.path d="M200 220 L200 150" fill="none" stroke="#d4d4d4" strokeWidth="1.5" {...draw(0.5)} />
+
+                    {[
+                      { cx: 120, cy: 90, r: 8, f: ENTITY.person, d: 0.2 },
+                      { cx: 280, cy: 90, r: 10, f: ACCENT, d: 0.4 },
+                      { cx: 200, cy: 220, r: 8, f: ENTITY.phone, d: 0.6 },
+                      { cx: 200, cy: 150, r: 12, f: ENTITY.vehicle, d: 0.7 },
+                    ].map((c) => (
+                      <motion.circle
+                        key={`${c.cx}-${c.cy}`}
+                        cx={c.cx}
+                        cy={c.cy}
+                        r={c.r}
+                        fill={c.f}
+                        initial={reduce ? false : { scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        viewport={{ once: true, amount: "some" }}
+                        transition={{ delay: c.d, duration: 0.35, ease: [0.25, 0, 0, 1] }}
+                        style={{ transformOrigin: `${c.cx}px ${c.cy}px` }}
+                      />
+                    ))}
                   </svg>
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.2, duration: 0.4 }}
-                    className="absolute top-1/2 left-1/2 translate-x-3 translate-y-3 bg-white border border-[#ff3d00] p-1.5 shadow-sm pointer-events-none"
+
+                  <motion.p
+                    initial={reduce ? false : { opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: "some" }}
+                    transition={{ delay: 0.95, duration: 0.35 }}
+                    className="pointer-events-none absolute left-[52%] top-[52%] border border-[#ff3d00] bg-white p-1.5 font-[family-name:var(--font-mono)] text-[10px] font-bold"
                   >
-                    <p className="text-[10px] font-[family-name:var(--font-mono)] font-bold">SHARED_VEHICLE</p>
-                  </motion.div>
+                    SHARED_VEHICLE
+                  </motion.p>
                 </div>
-                {/* Fake Sidebar */}
-                <div className="w-48 md:w-64 bg-white border-l border-[#d4d4d4] p-4 hidden sm:block">
-                  <Label>Selected Entity</Label>
+
+                <div className="hidden w-48 border-l border-[#d4d4d4] bg-white p-4 sm:block md:w-64">
+                  <Label>Selected entity</Label>
                   <p className="mt-2 text-lg font-bold">Vehicle DL8C</p>
                   <div className="mt-4 border-l-2 border-[#ff3d00] pl-3">
                     <p className="text-xs font-bold text-[#0a0a0a]">Why this matters</p>
-                    <p className="mt-1 text-xs text-[#737373] leading-relaxed">
-                      This vehicle connects two separate cases and is directly linked to a primary target.
+                    <p className="mt-1 text-xs leading-relaxed text-[#737373]">
+                      This vehicle connects two separate cases and is directly
+                      linked to a primary person of interest.
                     </p>
-                </div>
+                  </div>
                 </div>
               </div>
             </div>
+
             <div className="lg:col-span-4 lg:pt-10">
-              <div className="flex items-center gap-3 mb-4">
-                <Eye size={20} className="text-[#ff3d00]" />
-                <h3 className="text-2xl font-bold tracking-tight">Interactive exploration.</h3>
-              </div>
-              <p className="text-base text-[#737373] leading-relaxed">
-                Investigating a massive graph can be overwhelming. NEXUS features Focus Modes that allow officers to fade out unrelated nodes and drill down into the direct relationships of a specific target.
-              </p>
+              <StepHeading icon={Eye} title="Interactive exploration.">
+                A large graph is hard to read all at once. Focus modes fade
+                unrelated entities so an officer can follow one thread at a time.
+              </StepHeading>
             </div>
           </Reveal>
 
-          {/* STEP 5: EVIDENCE TRAIL */}
-          <Reveal className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* 5. EVIDENCE. A plain table. Tabular data belongs in a table. */}
+          <Reveal className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <div className="flex items-center gap-3 mb-4">
-                <ShieldCheck size={20} className="text-[#ff3d00]" />
-                <h3 className="text-2xl font-bold tracking-tight">Immutable evidence.</h3>
-              </div>
-              <p className="text-base text-[#737373] leading-relaxed">
-                NEXUS is built for the courtroom. Every connection displayed in the system is directly linked to the original source document, ensuring complete traceability and an auditable chain of custody.
-              </p>
+              <StepHeading icon={ShieldCheck} title="Traceable evidence.">
+                Every connection on screen cites the record it came from, and
+                every action against it is written to an append-only log.
+              </StepHeading>
             </div>
-            <div className="lg:col-span-8 border border-[#d4d4d4] bg-white">
-              <div className="p-4 md:p-6 border-b border-[#d4d4d4] bg-[#f5f5f5]">
-                <Label>Audit Log / Connection Trace</Label>
+
+            <div className="overflow-x-auto border border-[#d4d4d4] bg-white lg:col-span-8">
+              <div className="border-b border-[#d4d4d4] bg-[#f5f5f5] p-4 md:p-6">
+                <Label>Audit log / connection trace</Label>
               </div>
-              <div className="p-0">
-                <table className="w-full text-left text-sm font-[family-name:var(--font-mono)]">
-                  <thead className="bg-white text-[#737373] text-xs">
-                    <tr>
-                      <th className="px-6 py-4 font-normal uppercase tracking-wider">Timestamp</th>
-                      <th className="px-6 py-4 font-normal uppercase tracking-wider">Action</th>
-                      <th className="px-6 py-4 font-normal uppercase tracking-wider hidden md:table-cell">Source Record</th>
-                      <th className="px-6 py-4 font-normal uppercase tracking-wider text-right">Verification</th>
-                    </tr>
-                  </thead>
-                  <motion.tbody 
-                    initial="hidden" 
-                    whileInView="show" 
-                    viewport={{ once: true }} 
-                    variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }} 
-                    className="divide-y divide-[#d4d4d4] text-[#0a0a0a]"
-                  >
-                    <motion.tr variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }} className="hover:bg-[#f5f5f5]">
-                      <td className="px-6 py-4 whitespace-nowrap">2026-09-14 10:15</td>
-                      <td className="px-6 py-4">Node Created: PERSON_01</td>
-                      <td className="px-6 py-4 hidden md:table-cell text-[#737373]">FIR_C014.pdf</td>
-                      <td className="px-6 py-4 text-right text-green-600 font-bold">VALID</td>
+              <table className="w-full min-w-[520px] text-left font-[family-name:var(--font-mono)] text-sm">
+                <thead className="text-xs text-[#737373]">
+                  <tr>
+                    <th scope="col" className="px-6 py-4 font-normal uppercase tracking-wider">Timestamp</th>
+                    <th scope="col" className="px-6 py-4 font-normal uppercase tracking-wider">Action</th>
+                    <th scope="col" className="hidden px-6 py-4 font-normal uppercase tracking-wider md:table-cell">Source record</th>
+                    <th scope="col" className="px-6 py-4 text-right font-normal uppercase tracking-wider">Verification</th>
+                  </tr>
+                </thead>
+                <motion.tbody
+                  initial={reduce ? false : "hidden"}
+                  whileInView="show"
+                  viewport={{ once: true, amount: "some" }}
+                  variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
+                  className="divide-y divide-[#d4d4d4] text-[#0a0a0a]"
+                >
+                  {[
+                    { t: "2026-03-09 10:15", a: "Node created: PERSON_01", s: "FIR_C014.pdf", flag: false },
+                    { t: "2026-03-09 11:30", a: "Entity match approved", s: "Officer INSP_VIKRAM_DL", flag: false },
+                    { t: "2026-03-10 09:42", a: "Bridge identified: VEHICLE_DL8C", s: "System output", flag: true },
+                  ].map((row) => (
+                    <motion.tr
+                      key={row.t}
+                      variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0 } }}
+                      className="hover:bg-[#f5f5f5]"
+                    >
+                      <td className={`whitespace-nowrap px-6 py-4 ${row.flag ? "text-[#ff3d00]" : ""}`}>
+                        {row.t}
+                      </td>
+                      <td className={`px-6 py-4 ${row.flag ? "font-bold text-[#ff3d00]" : ""}`}>{row.a}</td>
+                      <td className="hidden px-6 py-4 text-[#737373] md:table-cell">{row.s}</td>
+                      <td className="px-6 py-4 text-right font-bold" style={{ color: CONFIRMED }}>
+                        VALID
+                      </td>
                     </motion.tr>
-                    <motion.tr variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }} className="hover:bg-[#f5f5f5]">
-                      <td className="px-6 py-4 whitespace-nowrap">2026-09-14 11:30</td>
-                      <td className="px-6 py-4">Entity Match Approved</td>
-                      <td className="px-6 py-4 hidden md:table-cell text-[#737373]">User: admin</td>
-                      <td className="px-6 py-4 text-right text-green-600 font-bold">VALID</td>
-                    </motion.tr>
-                    <motion.tr variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }} className="hover:bg-[#f5f5f5] bg-red-50/30">
-                      <td className="px-6 py-4 whitespace-nowrap text-[#ff3d00]">2026-09-15 09:42</td>
-                      <td className="px-6 py-4 text-[#ff3d00] font-bold">Bridge Identified</td>
-                      <td className="px-6 py-4 hidden md:table-cell text-[#737373]">System Output</td>
-                      <td className="px-6 py-4 text-right text-green-600 font-bold">VALID</td>
-                    </motion.tr>
-                  </motion.tbody>
-                </table>
-              </div>
+                  ))}
+                </motion.tbody>
+              </table>
             </div>
           </Reveal>
-
         </div>
       </Container>
     </Section>

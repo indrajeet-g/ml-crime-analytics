@@ -281,8 +281,16 @@ export default function HeroGraph() {
     const observer = new ResizeObserver((entries) => {
       const box = entries[0]?.contentRect;
       if (!box) return;
-      const w = Math.max(1, Math.round(box.width));
-      const h = Math.max(1, Math.round(box.height));
+      const w = Math.round(box.width);
+      const h = Math.round(box.height);
+
+      /* Ignore degenerate boxes. ResizeObserver fires once before layout has
+         settled, and seeding the simulation against a 0 or 1px height puts
+         every node at the same y (the clamp collapses them outright). The
+         later rescale multiplies all of them by the same factor, so the
+         graph stays collapsed to a flat line for the life of the page. */
+      if (w < 2 || h < 2) return;
+
       resizeBuffer(w, h);
 
       const st = simRef.current;

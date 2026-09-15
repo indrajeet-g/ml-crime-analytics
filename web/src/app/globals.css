@@ -29,6 +29,15 @@
   --color-location: #d4a017;
   --color-case: #c0392b;
 
+  /* Status palette. One meaning per colour, used for verification state
+     only, never for decoration. Amber is always "a human still has to
+     look at this", green is always "a human confirmed it", red is the
+     brand and marks the thing under investigation. */
+  --color-review: #b45309;
+  --color-review-bg: #fef6ec;
+  --color-confirmed: #15803d;
+  --color-confirmed-bg: #f0f7f1;
+
   --font-sans: "Inter Tight", "Inter", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
   --font-display: "Playfair Display", Georgia, serif;
