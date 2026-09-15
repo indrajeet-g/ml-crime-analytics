@@ -1,49 +1,40 @@
-# Dashboard UX Improvements
+# Landing Page Visual Overhaul & De-AI-ification
 
-This plan outlines major functional and UX improvements to the NEXUS dashboard, focusing on investigator-support features, focus modes, AI explanations, and reporting.
-
-## Open Questions
-- None. Proceeding with mock data for AI explanations where appropriate, and updating the UI structures as requested.
+The goal is to eliminate the "AI Startup Template" aesthetic (excessive cards, generic grids, decoration for decoration's sake) and replace it with a professional, editorial, intelligence-analysis product design.
 
 ## Proposed Changes
 
-### Dashboard / Network Explorer (`src/components/GraphExplorer.tsx`)
-- **State Additions**:
-  - `focusMode`: "Selected Node" | "Direct Links" | "2 Hops" | "All".
-  - `hideUnrelated`: boolean toggle to drastically fade out non-focused nodes.
-  - `nodePriorities`: mapping of node IDs to "PRIMARY", "SECONDARY", "OTHER".
-  - `isAgentModalOpen`: boolean to show the full Intelligence Summary.
-- **Canvas Rendering Updates (`draw` method)**:
-  - Add logic to calculate which nodes are in focus (0 hops, 1 hop, 2 hops) based on `selectedNode`.
-  - Visually fade out (`globalAlpha`) unrelated nodes if `hideUnrelated` is active.
-  - Highlight relationship paths visually using red and thicker strokes.
-  - Color overrides based on priority: Primary gets strong red, Secondary gets amber, Other gets muted/default.
-- **UI Controls**:
-  - Add Focus Mode toggle buttons (`Selected Node`, `Direct Links`, `2 Hops`, `All`).
-  - Add `Hide unrelated` toggle.
-  - Add filter by Priority (`All`, `Primary`, `Secondary`, `Other`).
-- **Intelligence Agent Panels**:
-  - **In Sidebar**: Add a "WHY THIS MATTERS" mock explanation with a "View Full Analysis" button.
-  - **Modal Panel**: An Intelligence Summary modal showing Relevance, Key Connections, Related Cases, and Supporting Records.
-  - **Priority Assignment**: Add a dropdown in the sidebar to let the investigator assign Priority (Primary, Secondary, Other).
-  - **Connection Reasons**: Update the connections list to include a mock "WHY THIS CONNECTION?" explanation (e.g. "Shared phone number").
+### 1. Structure Reorganization (`src/app/page.tsx`)
+Merge `Capabilities.tsx` and `CapabilityShowcases.tsx` into a single, story-driven section called `ProductStory.tsx`. This enforces the user's requested storytelling flow and eliminates the redundant grid-of-cards pattern.
+Flow:
+- Hero -> StatBand -> Problem -> Pipeline -> ProductStory -> HumanInTheLoop -> DashboardPreview (new) -> Responsible -> FinalCTA
 
-### Entity Resolution (`src/app/dashboard/resolve/page.tsx`)
-- **Confidence Explanation**:
-  - Add an expandable "WHY THIS MATCH?" panel.
-  - Show a breakdown table of matching factors (Positive: Name match, Phone match; Negative: Age difference).
-  - Add a human-readable agent summary of the match (e.g., "The records use very similar names...").
-  - Add clear labels (e.g., "92% - Very Strong Match").
+### 2. Storytelling Sequence (`src/components/ProductStory.tsx`)
+Replace the bento grids with a linear, split-layout story where each step has a distinct visual:
+- **Step 1: Information is scattered** (Show unstructured text vs extracted entities in a sleek code-like view).
+- **Step 2: NEXUS finds possible matches** (Show a clear diagram of two records merging, not a floating card).
+- **Step 3: NEXUS builds the network** (Show the ASCII-style or minimalist graph diagram `PERSON -> PHONE -> VEHICLE`).
+- **Step 4: The investigator explores** (Show the realistic network path finding).
+- **Step 5: The investigator reviews evidence** (Show a clean timeline/ledger view).
 
-### Reports (`src/app/dashboard/reports/page.tsx`)
-- **Report Preview UX**:
-  - Remove immediate JSON download.
-  - Add a Report Preview view.
-  - Provide "Download PDF", "Download HTML", and "Download JSON" options.
-  - Add a visually formatted HTML preview mimicking the PDF output structure (Executive Summary, Key Entities, Key Connections, Network Snapshot).
+### 3. Diagrammatic Visuals (No Fluff)
+- Remove glowing blobs, blurred backgrounds, and purely decorative borders.
+- Replace generic "icons in boxes" with hard data visualizations, ASCII-style relationship trees, and annotated UI fragments.
+- Use strict, minimal CSS: `border-black`, `border-[#d4d4d4]`, sharp corners, high contrast typography.
+
+### 4. Intentional Color Usage
+- Body text remains mostly neutral (`#0a0a0a`, `#737373`).
+- **Red (`#ff3d00`)**: Used strictly for NEXUS brand moments, active highlights, and primary nodes.
+- **Amber (`#d97706`)**: Used for "Needs Review" or "Match Confidence < 100%".
+- **Blue (`#2563eb`) / Teal (`#0d9488`)**: Used selectively in network diagrams to differentiate entity types (Person vs Phone).
+- **Green (`#16a34a`)**: Used for "Resolved" or "Verified".
+
+### 5. Asymmetric Layouts & Hierarchy
+- Remove the uniform `grid-cols-3` or `grid-cols-4` patterns.
+- Use `lg:grid-cols-12` with asymmetrical splits (e.g., text spans 4 cols, visualization spans 8 cols).
+- Introduce strong typographic hierarchy (huge numbers, tiny metadata labels).
 
 ## Verification Plan
-### Manual Verification
-- Test Network View: Click node -> check focus modes -> toggle "Hide unrelated" -> check priority filters -> open Agent modal.
-- Test Match Records: Expand "Why this match?" -> review factors.
-- Test Reports: Preview report -> ensure buttons for PDF/HTML exist.
+1. Ensure the landing page feels like an Apple/Palantir-style enterprise product, not a generic SaaS template.
+2. Verify all animations feel purposeful (e.g., a line drawing between two nodes) rather than generic (everything sliding in at once).
+3. Confirm that removing `Capabilities.tsx` and `CapabilityShowcases.tsx` doesn't lose technical detail, but presents it better.
