@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Bold Typography design system.
+   Poster design translated to web: type is the visual language,
+   color exists only to create contrast, nothing is rounded.
+   Theme is locked dark. There is no light variant by design.
+   ============================================================ */
+
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #737373;
+  --color-accent: #ff3d00;
+  --color-accent-foreground: #0a0a0a;
+  --color-border: #262626;
+  --color-border-hover: #3d3d3d;
+  --color-input: #1a1a1a;
+  --color-card: #0f0f0f;
+
+  /* Entity palette. Carried over from the Python visualiser so the
+     web graph and the generated PyVis report read as one system. */
+  --color-person: #4a7fb5;
+  --color-phone: #e67e22;
+  --color-org: #8e44ad;
+  --color-vehicle: #16a085;
+  --color-account: #27ae60;
+  --color-location: #d4a017;
+  --color-case: #c0392b;
+
+  --font-sans: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-display: "Playfair Display", Georgia, serif;
+
+  --radius-none: 0px;
+
+  --ease-crisp: cubic-bezier(0.25, 0, 0, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    background-color: var(--color-background);
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  /* Sharp edges everywhere. Matches the typography. */
+  * {
+    border-radius: 0 !important;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  .track-tighter { letter-spacing: -0.06em; }
+  .track-tight   { letter-spacing: -0.04em; }
+  .track-wider   { letter-spacing: 0.1em; }
+  .track-widest  { letter-spacing: 0.2em; }
+}
+
+/* Noise grain. Fixed and pointer-events-none so it never repaints
+   on scroll: a scrolling grain layer destroys mobile frame rate. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
