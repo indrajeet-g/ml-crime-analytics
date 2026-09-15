@@ -283,8 +283,8 @@ export default function ChainOfCustody() {
           : `FAIL, chain breaks at block ${pad2(result.brokenAt ?? 0)}, ${result.reason}`;
 
   return (
-    <Section id="custody">
-      <Container>
+    <div id="custody" className="px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-8">
+      
         <Reveal>
           <Eyebrow>Chain of custody</Eyebrow>
           <h2 className="mt-4 max-w-3xl text-3xl font-semibold track-tighter md:text-4xl lg:text-5xl">
@@ -323,7 +323,7 @@ export default function ChainOfCustody() {
                 >
                   <div className="flex items-baseline justify-between gap-3">
                     <span
-                      className={`${mono} text-3xl font-bold tabular-nums track-tight text-[--color-border]`}
+                      className={`${mono} text-3xl font-bold tabular-nums track-tight text-[#a3a3a3]`}
                     >
                       {pad2(row.index)}
                     </span>
@@ -461,7 +461,7 @@ export default function ChainOfCustody() {
             </p>
           </div>
         </Reveal>
-      </Container>
-    </Section>
+      
+    </div>
   );
 }

@@ -1,7 +1,112 @@
 "use client";
+import Link from "next/link";
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
+
+import { useRef, useState } from "react";
 import type { ReactNode } from "react";
+
+export function TextReveal({
+  text,
+  className = "",
+  delay = 0,
+}: {
+  text: string;
+  className?: string;
+  delay?: number;
+}) {
+  const reduce = useReducedMotion();
+  const words = text.split(" ");
+  
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.04, delayChildren: delay }
+    }
+  };
+  
+  const item = {
+    hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
+    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: EASE } }
+  };
+
+  return (
+    <motion.div
+      className={className}
+      variants={container}
+      initial={reduce ? false : "hidden"}
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      {words.map((word, i) => (
+        <motion.span key={i} variants={item} className="inline-block whitespace-pre">
+          {word}{" "}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
+}
+
+export function SpotlightCard({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current || isFocused) return;
+    const div = divRef.current;
+    const rect = div.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setOpacity(1);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    setOpacity(0);
+  };
+
+  const handleMouseEnter = () => {
+    setOpacity(1);
+  };
+
+  const handleMouseLeave = () => {
+    setOpacity(0);
+  };
+
+  return (
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 z-10"
+        style={{
+          opacity,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,61,0,0.08), transparent 40%)`,
+        }}
+      />
+      <div className="relative z-20 h-full w-full">{children}</div>
+    </div>
+  );
+}
+
 
 /* Motion spec from the design system: fast and decisive.
    Fade in plus 20px rise over 500ms, children staggered 80ms
@@ -10,8 +115,8 @@ import type { ReactNode } from "react";
 const EASE = [0.25, 0, 0, 1] as const;
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
+  hidden: { opacity: 0, y: 15, filter: "blur(8px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: EASE } },
 };
 
 export const stagger: Variants = {
@@ -36,8 +141,8 @@ export function Reveal({
       whileInView="show"
       viewport={{ once: true, amount: 0.15, margin: "-50px" }}
       variants={{
-        hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE, delay } },
+        hidden: { opacity: 0, y: 15, filter: "blur(8px)" },
+        show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: EASE, delay } },
       }}
     >
       {children}
@@ -143,37 +248,49 @@ export function PrimaryLink({
   children,
   href,
   size = "default",
+  target,
+  rel
 }: {
   children: ReactNode;
   href: string;
   size?: "sm" | "default" | "lg";
+  target?: string;
+  rel?: string;
 }) {
   const pad = size === "lg" ? "py-4 gap-3 text-base" : size === "sm" ? "py-2 gap-2 text-sm" : "py-3 gap-2.5 text-sm";
   return (
-    <a
+    <Link
       href={href}
+      target={target}
+      rel={rel}
       className={`group relative inline-flex items-center ${pad} font-semibold uppercase track-wider text-[--color-accent] transition-all duration-150 active:translate-y-px`}
     >
       {children}
       <span className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-100 bg-[--color-accent] transition-transform duration-150 ease-[cubic-bezier(0.25,0,0,1)] group-hover:scale-x-110" />
-    </a>
+    </Link>
   );
 }
 
 export function OutlineLink({
   children,
   href,
+  target,
+  rel
 }: {
   children: ReactNode;
   href: string;
+  target?: string;
+  rel?: string;
 }) {
   return (
-    <a
+    <Link
       href={href}
-      className="inline-flex items-center gap-2.5 border border-[--color-foreground] px-6 py-3 text-sm font-semibold uppercase track-wider text-[--color-foreground] transition-colors duration-150 hover:bg-[--color-foreground] hover:text-[--color-background] active:translate-y-px"
+      target={target}
+      rel={rel}
+      className="relative overflow-hidden inline-flex items-center gap-2.5 border border-[--color-foreground] px-6 py-3 text-sm font-semibold uppercase track-wider text-[--color-foreground] transition-colors duration-300 hover:bg-[--color-foreground] hover:text-[--color-background] active:translate-y-px after:absolute after:inset-0 after:z-[-1] after:translate-x-[-100%] after:bg-[--color-foreground] after:transition-transform after:duration-300 hover:after:translate-x-0"
     >
       {children}
-    </a>
+    </Link>
   );
 }
 

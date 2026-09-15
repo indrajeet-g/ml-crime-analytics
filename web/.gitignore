@@ -5,3 +5,14 @@ node_modules/
 next-env.d.ts
 *.tsbuildinfo
 .env*
+
+# Scratch patch scripts and merge debris from an editing session.
+# Not part of the app: safe to delete from the working tree.
+/fix_*.js
+/fix-*.js
+/upgrade_*.js
+/add_*.js
+/use_*.js
+*.rej
+*.orig
+*.patch

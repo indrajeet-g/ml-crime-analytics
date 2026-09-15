@@ -169,7 +169,7 @@ function ChipList({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: reduce ? 0 : -4 }}
             transition={{ duration: reduce ? 0 : 0.2, ease: EASE }}
-            className={`${MONO} border border-[#262626] px-3 py-2 text-sm text-[#fafafa]`}
+            className={`${MONO} border border-[#d4d4d4] px-3 py-2 text-sm text-[#0a0a0a]`}
           >
             {v}
           </motion.li>
@@ -217,7 +217,7 @@ export default function LiveExtractor() {
   const heuristicTotal = result.people.length + result.orgs.length;
 
   const ghostButton =
-    `${MONO} inline-flex min-h-[44px] items-center gap-2 border border-transparent px-3 text-[11px] uppercase track-wider text-[#737373] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:border-[#262626] hover:text-[#fafafa]`;
+    `${MONO} inline-flex min-h-[44px] items-center gap-2 border border-transparent px-3 text-[11px] uppercase track-wider text-[#737373] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:border-[#d4d4d4] hover:text-[#0a0a0a]`;
 
   return (
     <Section id="extract">
@@ -233,7 +233,7 @@ export default function LiveExtractor() {
         </Reveal>
 
         <Reveal className="mt-12 md:mt-16">
-          <div className="grid grid-cols-1 border border-[#262626] bg-[#0f0f0f] lg:grid-cols-2">
+          <div className="grid grid-cols-1 border border-[#d4d4d4] bg-[#f5f5f5] lg:grid-cols-2">
             {/* Input column. */}
             <div className="min-w-0 p-5 md:p-6 lg:p-8">
               <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
@@ -260,7 +260,7 @@ export default function LiveExtractor() {
                 autoComplete="off"
                 aria-describedby="fir-source-note"
                 placeholder="Paste an FIR narrative, a statement or a call record line."
-                className={`${MONO} mt-4 block min-h-[14rem] w-full resize-y border border-[#262626] bg-[#1a1a1a] p-4 text-base leading-relaxed text-[#fafafa] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] placeholder:text-[#737373] focus:border-[#ff3d00] lg:min-h-[20rem]`}
+                className={`${MONO} mt-4 block min-h-[14rem] w-full resize-y border border-[#d4d4d4] bg-[#e5e5e5] p-4 text-base leading-relaxed text-[#0a0a0a] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] placeholder:text-[#737373] focus:border-[#ff3d00] lg:min-h-[20rem]`}
               />
 
               <p
@@ -271,7 +271,7 @@ export default function LiveExtractor() {
                 <span>matching runs in this browser, nothing is uploaded</span>
               </p>
 
-              <p className="mt-6 max-w-2xl border-l-2 border-[#ff3d00] bg-[#0a0a0a] p-4 text-base leading-relaxed text-[#737373]">
+              <p className="mt-6 max-w-2xl border-l-2 border-[#ff3d00] bg-[#fafafa] p-4 text-base leading-relaxed text-[#737373]">
                 The sample is synthetic. It carries one name twice, once in full and
                 once as an initial form, which is the variation alias resolution has
                 to survive.
@@ -279,8 +279,8 @@ export default function LiveExtractor() {
             </div>
 
             {/* Output column. */}
-            <div className="min-w-0 border-t border-[#262626] lg:border-l lg:border-t-0">
-              <div className="flex items-center justify-between gap-3 border-b border-[#262626] px-5 py-4 md:px-6 lg:px-8">
+            <div className="min-w-0 border-t border-[#d4d4d4] lg:border-l lg:border-t-0">
+              <div className="flex items-center justify-between gap-3 border-b border-[#d4d4d4] px-5 py-4 md:px-6 lg:px-8">
                 <Label>Live output</Label>
                 <p
                   aria-live="polite"
@@ -311,11 +311,11 @@ export default function LiveExtractor() {
                     record into the box on the left. Every pattern reruns as you type.
                   </p>
 
-                  <ul className="mt-6 border-t border-[#262626]">
+                  <ul className="mt-6 border-t border-[#d4d4d4]">
                     {patternGroups.map((g) => (
                       <li
                         key={g.type}
-                        className="flex items-center gap-2.5 border-b border-[#262626] py-3"
+                        className="flex items-center gap-2.5 border-b border-[#d4d4d4] py-3"
                       >
                         <span
                           className="h-2.5 w-2.5 shrink-0"
@@ -330,7 +330,7 @@ export default function LiveExtractor() {
                   <button
                     type="button"
                     onClick={reset}
-                    className={`${MONO} mt-6 inline-flex min-h-[44px] items-center gap-2 border border-[#fafafa] px-5 text-[11px] uppercase track-wider text-[#fafafa] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:bg-[#fafafa] hover:text-[#0a0a0a]`}
+                    className={`${MONO} mt-6 inline-flex min-h-[44px] items-center gap-2 border border-[#0a0a0a] px-5 text-[11px] uppercase track-wider text-[#0a0a0a] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:bg-[#0a0a0a] hover:text-[#fafafa]`}
                   >
                     <RotateCcw size={14} strokeWidth={1.5} aria-hidden="true" />
                     Load the sample record
@@ -341,7 +341,7 @@ export default function LiveExtractor() {
                   {patternGroups.map((g) => (
                     <div
                       key={g.type}
-                      className="border-b border-[#262626] p-5 md:p-6 lg:px-8"
+                      className="border-b border-[#d4d4d4] p-5 md:p-6 lg:px-8"
                     >
                       <GroupHead type={g.type} count={g.values.length} />
                       <div className="mt-3 overflow-x-auto">
@@ -364,7 +364,7 @@ export default function LiveExtractor() {
                     </div>
                   ))}
 
-                  <div className="bg-[#1a1a1a] p-5 md:p-6 lg:px-8">
+                  <div className="bg-[#e5e5e5] p-5 md:p-6 lg:px-8">
                     <div className="flex items-center justify-between gap-3">
                       <Label>Heuristic preview</Label>
                       <span
@@ -395,7 +395,7 @@ export default function LiveExtractor() {
                       </span>
                     </p>
 
-                    <div className="mt-6 border-t border-[#262626] pt-5">
+                    <div className="mt-6 border-t border-[#d4d4d4] pt-5">
                       <GroupHead type="PERSON" count={result.people.length} />
                       <ChipList
                         values={result.people}
@@ -404,7 +404,7 @@ export default function LiveExtractor() {
                       />
                     </div>
 
-                    <div className="mt-6 border-t border-[#262626] pt-5">
+                    <div className="mt-6 border-t border-[#d4d4d4] pt-5">
                       <GroupHead type="ORGANIZATION" count={result.orgs.length} />
                       <ChipList
                         values={result.orgs}

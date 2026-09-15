@@ -8,16 +8,16 @@
    ============================================================ */
 
 @theme {
-  --color-background: #0a0a0a;
-  --color-foreground: #fafafa;
-  --color-muted: #1a1a1a;
-  --color-muted-foreground: #737373;
+  --color-background: #fafafa;
+  --color-foreground: #0a0a0a;
+  --color-muted: #e5e5e5;
+  --color-muted-foreground: #525252;
   --color-accent: #ff3d00;
-  --color-accent-foreground: #0a0a0a;
-  --color-border: #262626;
-  --color-border-hover: #3d3d3d;
-  --color-input: #1a1a1a;
-  --color-card: #0f0f0f;
+  --color-accent-foreground: #fafafa;
+  --color-border: #d4d4d4;
+  --color-border-hover: #a3a3a3;
+  --color-input: #e5e5e5;
+  --color-card: #f5f5f5;
 
   /* Entity palette. Carried over from the Python visualiser so the
      web graph and the generated PyVis report read as one system. */
@@ -30,7 +30,7 @@
   --color-case: #c0392b;
 
   --font-sans: "Inter Tight", "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
   --font-display: "Playfair Display", Georgia, serif;
 
   --radius-none: 0px;
@@ -45,7 +45,7 @@
 
   html {
     background-color: var(--color-background);
-    color-scheme: dark;
+    color-scheme: light;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -57,9 +57,12 @@
     overflow-x: hidden;
   }
 
-  /* Sharp edges everywhere. Matches the typography. */
+  /* Sharp edges are the default, matching the typography. This is a
+     base-layer rule with no !important, so a component that genuinely
+     wants a curve (the nav pills, the footer slab) can opt in with a
+     rounded utility and win on layer order. */
   * {
-    border-radius: 0 !important;
+    border-radius: 0;
   }
 
   ::selection {
@@ -106,4 +109,176 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ============================================================
+   Footer.
+   Ported from the VAJRON footer treatment: a dark slab that
+   grounds the light page, curved at the top two corners, with a
+   hairline glow and a soft radial bloom bleeding down from the
+   seam. Token names are mapped onto the NEXUS palette so the
+   footer uses one accent like the rest of the page.
+   ============================================================ */
+
+.foot {
+  --foot-ground: #0a0a0a;
+  --foot-line: #262626;
+  --foot-ink: #fafafa;
+  --foot-ink-dim: #a3a3a3;
+  --foot-ink-faint: #737373;
+  --foot-accent: #ff3d00;
+  --foot-ease: cubic-bezier(0.25, 0, 0, 1);
+
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 6rem;
+  border-top: 1px solid var(--foot-line);
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  background: var(--foot-ground);
+  color: var(--foot-ink);
+  padding: 4rem 0 calc(2.5rem + env(safe-area-inset-bottom));
+}
+
+/* Bloom under the seam. Sits behind content and eats no pointer events. */
+.foot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  background: radial-gradient(35% 128px at 50% 0%, rgba(255, 61, 0, 0.13), transparent);
+}
+
+/* The hairline of light along the top edge. */
+.foot__glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 1px;
+  width: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: rgba(255, 138, 92, 0.34);
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .foot {
+    border-top-left-radius: 4rem;
+    border-top-right-radius: 4rem;
+  }
+}
+
+.foot__grid {
+  position: relative;
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .foot__grid {
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 4rem;
+  }
+}
+
+.foot__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.foot__tagline {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--foot-ink-dim);
+  max-width: 34ch;
+}
+
+.foot__est {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foot-ink-faint);
+}
+
+.foot__label {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foot-ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.foot__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.foot__list a {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 0.9375rem;
+  color: var(--foot-ink);
+  text-decoration: none;
+  width: fit-content;
+  transition: color 300ms var(--foot-ease);
+}
+
+.foot__list a:hover {
+  color: #ffffff;
+}
+
+.foot__url {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.9375rem;
+  color: var(--foot-accent);
+  text-decoration: none;
+  text-underline-offset: 4px;
+  word-break: break-word;
+  transition: color 300ms var(--foot-ease);
+}
+
+.foot__url:hover {
+  text-decoration: underline;
+}
+
+.foot__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--foot-ink-faint);
+}
+
+/* Bottom rule carrying the synthetic-data statement. */
+.foot__base {
+  position: relative;
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--foot-line);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--foot-ink-faint);
+  max-width: 78ch;
+}
+
+.foot a:focus-visible {
+  outline: 2px solid var(--foot-accent);
+  outline-offset: 3px;
 }

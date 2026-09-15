@@ -98,7 +98,7 @@ export default function Differentiation() {
         <RevealGroup className="mt-16 grid grid-cols-1 pt-px pl-px md:mt-20 md:grid-cols-2">
           {EDGES.map((edge, i) => (
             <RevealItem key={edge.title} className="-mt-px -ml-px">
-              <article className="group relative z-0 flex h-full flex-col border border-[--color-border] bg-transparent p-6 transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:z-10 hover:border-[#3d3d3d] md:p-10">
+              <article className="group relative z-0 flex h-full flex-col border border-[--color-border] bg-transparent p-6 transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:z-10 hover:border-[#a3a3a3] md:p-10">
                 {i === 0 ? (
                   <span
                     aria-hidden="true"

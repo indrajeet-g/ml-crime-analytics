@@ -24,10 +24,10 @@ const NODE_BUDGET = 45;
 const TICKS = 280;
 const SEED = 82634;
 const ACCENT = "#ff3d00";
-const EDGE = "#262626";
-const EDGE_LIT = "#3d3d3d";
-const BG = "#0a0a0a";
-const FG = "#fafafa";
+const EDGE = "#a3a3a3";
+const EDGE_LIT = "#525252";
+const BG = "#fafafa";
+const FG = "#0a0a0a";
 
 const seeds: SeedNode[] = [...net.graph.nodes]
   .sort((a, b) => b.betweenness - a.betweenness || b.degree - a.degree)

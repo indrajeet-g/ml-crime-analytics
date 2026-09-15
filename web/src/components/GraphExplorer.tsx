@@ -247,7 +247,7 @@ export default function GraphExplorer() {
     const neighbours: number[] = [];
 
     ctx.lineWidth = 1;
-    ctx.strokeStyle = "rgba(115,115,115,0.10)";
+    ctx.strokeStyle = "rgba(10, 10, 10, 0.08)";
     ctx.beginPath();
     for (let e = 0; e < EDGES.length; e++) {
       const s = EDGES[e].s;
@@ -259,7 +259,7 @@ export default function GraphExplorer() {
     }
     ctx.stroke();
 
-    ctx.strokeStyle = "rgba(160,160,160,0.42)";
+    ctx.strokeStyle = "rgba(10, 10, 10, 0.35)";
     ctx.beginPath();
     for (let e = 0; e < EDGES.length; e++) {
       const s = EDGES[e].s;
@@ -289,7 +289,7 @@ export default function GraphExplorer() {
 
     for (let i = 0; i < N; i++) {
       if (act[i]) continue;
-      ctx.globalAlpha = 0.14;
+      ctx.globalAlpha = 0.25;
       ctx.fillStyle = entityColor(NODES[i].type);
       ctx.beginPath();
       ctx.arc(sx[i], sy[i], radiusOf(NODES[i].degree), 0, Math.PI * 2);
@@ -318,7 +318,7 @@ export default function GraphExplorer() {
 
     const hov = hoverRef.current;
     if (hov >= 0 && hov !== sel) {
-      ctx.strokeStyle = "#fafafa";
+      ctx.strokeStyle = "#0a0a0a";
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.arc(sx[hov], sy[hov], radiusOf(NODES[hov].degree) + 4, 0, Math.PI * 2);
@@ -493,19 +493,15 @@ export default function GraphExplorer() {
   ];
 
   return (
-    <Section id="explorer">
-      <Container>
+    <div className="flex h-full flex-col px-4 md:px-6 pt-4" id="explorer">
+      
         <Reveal>
-          <h2 className="max-w-3xl text-3xl font-semibold track-tighter md:text-4xl lg:text-5xl">
-            Explore the network.
-          </h2>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#737373]">
-            Every node and edge below comes from the real 287-node synthetic graph. Filter it,
-            search it, then open any entity.
-          </p>
-          <div className="mt-8 flex flex-wrap items-stretch gap-y-4 border-t border-[#262626] pt-6">
+          <div className="flex items-end justify-between">
+            <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">Network Topology</h2>
+          </div>
+          <div className="mt-8 flex flex-wrap items-stretch gap-y-4 border-t border-[#d4d4d4] pt-6">
             {counters.map(([value, name], i) => (
-              <div key={name} className={i === 0 ? "pr-8" : "border-l border-[#262626] px-8"}>
+              <div key={name} className={i === 0 ? "pr-8" : "border-l border-[#d4d4d4] px-8"}>
                 <div className="font-[family-name:var(--font-jetbrains)] text-2xl track-tight tabular-nums">
                   {value}
                 </div>
@@ -516,19 +512,19 @@ export default function GraphExplorer() {
             ))}
           </div>
         </Reveal>
-      </Container>
+      
 
       <Reveal className="mt-12 md:mt-16">
-        <div className="grid grid-cols-1 border-y border-[#262626] bg-[#0f0f0f] lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid grid-cols-1 border-y border-[#d4d4d4] bg-[#f5f5f5] lg:grid-cols-[minmax(0,1fr)_380px]">
           {/* Canvas column. The rail sits in the flow on small screens and
               floats over the canvas from lg upward. */}
           <div className="relative min-w-0">
             <div
               ref={railRef}
-              className="border-b border-[#262626] bg-[#0a0a0a] px-5 py-4 lg:absolute lg:inset-x-0 lg:top-0 lg:z-10 lg:bg-[#0a0a0a]/85 lg:px-6 lg:backdrop-blur-sm"
+              className="border-b border-[#d4d4d4] bg-[#fafafa] px-5 py-4 lg:absolute lg:inset-x-0 lg:top-0 lg:z-10 lg:bg-[#fafafa]/85 lg:px-6 lg:backdrop-blur-sm"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <label className="relative flex min-h-[44px] w-full items-center border border-[#262626] bg-[#0f0f0f] pl-9 pr-3 transition-colors duration-150 focus-within:border-[#ff3d00] sm:w-[230px]">
+                <label className="relative flex min-h-[44px] w-full items-center border border-[#d4d4d4] bg-[#f5f5f5] pl-9 pr-3 transition-colors duration-150 focus-within:border-[#ff3d00] sm:w-[230px]">
                   <Search
                     className="pointer-events-none absolute left-3 h-4 w-4 text-[#737373]"
                     strokeWidth={1.5}
@@ -541,14 +537,14 @@ export default function GraphExplorer() {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Name or id"
                     autoComplete="off"
-                    className="w-full bg-transparent text-base text-[#fafafa] outline-none placeholder:text-[#737373]"
+                    className="w-full bg-transparent text-base text-[#0a0a0a] outline-none placeholder:text-[#737373]"
                   />
                   {query.length > 0 ? (
                     <button
                       type="button"
                       onClick={() => setQuery("")}
                       aria-label="Clear the search"
-                      className="-mr-2 flex h-[44px] w-[44px] shrink-0 items-center justify-center text-[#737373] transition-colors duration-150 hover:text-[#fafafa]"
+                      className="-mr-2 flex h-[44px] w-[44px] shrink-0 items-center justify-center text-[#737373] transition-colors duration-150 hover:text-[#0a0a0a]"
                     >
                       <X className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
                     </button>
@@ -565,8 +561,8 @@ export default function GraphExplorer() {
                       onClick={() => setTypes((p) => ({ ...p, [t]: !on }))}
                       className={`flex min-h-[44px] items-center gap-2 border px-3 transition-colors duration-150 ${
                         on
-                          ? "border-[#3d3d3d] bg-[#1a1a1a] text-[#fafafa]"
-                          : "border-[#262626] text-[#737373] hover:text-[#fafafa]"
+                          ? "border-[#a3a3a3] bg-[#e5e5e5] text-[#0a0a0a]"
+                          : "border-[#d4d4d4] text-[#737373] hover:text-[#0a0a0a]"
                       }`}
                     >
                       <span
@@ -595,7 +591,7 @@ export default function GraphExplorer() {
                   className={`flex min-h-[44px] items-center gap-2 border px-3 transition-colors duration-150 ${
                     bridgesOnly
                       ? "border-[#ff3d00] text-[#ff3d00]"
-                      : "border-[#262626] text-[#737373] hover:text-[#fafafa]"
+                      : "border-[#d4d4d4] text-[#737373] hover:text-[#0a0a0a]"
                   }`}
                 >
                   <span className="font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider">
@@ -648,11 +644,11 @@ export default function GraphExplorer() {
           {/* Evidence panel. */}
           <aside
             aria-label="Evidence panel"
-            className="min-w-0 border-t border-[#262626] bg-[#0a0a0a] lg:max-h-[560px] lg:overflow-y-auto lg:border-l lg:border-t-0"
+            className="min-w-0 border-t border-[#d4d4d4] bg-[#fafafa] lg:max-h-[560px] lg:overflow-y-auto lg:border-l lg:border-t-0"
           >
             {selectedNode ? (
               <>
-                <div className="flex items-start justify-between gap-3 border-b border-[#262626] p-5 lg:p-6">
+                <div className="flex items-start justify-between gap-3 border-b border-[#d4d4d4] p-5 lg:p-6">
                   <div className="min-w-0">
                     <span className="flex items-center gap-2">
                       <span
@@ -673,13 +669,13 @@ export default function GraphExplorer() {
                     type="button"
                     onClick={() => setSelected(null)}
                     aria-label="Close the evidence panel"
-                    className="-mr-2 -mt-2 flex h-[44px] w-[44px] shrink-0 items-center justify-center text-[#737373] transition-colors duration-150 hover:text-[#fafafa]"
+                    className="-mr-2 -mt-2 flex h-[44px] w-[44px] shrink-0 items-center justify-center text-[#737373] transition-colors duration-150 hover:text-[#0a0a0a]"
                   >
                     <X className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
                   </button>
                 </div>
 
-                <dl className="grid grid-cols-2 border-b border-[#262626]">
+                <dl className="grid grid-cols-2 border-b border-[#d4d4d4]">
                   {(
                     [
                       ["DEGREE", String(selectedNode.degree)],
@@ -690,8 +686,8 @@ export default function GraphExplorer() {
                   ).map(([k, val], i) => (
                     <div
                       key={k}
-                      className={`p-5 lg:px-6 ${i % 2 === 1 ? "border-l border-[#262626]" : ""} ${
-                        i < 2 ? "border-b border-[#262626]" : ""
+                      className={`p-5 lg:px-6 ${i % 2 === 1 ? "border-l border-[#d4d4d4]" : ""} ${
+                        i < 2 ? "border-b border-[#d4d4d4]" : ""
                       }`}
                     >
                       <dt>
@@ -713,13 +709,13 @@ export default function GraphExplorer() {
 
                 <ul>
                   {connections.map(({ link, other, otherId }, i) => (
-                    <li key={`${link.source}-${link.target}-${link.rel}-${i}`} className="border-t border-[#262626]">
+                    <li key={`${link.source}-${link.target}-${link.rel}-${i}`} className="border-t border-[#d4d4d4]">
                       <div className="p-5 lg:px-6">
                         <div className="flex items-baseline justify-between gap-3">
                           <button
                             type="button"
                             onClick={() => setSelected(otherId)}
-                            className="min-h-[24px] break-words text-left text-base text-[#fafafa] underline decoration-[#3d3d3d] underline-offset-4 transition-colors duration-150 hover:decoration-[#ff3d00]"
+                            className="min-h-[24px] break-words text-left text-base text-[#0a0a0a] underline decoration-[#a3a3a3] underline-offset-4 transition-colors duration-150 hover:decoration-[#ff3d00]"
                           >
                             {other ? other.label : otherId}
                           </button>
@@ -737,7 +733,7 @@ export default function GraphExplorer() {
                         <p className="mt-2 font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#737373]">
                           {link.rel}
                         </p>
-                        <div className="mt-3 flex items-center gap-3 border-l-2 border-[#ff3d00] bg-[#0f0f0f] py-2.5 pl-3">
+                        <div className="mt-3 flex items-center gap-3 border-l-2 border-[#ff3d00] bg-[#f5f5f5] py-2.5 pl-3">
                           <FileText
                             className="h-4 w-4 shrink-0 text-[#737373]"
                             strokeWidth={1.5}
@@ -747,7 +743,7 @@ export default function GraphExplorer() {
                             <span className="block font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#737373]">
                               Source record
                             </span>
-                            <span className="mt-0.5 block font-[family-name:var(--font-jetbrains)] text-base track-tight text-[#fafafa]">
+                            <span className="mt-0.5 block font-[family-name:var(--font-jetbrains)] text-base track-tight text-[#0a0a0a]">
                               {link.rec}
                             </span>
                           </span>
@@ -773,9 +769,9 @@ export default function GraphExplorer() {
                   </Label>
                 </p>
                 {shortcuts.length > 0 ? (
-                  <ul className="mt-3 border-t border-[#262626]">
+                  <ul className="mt-3 border-t border-[#d4d4d4]">
                     {shortcuts.map((n) => (
-                      <li key={n.id} className="border-b border-[#262626]">
+                      <li key={n.id} className="border-b border-[#d4d4d4]">
                         <button
                           type="button"
                           onClick={() => setSelected(n.id)}
@@ -797,7 +793,7 @@ export default function GraphExplorer() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-3 border-t border-[#262626] pt-4 text-base text-[#737373]">
+                  <p className="mt-3 border-t border-[#d4d4d4] pt-4 text-base text-[#737373]">
                     Nothing in the graph matches that text.
                   </p>
                 )}
@@ -806,6 +802,6 @@ export default function GraphExplorer() {
           </aside>
         </div>
       </Reveal>
-    </Section>
+    </div>
   );
 }

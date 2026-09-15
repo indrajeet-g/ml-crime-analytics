@@ -1,215 +1,151 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-} from "motion/react";
-import { ArrowUpRight, Github, Menu, X } from "lucide-react";
-import { Container } from "@/components/ui";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Menu, X, ShieldAlert, Github } from "lucide-react";
+import { useScroll, useMotionValueEvent } from "motion/react";
 
 const REPO = "https://github.com/indrajeet-g/ml-crime-analytics";
 
-/* Single word labels so the rail never wraps. "always" links survive
-   the md breakpoint, the rest are dropped below lg to hold one line. */
-const LINKS: { href: string; label: string; always: boolean }[] = [
-  { href: "#problem", label: "Problem", always: true },
-  { href: "#pipeline", label: "Pipeline", always: true },
-  { href: "#capabilities", label: "Capabilities", always: false },
-  { href: "#explorer", label: "Explorer", always: true },
-  { href: "#custody", label: "Custody", always: false },
+const LINKS = [
+  { label: "Pipeline", href: "#pipeline" },
+  { label: "Capabilities", href: "#showcases" },
+  { label: "Scope", href: "#different" },
 ];
 
-const EASE = [0.25, 0, 0, 1] as const;
-
-function Wordmark({ onClick }: { onClick?: () => void }) {
-  return (
-    <a
-      href="#top"
-      onClick={onClick}
-      className="inline-flex h-11 items-center gap-2.5 whitespace-nowrap font-[family-name:var(--font-jetbrains)]"
-    >
-      <span className="text-[15px] font-bold track-tight text-[#ff3d00]">NEXUS</span>
-      <span aria-hidden="true" className="h-4 w-px bg-[#262626]" />
-      <span className="text-[13px] font-medium track-tight text-[#fafafa]">
-        <span className="hidden sm:inline">Network Intelligence</span>
-        <span className="sm:hidden">Network Intel</span>
-      </span>
-    </a>
-  );
-}
+export const Wordmark = ({ className, onClick }: { className?: string; onClick?: () => void }) => (
+  <Link
+    href="/"
+    onClick={onClick}
+    className={`inline-flex h-9 items-center gap-2.5 transition-colors duration-150 hover:text-[#ff3d00] ${className || ""}`}
+  >
+    <ShieldAlert className="h-5 w-5 text-[#ff3d00]" strokeWidth={2} />
+    <span className="font-[family-name:var(--font-jetbrains)] text-sm font-bold uppercase tracking-wider text-[#0a0a0a]">
+      NEXUS
+    </span>
+  </Link>
+);
 
 export default function Nav() {
-  const reduce = useReducedMotion();
+  const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const closeRef = useRef<HTMLButtonElement | null>(null);
 
   useMotionValueEvent(scrollY, "change", (v) => {
-    setScrolled(v > 8);
+    setScrolled(v > 10);
   });
 
-  /* Cover a reload that restores a scrolled position, where the motion
-     value never fires a change event on mount. */
   useEffect(() => {
-    setScrolled(scrollY.get() > 8);
+    setScrolled(scrollY.get() > 10);
   }, [scrollY]);
 
-  /* Lock the page behind the overlay and wire the escape key. */
   useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    closeRef.current?.focus();
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
     };
   }, [open]);
 
   return (
-    <>
-      <header className="sticky top-0 z-50 bg-[#0a0a0acc] backdrop-blur-md backdrop-saturate-150">
-        <Container>
-          <nav aria-label="Primary" className="relative flex h-16 items-center justify-between gap-4">
-            <Wordmark />
-
-            {/* Desktop rail. Hidden below md, where the hamburger takes over. */}
-            <div className="hidden items-center gap-1 md:flex">
-              {LINKS.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  className={`group relative inline-flex h-11 items-center px-3 font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#737373] transition-colors duration-150 hover:text-[#fafafa] ${
-                    l.always ? "" : "hidden lg:inline-flex"
-                  }`}
-                >
-                  <span className="relative">
-                    {l.label}
-                    <span
-                      aria-hidden="true"
-                      className="absolute -bottom-1.5 left-0 h-0.5 w-full origin-left scale-x-0 bg-[#ff3d00] transition-transform duration-150 ease-[cubic-bezier(0.25,0,0,1)] group-hover:scale-x-100"
-                    />
-                  </span>
-                </a>
-              ))}
-
-              <a
-                href={REPO}
-                target="_blank"
-                rel="noreferrer"
-                className="ml-2 inline-flex h-11 items-center gap-2 border border-[#262626] px-4 font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#fafafa] transition-colors duration-150 hover:border-[#ff3d00] hover:text-[#ff3d00]"
-              >
-                <Github className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-                <span className="hidden lg:inline">View source</span>
-                <span className="lg:hidden">Source</span>
-              </a>
-            </div>
-
-            {/* Mobile trigger. */}
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              aria-label="Open menu"
-              aria-expanded={open}
-              className="-mr-3 inline-flex h-11 w-11 items-center justify-center text-[#fafafa] transition-colors duration-150 hover:text-[#ff3d00] md:hidden"
+    <header
+      className={`sticky top-0 z-50 mx-auto w-full max-w-5xl border-b border-transparent md:rounded-full md:border md:transition-all md:ease-out ${
+        scrolled && !open
+          ? "bg-[#fafafa]/90 border-[#d4d4d4] backdrop-blur-lg md:top-4 md:max-w-4xl md:shadow-sm"
+          : open
+          ? "bg-[#fafafa] border-[#d4d4d4]"
+          : "bg-[#fafafa]/90 md:bg-transparent md:border-transparent"
+      }`}
+    >
+      <nav
+        className={`flex h-14 w-full items-center justify-between px-4 md:h-12 md:transition-all md:ease-out ${
+          scrolled ? "md:px-4" : ""
+        }`}
+      >
+        <Wordmark onClick={() => setOpen(false)} />
+        
+        <div className="hidden items-center gap-2 md:flex">
+          {LINKS.map((link, i) => (
+            <a
+              key={i}
+              className="inline-flex h-9 items-center justify-center rounded-full px-4 text-xs font-medium font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-[#525252] transition-colors hover:bg-black/5 hover:text-[#0a0a0a]"
+              href={link.href}
             >
-              <Menu className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
-            </button>
+              {link.label}
+            </a>
+          ))}
+          <div className="ml-2 flex items-center gap-2">
+            <a
+              href={REPO}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-9 items-center justify-center rounded-full border border-[#d4d4d4] px-4 text-xs font-medium font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-[#0a0a0a] transition-colors hover:bg-black/5"
+            >
+              <Github className="mr-2 h-3.5 w-3.5" />
+              Source
+            </a>
+            <Link
+              href="/dashboard"
+              className="inline-flex h-9 items-center justify-center rounded-full bg-[#ff3d00] px-4 text-xs font-bold font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-white transition-colors hover:bg-[#0a0a0a]"
+            >
+              Enter Dashboard
+            </Link>
+          </div>
+        </div>
 
-            {/* Hairline that only resolves once the page has moved. */}
-            <span
-              aria-hidden="true"
-              className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[#262626] transition-opacity duration-200 ease-[cubic-bezier(0.25,0,0,1)] ${
-                scrolled ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          </nav>
-        </Container>
-      </header>
+        <button
+          onClick={() => setOpen(!open)}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#d4d4d4] text-[#0a0a0a] transition-colors hover:bg-black/5 md:hidden"
+        >
+          {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+        </button>
+      </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site menu"
-            initial={reduce ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduce ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: reduce ? 0 : 0.2, ease: EASE }}
-            className="fixed inset-0 z-[70] bg-[#0a0a0a] md:hidden"
-          >
-            <Container>
-              <div className="flex h-16 items-center justify-between">
-                <Wordmark onClick={() => setOpen(false)} />
-                <button
-                  ref={closeRef}
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  aria-label="Close menu"
-                  className="-mr-3 inline-flex h-11 w-11 items-center justify-center text-[#fafafa] transition-colors duration-150 hover:text-[#ff3d00]"
-                >
-                  <X className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
-                </button>
-              </div>
-            </Container>
-
-            <div className="h-px w-full bg-[#262626]" />
-
-            <Container>
-              <div className="grid grid-cols-1 pt-6">
-                {LINKS.map((l, i) => (
-                  <motion.a
-                    key={l.href}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    initial={reduce ? false : { opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: reduce ? 0 : 0.2,
-                      ease: EASE,
-                      delay: reduce ? 0 : 0.04 * i,
-                    }}
-                    className="group flex min-h-[64px] items-center justify-between border-b border-[#262626] py-4 text-3xl font-semibold track-tighter text-[#fafafa] transition-colors duration-150 hover:text-[#ff3d00]"
-                  >
-                    {l.label}
-                    <ArrowUpRight
-                      className="h-5 w-5 shrink-0 text-[#737373] transition-colors duration-150 group-hover:text-[#ff3d00]"
-                      strokeWidth={1.5}
-                      aria-hidden="true"
-                    />
-                  </motion.a>
-                ))}
-
-                <a
-                  href={REPO}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => setOpen(false)}
-                  className="mt-8 inline-flex min-h-[56px] items-center justify-center gap-2.5 border border-[#fafafa] px-6 font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#fafafa] transition-colors duration-150 hover:bg-[#fafafa] hover:text-[#0a0a0a]"
-                >
-                  <Github className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-                  View source
-                </a>
-
-                <p className="mt-8 max-w-2xl text-base leading-relaxed text-[#737373]">
-                  Smart India Hackathon 2026, Problem Statement 26189. Ministry of Home Affairs,
-                  National Crime Records Bureau.
-                </p>
-              </div>
-            </Container>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      <div
+        className={`fixed top-14 right-0 bottom-0 left-0 z-50 flex flex-col overflow-hidden border-t border-[#d4d4d4] bg-[#fafafa]/95 backdrop-blur-md transition-all duration-300 ease-out md:hidden ${
+          open ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+      >
+        <div
+          className={`flex h-full w-full flex-col justify-between p-4 transition-transform duration-300 ease-out ${
+            open ? "scale-100" : "scale-95"
+          }`}
+        >
+          <div className="grid gap-y-2">
+            {LINKS.map((link) => (
+              <a
+                key={link.label}
+                className="flex items-center rounded-md px-4 py-3 text-sm font-medium font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-[#0a0a0a] hover:bg-black/5"
+                href={link.href}
+                onClick={() => setOpen(false)}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <div className="flex flex-col gap-3 pb-8">
+            <a
+              href={REPO}
+              target="_blank"
+              rel="noreferrer"
+              className="flex w-full items-center justify-center rounded-md border border-[#d4d4d4] px-4 py-3 text-sm font-medium font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-[#0a0a0a] hover:bg-black/5"
+            >
+              <Github className="mr-2 h-4 w-4" />
+              Source
+            </a>
+            <Link
+              href="/dashboard"
+              onClick={() => setOpen(false)}
+              className="flex w-full items-center justify-center rounded-md bg-[#ff3d00] px-4 py-3 text-sm font-bold font-[family-name:var(--font-jetbrains)] tracking-wide uppercase text-white hover:bg-[#0a0a0a]"
+            >
+              Enter Dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }

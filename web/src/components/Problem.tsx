@@ -73,7 +73,7 @@ export default function Problem() {
 
           {FRAGMENTS.map((f, i) => {
             const Icon = f.icon;
-            const isResolved = i === FRAGMENTS.length - 1;
+            const isResolved = false;
             return (
               <RevealItem key={f.source}>
                 <div className="grid grid-cols-1 gap-3 border-t border-[--color-border] py-7 md:grid-cols-12 md:gap-8 md:py-9">

@@ -98,7 +98,7 @@ export default function Pipeline() {
                 <div className="group grid grid-cols-1 gap-y-4 py-8 md:grid-cols-[6rem_1fr] md:items-start md:gap-x-8 md:py-10">
                   <div className="md:flex md:justify-center">
                     <span
-                      className="inline-block bg-[--color-background] font-[family-name:var(--font-jetbrains)] text-3xl font-bold tabular-nums track-tight text-[--color-border] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] group-hover:text-[--color-accent] md:px-2 md:py-1 md:text-4xl"
+                      className="inline-block bg-[--color-background] font-[family-name:var(--font-jetbrains)] text-3xl font-bold tabular-nums track-tight text-[#a3a3a3] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] group-hover:text-[--color-accent] md:px-2 md:py-1 md:text-4xl"
                     >
                       {n}
                     </span>
@@ -119,16 +119,16 @@ export default function Pipeline() {
                     <p className="mt-3 max-w-2xl text-base leading-relaxed text-[--color-foreground]">
                       {body}
                     </p>
-                    <p className="mt-3 font-[family-name:var(--font-jetbrains)] text-[13px] leading-relaxed text-[--color-muted-foreground]">
+                                        <p className="mt-3 font-[family-name:var(--font-jetbrains)] text-[13px] leading-relaxed text-[--color-muted-foreground]">
                       {note}
                     </p>
                   </div>
                 </div>
-              </RevealItem>
+                </RevealItem>
             ))}
           </RevealGroup>
         </div>
-      </Container>
-    </Section>
+        </Container>
+      </Section>
   );
 }

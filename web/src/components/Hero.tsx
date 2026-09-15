@@ -1,4 +1,5 @@
-import { ArrowRight, Github } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 import {
   Container,
@@ -17,7 +18,6 @@ import HeroGraph from "@/components/HeroGraph";
    the section still measures exactly one viewport. Top padding stays
    larger than the nav, so no line ever sits behind it. */
 
-const REPO = "https://github.com/indrajeet-g/ml-crime-analytics";
 
 export default function Hero() {
   return (
@@ -30,10 +30,10 @@ export default function Hero() {
           <Reveal className="min-w-0">
             {/* 1. Wordmark plus the one eyebrow this section is allowed. */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="font-[family-name:var(--font-jetbrains)] text-[13px] font-bold track-tight text-[#fafafa]">
+              <span className="font-[family-name:var(--font-jetbrains)] text-[13px] font-bold track-tight text-[#0a0a0a]">
                 NEXUS
               </span>
-              <span aria-hidden="true" className="h-3 w-px bg-[#262626]" />
+              <span aria-hidden="true" className="h-3 w-px bg-[#d4d4d4]" />
               <Label>Smart India Hackathon 2026 / PS 26189 / NCRB</Label>
             </div>
 
@@ -45,20 +45,19 @@ export default function Hero() {
 
             {/* 3. What it does, and who stays in charge of it. */}
             <p className="mt-6 max-w-xl text-base leading-relaxed text-[#737373] md:mt-7 md:text-lg">
-              <span className="text-[#fafafa]">NEXUS</span> surfaces hidden
+              <span className="text-[#0a0a0a]">NEXUS</span> surfaces hidden
               connections across FIRs, call records and transactions. Each one
               stays a proposal until an investigator confirms it.
             </p>
 
             {/* 4. One way in, one way to check the work. */}
             <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4 md:mt-10">
-              <PrimaryLink href="#explorer">
-                Explore the graph
-                <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-              </PrimaryLink>
-              <OutlineLink href={REPO}>
-                <Github className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-                View source
+              <PrimaryLink href="/login">
+                  Enter Dashboard
+                  <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+                </PrimaryLink>
+              <OutlineLink href="#pipeline">
+                See how it works ↓
               </OutlineLink>
             </div>
           </Reveal>

@@ -69,10 +69,10 @@ const ledgerFields = [
 ];
 
 const cellBase =
-  "group flex h-full flex-col border border-[#262626] p-6 transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:border-[#3d3d3d] md:p-8";
+  "group flex h-full flex-col border border-[#d4d4d4] p-6 transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:border-[#a3a3a3] md:p-8";
 
 const iconClass =
-  "text-[#737373] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] group-hover:text-[#fafafa]";
+  "text-[#737373] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] group-hover:text-[#0a0a0a]";
 
 const titleClass = "mt-5 text-xl track-tight font-semibold md:text-2xl";
 
@@ -113,7 +113,7 @@ export default function Capabilities() {
                 {extractionPatterns.map((p) => (
                   <div
                     key={p.label}
-                    className={`border border-[#262626] bg-[#0f0f0f] p-4 ${
+                    className={`border border-[#d4d4d4] bg-[#f5f5f5] p-4 ${
                       p.wide ? "sm:col-span-2" : ""
                     }`}
                   >
@@ -133,7 +133,7 @@ export default function Capabilities() {
 
           {/* 2. Alias resolution. 2 of 6 at lg. */}
           <RevealItem className="lg:col-span-2">
-            <article className={`${cellBase} bg-[#0f0f0f]`}>
+            <article className={`${cellBase} bg-[#f5f5f5]`}>
               <GitMerge size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
               <h3 className={titleClass}>Alias resolution</h3>
               <p className={bodyClass}>
@@ -142,12 +142,12 @@ export default function Capabilities() {
                 or rejects.
               </p>
 
-              <div className="mt-7 border-t border-[#262626] pt-5">
+              <div className="mt-7 border-t border-[#d4d4d4] pt-5">
                 <Label>Suggested merge</Label>
                 <dl className="mt-3 space-y-3">
                   {[aliasBase, aliasTwin].map((r) => (
                     <div key={r.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <dt className={`${monoClass} text-sm text-[#fafafa]`}>{r.id}</dt>
+                      <dt className={`${monoClass} text-sm text-[#0a0a0a]`}>{r.id}</dt>
                       <dd className={`${monoClass} text-[13px] text-[#737373]`}>
                         {aliasCluster.name}, {r.city}, {r.occupation}, {r.community}
                       </dd>
@@ -167,7 +167,7 @@ export default function Capabilities() {
 
           {/* 3. Bridge detection. 2 of 6 at lg. */}
           <RevealItem className="lg:col-span-2">
-            <article className={`${cellBase} bg-[#0f0f0f]`}>
+            <article className={`${cellBase} bg-[#f5f5f5]`}>
               <Waypoints size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
               <h3 className={titleClass}>Bridge detection</h3>
               <p className={bodyClass}>
@@ -175,7 +175,7 @@ export default function Capabilities() {
                 clusters while looking unimportant inside its own.
               </p>
 
-              <div className="mt-7 border-t border-[#262626] pt-5">
+              <div className="mt-7 border-t border-[#d4d4d4] pt-5">
                 <Label>Flagged in this dataset</Label>
                 <p className="mt-3 text-lg track-tight font-semibold">{broker.label}</p>
                 <dl className="mt-4 grid grid-cols-2 gap-4">
@@ -189,7 +189,7 @@ export default function Capabilities() {
                       <dt>
                         <Label>{k}</Label>
                       </dt>
-                      <dd className={`${monoClass} mt-1 text-base text-[#fafafa]`}>{v}</dd>
+                      <dd className={`${monoClass} mt-1 text-base text-[#0a0a0a]`}>{v}</dd>
                     </div>
                   ))}
                 </dl>
@@ -199,7 +199,7 @@ export default function Capabilities() {
 
           {/* 4. Cross-case linking. Wide: 4 of 6 at lg. */}
           <RevealItem className="md:col-span-2 lg:col-span-4">
-            <article className={`${cellBase} bg-[#0f0f0f]`}>
+            <article className={`${cellBase} bg-[#f5f5f5]`}>
               <Share2 size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
               <h3 className={titleClass}>Cross-case linking</h3>
               <p className={bodyClass}>
@@ -207,7 +207,7 @@ export default function Capabilities() {
                 raised as a reviewable alert, not an automatic conclusion.
               </p>
 
-              <div className="mt-7 border-t border-[#262626] pt-5">
+              <div className="mt-7 border-t border-[#d4d4d4] pt-5">
                 <Label>
                   {net.stats.edges} edges by relation type
                 </Label>
@@ -227,7 +227,7 @@ export default function Capabilities() {
                           />
                         </span>
                       </div>
-                      <span className={`${monoClass} text-sm tabular-nums text-[#fafafa]`}>
+                      <span className={`${monoClass} text-sm tabular-nums text-[#0a0a0a]`}>
                         {count}
                       </span>
                     </li>
@@ -247,13 +247,13 @@ export default function Capabilities() {
                 any link can be walked back to the document behind it.
               </p>
 
-              <div className="mt-7 border-l-2 border-[#ff3d00] bg-[#0f0f0f] p-4">
-                <p className={`${monoClass} text-sm leading-relaxed text-[#fafafa]`}>
+              <div className="mt-7 border-l-2 border-[#ff3d00] bg-[#f5f5f5] p-4">
+                <p className={`${monoClass} text-sm leading-relaxed text-[#0a0a0a]`}>
                   {nodeLabel(traceEdge.source)} {"->"} {nodeLabel(traceEdge.target)}
                 </p>
                 <p className={`${monoClass} mt-2 text-[13px] leading-relaxed text-[#737373]`}>
                   {traceEdge.rel}, confidence {traceEdge.conf.toFixed(2)}, source record{" "}
-                  <span className="text-[#fafafa]">{traceEdge.rec}</span>
+                  <span className="text-[#0a0a0a]">{traceEdge.rec}</span>
                 </p>
               </div>
             </article>
@@ -261,7 +261,7 @@ export default function Capabilities() {
 
           {/* 6. Chain of custody. 3 of 6 at lg. */}
           <RevealItem className="lg:col-span-3">
-            <article className={`${cellBase} bg-[#1a1a1a]`}>
+            <article className={`${cellBase} bg-[#e5e5e5]`}>
               <ShieldCheck size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
               <h3 className={titleClass}>Chain of custody</h3>
               <p className={bodyClass}>
@@ -270,13 +270,13 @@ export default function Capabilities() {
                 hashes, never case content.
               </p>
 
-              <div className="mt-7 border-t border-[#262626] pt-5">
+              <div className="mt-7 border-t border-[#d4d4d4] pt-5">
                 <Label>Fields held in each block</Label>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {ledgerFields.map((f) => (
                     <li
                       key={f}
-                      className={`${monoClass} border border-[#262626] px-2.5 py-1.5 text-[13px] text-[#737373]`}
+                      className={`${monoClass} border border-[#d4d4d4] px-2.5 py-1.5 text-[13px] text-[#737373]`}
                     >
                       {f}
                     </li>

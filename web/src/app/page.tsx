@@ -4,12 +4,12 @@ import StatBand from "@/components/StatBand";
 import Problem from "@/components/Problem";
 import Pipeline from "@/components/Pipeline";
 import Capabilities from "@/components/Capabilities";
-import LiveExtractor from "@/components/LiveExtractor";
-import GraphExplorer from "@/components/GraphExplorer";
-import ChainOfCustody from "@/components/ChainOfCustody";
+import CapabilityShowcases from "@/components/CapabilityShowcases";
+import HumanInTheLoop from "@/components/HumanInTheLoop";
 import Differentiation from "@/components/Differentiation";
 import Responsible from "@/components/Responsible";
 import Roadmap from "@/components/Roadmap";
+import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -22,12 +22,12 @@ export default function Home() {
         <Problem />
         <Pipeline />
         <Capabilities />
-        <LiveExtractor />
-        <GraphExplorer />
-        <ChainOfCustody />
+        <CapabilityShowcases />
+        <HumanInTheLoop />
         <Differentiation />
         <Responsible />
         <Roadmap />
+        <FinalCTA />
       </main>
       <Footer />
     </>

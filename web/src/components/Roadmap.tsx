@@ -68,11 +68,11 @@ export default function Roadmap() {
           <RevealItem>
             <div className="h-full border-t-2 border-[#ff3d00] pt-6">
               <p
-                className={`${monoClass} text-4xl font-bold tabular-nums track-tighter text-[#fafafa] md:text-5xl`}
+                className={`${monoClass} text-4xl font-bold tabular-nums track-tighter text-[#0a0a0a] md:text-5xl`}
               >
                 T0
               </p>
-              <h3 className="mt-4 text-xl track-tight font-semibold text-[#fafafa] md:text-2xl">
+              <h3 className="mt-4 text-xl track-tight font-semibold text-[#0a0a0a] md:text-2xl">
                 Built and demoable
               </h3>
               <p
@@ -93,7 +93,7 @@ export default function Roadmap() {
                       aria-hidden="true"
                       className="mt-1 shrink-0 text-[#ff3d00]"
                     />
-                    <span className="text-base leading-relaxed text-[#fafafa]">
+                    <span className="text-base leading-relaxed text-[#0a0a0a]">
                       {item}
                     </span>
                   </li>
@@ -104,7 +104,7 @@ export default function Roadmap() {
 
           {/* T1. Planned, not built. No ticks, hairline rule. */}
           <RevealItem>
-            <div className="h-full border-t border-[#262626] pt-6">
+            <div className="h-full border-t border-[#d4d4d4] pt-6">
               <p
                 className={`${monoClass} text-4xl font-bold tabular-nums track-tighter text-[#737373] md:text-5xl`}
               >
@@ -129,7 +129,7 @@ export default function Roadmap() {
 
           {/* T2. Longer horizon, needs real government data access. */}
           <RevealItem>
-            <div className="h-full border-t border-[#262626] pt-6">
+            <div className="h-full border-t border-[#d4d4d4] pt-6">
               <p
                 className={`${monoClass} text-4xl font-light tabular-nums track-tighter text-[#737373] md:text-5xl`}
               >
@@ -156,7 +156,7 @@ export default function Roadmap() {
           </RevealItem>
         </RevealGroup>
 
-        <Reveal className="mt-16 border-t border-[#262626] pt-6 md:mt-20">
+        <Reveal className="mt-16 border-t border-[#d4d4d4] pt-6 md:mt-20">
           <p
             className={`${monoClass} max-w-3xl text-[13px] leading-relaxed text-[#737373]`}
           >
