@@ -229,18 +229,19 @@ export default function ProductStory() {
             </div>
 
             <div className="overflow-x-auto border border-[#d4d4d4] bg-[#f5f5f5] p-6 md:p-10 lg:col-span-8">
-              <svg viewBox="0 0 560 300" className="h-auto w-full min-w-[460px]" role="img"
+              <svg viewBox="0 0 640 300" className="h-auto w-full min-w-[520px]" role="img"
                 aria-label="Case C014 and case C099 each connect to their own people and phones, and both connect to the same vehicle DL-8C, which bridges them.">
                 {[
-                  { d: "M70 44 V250 ", delay: 0.05 },
-                  { d: "M70 92 H150", delay: 0.12 },
-                  { d: "M150 92 V128 H210", delay: 0.2 },
-                  { d: "M70 168 H150", delay: 0.28 },
-                  { d: "M70 250 H150", delay: 0.34 },
-                  { d: "M420 44 V250", delay: 0.42 },
-                  { d: "M420 92 H340", delay: 0.5 },
-                  { d: "M340 92 V128 H280", delay: 0.56 },
-                  { d: "M420 250 H340", delay: 0.62 },
+                  /* Left case spine and its branches. */
+                  { d: "M60 40 V266", delay: 0.05 },
+                  { d: "M60 88 H150", delay: 0.12 },
+                  { d: "M150 88 V128 H200", delay: 0.2 },
+                  { d: "M60 266 H150", delay: 0.28 },
+                  /* Right case spine and its branches, mirrored. */
+                  { d: "M580 40 V266", delay: 0.36 },
+                  { d: "M580 88 H490", delay: 0.44 },
+                  { d: "M490 88 V128 H440", delay: 0.5 },
+                  { d: "M580 266 H490", delay: 0.56 },
                 ].map((seg) => (
                   <motion.path
                     key={seg.d}
@@ -252,23 +253,31 @@ export default function ProductStory() {
                   />
                 ))}
 
-                {/* The bridge. Accent weight because it is the finding. */}
+                {/* The bridge: both people run down to the same vehicle.
+                    Accent weight because this is the finding. */}
                 <motion.path
-                  d="M150 168 H410"
+                  d="M150 88 V186 H268"
                   fill="none"
                   stroke={ACCENT}
                   strokeWidth="2"
-                  {...draw(0.72)}
+                  {...draw(0.66)}
+                />
+                <motion.path
+                  d="M490 88 V186 H372"
+                  fill="none"
+                  stroke={ACCENT}
+                  strokeWidth="2"
+                  {...draw(0.74)}
                 />
 
                 {([
-                  { x: 70, y: 44, label: "CASE_C014", c: ENTITY.case, anchor: "start" },
-                  { x: 150, y: 92, label: "PERSON_01", c: ENTITY.person, anchor: "start" },
-                  { x: 210, y: 128, label: "PHONE_987", c: ENTITY.phone, anchor: "start" },
-                  { x: 150, y: 250, label: "LOCATION_MAIN", c: ENTITY.location, anchor: "start" },
-                  { x: 420, y: 44, label: "CASE_C099", c: ENTITY.case, anchor: "end" },
-                  { x: 340, y: 92, label: "PERSON_02", c: ENTITY.person, anchor: "end" },
-                  { x: 280, y: 128, label: "PHONE_332", c: ENTITY.phone, anchor: "end" },
+                  { x: 60, y: 40, label: "CASE_C014", c: ENTITY.case, anchor: "start" },
+                  { x: 150, y: 88, label: "PERSON_01", c: ENTITY.person, anchor: "start" },
+                  { x: 200, y: 128, label: "PHONE_987", c: ENTITY.phone, anchor: "start" },
+                  { x: 150, y: 266, label: "LOCATION_MAIN", c: ENTITY.location, anchor: "start" },
+                  { x: 580, y: 40, label: "CASE_C099", c: ENTITY.case, anchor: "end" },
+                  { x: 490, y: 88, label: "PERSON_02", c: ENTITY.person, anchor: "end" },
+                  { x: 440, y: 128, label: "PHONE_332", c: ENTITY.phone, anchor: "end" },
                 ] as const).map((n, i) => (
                   <motion.g
                     key={n.label}
@@ -298,12 +307,12 @@ export default function ProductStory() {
                   viewport={{ once: true, amount: "some" }}
                   transition={{ delay: 0.85, duration: 0.4 }}
                 >
-                  <rect x="228" y="152" width="104" height="32" fill="#ffffff" stroke={ACCENT} strokeWidth="1.5" />
-                  <rect x="236" y="164" width="8" height="8" fill={ENTITY.vehicle} />
-                  <text x="252" y="172" fill="#0a0a0a" fontSize="12" fontFamily="var(--font-jetbrains), monospace">
+                  <rect x="268" y="170" width="104" height="32" fill="#ffffff" stroke={ACCENT} strokeWidth="1.5" />
+                  <rect x="277" y="182" width="8" height="8" fill={ENTITY.vehicle} />
+                  <text x="292" y="190" fill="#0a0a0a" fontSize="12" fontFamily="var(--font-jetbrains), monospace">
                     VEHICLE_DL8C
                   </text>
-                  <text x="280" y="206" textAnchor="middle" fill={ACCENT} fontSize="11" fontWeight="700"
+                  <text x="320" y="228" textAnchor="middle" fill={ACCENT} fontSize="11" fontWeight="700"
                     fontFamily="var(--font-jetbrains), monospace">
                     SHARED ACROSS TWO CASES
                   </text>
