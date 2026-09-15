@@ -268,7 +268,7 @@ export default function LiveExtractor() {
                 className={`${MONO} mt-3 flex flex-wrap items-baseline gap-x-5 gap-y-1 text-[13px] leading-relaxed text-[#737373]`}
               >
                 <span className="tabular-nums">{text.length} chars</span>
-                <span>matching runs in this browser, nothing is uploaded</span>
+                <span>Checking happens directly on your device. Nothing is uploaded.</span>
               </p>
 
               <p className="mt-6 max-w-2xl border-l-2 border-[#ff3d00] bg-[#fafafa] p-4 text-base leading-relaxed text-[#737373]">
@@ -304,7 +304,7 @@ export default function LiveExtractor() {
                     className="text-[#ff3d00]"
                   />
                   <h3 className="mt-5 text-xl font-semibold track-tight">
-                    Nothing to read yet.
+                    No text to read.
                   </h3>
                   <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#737373]">
                     Paste an FIR narrative, a witness statement or a line from a call
@@ -366,7 +366,7 @@ export default function LiveExtractor() {
 
                   <div className="bg-[#e5e5e5] p-5 md:p-6 lg:px-8">
                     <div className="flex items-center justify-between gap-3">
-                      <Label>Heuristic preview</Label>
+                      <Label>Possible Names</Label>
                       <span
                         className={`${MONO} shrink-0 text-[11px] tabular-nums track-wider text-[#737373]`}
                       >
@@ -400,7 +400,7 @@ export default function LiveExtractor() {
                       <ChipList
                         values={result.people}
                         reduce={reduce}
-                        empty="No capitalised multiword name in the current text."
+                        empty="No possible names found in the text."
                       />
                     </div>
 
@@ -409,7 +409,7 @@ export default function LiveExtractor() {
                       <ChipList
                         values={result.orgs}
                         reduce={reduce}
-                        empty="No phrase in the current text carries an organization word."
+                        empty="No organizations found in the text."
                       />
                     </div>
                   </div>

@@ -2,12 +2,6 @@ import { Container, Section, Reveal, RevealGroup, RevealItem } from "@/component
 import net from "@/data/network.json";
 import { FileText, Car, PhoneCall, CornerDownRight } from "lucide-react";
 
-/* Problem. Editorial manifesto: full-width type, no card grid.
-   The emotional core is the three-fragment illustration, which uses the
-   real planted alias in the dataset (Vivek Iyer, person records P020,
-   P040, P060 and P080 across four communities). Every id below is a
-   literal record id from network.json. */
-
 type Fragment = {
   source: string;
   kind: string;
@@ -23,7 +17,7 @@ const FRAGMENTS: Fragment[] = [
     kind: "Full name",
     raw: "Vivek Iyer",
     rawIsMono: false,
-    reads: "Written out in full. Becomes person record P040 in community C04.",
+    reads: "Written out in full. Appears as a new person in the system.",
     icon: FileText,
   },
   {
@@ -31,7 +25,7 @@ const FRAGMENTS: Fragment[] = [
     kind: "Vehicle only",
     raw: "VH027",
     rawIsMono: true,
-    reads: "No name on the page, only a registration. Becomes P080 in community C07.",
+    reads: "No name on the page, only a registration. Appears as a completely separate person.",
     icon: Car,
   },
   {
@@ -39,7 +33,7 @@ const FRAGMENTS: Fragment[] = [
     kind: "Number only",
     raw: "PH060",
     rawIsMono: true,
-    reads: "A subscriber with no name attached. Becomes P060 in community C05.",
+    reads: "A phone number with no name attached. Appears as a third unknown person.",
     icon: PhoneCall,
   },
 ];
@@ -56,18 +50,14 @@ export default function Problem() {
 
         <Reveal delay={0.08}>
           <p className="mt-8 max-w-3xl text-lg leading-relaxed text-[--color-foreground] md:text-xl">
-            Law enforcement already holds the evidence. FIRs, call detail records, financial
-            transactions, criminal history. It sits in different formats, in different systems,
-            in different jurisdictions, and none of it agrees on who anyone is. So the network
-            stays invisible while every piece of it is already on file.
+            Important information is already in your files. FIRs, call records, financial transactions, and criminal histories sit in different formats and systems. They rarely match up perfectly. As a result, important connections stay hidden even when you already have the evidence.
           </p>
         </Reveal>
 
-        {/* Three source records, one person. Stacked rows, hairline between. */}
         <RevealGroup className="mt-16 md:mt-20">
           <RevealItem>
             <p className="font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#737373]">
-              3 of {net.stats.sourceRecords} source records
+              3 of {net.stats.sourceRecords} records
             </p>
           </RevealItem>
 
@@ -125,10 +115,7 @@ export default function Problem() {
                 className="mt-1 h-4 w-4 shrink-0 text-[--color-accent]"
               />
               <p className="max-w-3xl text-base leading-relaxed text-[--color-foreground] md:text-lg">
-                Three fragments, one person. Across the full dataset this name carries four
-                separate person records, P020, P040, P060 and P080, sitting in four different
-                communities with no edge between them. Nobody wrote it wrong. The records were
-                simply never introduced to each other.
+                Three pieces of information, one actual person. Because these details were never connected, this person appears as four different individuals across the system. The records were not wrong, they were just never brought together.
               </p>
             </div>
           </RevealItem>
@@ -137,8 +124,7 @@ export default function Problem() {
         <Reveal>
           <blockquote className="mt-16 max-w-3xl border-t border-[--color-border] pt-12 md:mt-20">
             <p className="pb-1 font-[family-name:var(--font-playfair)] text-2xl italic leading-[1.15] track-tight text-[--color-foreground] md:text-3xl">
-              Manual link analysis does not scale. The network grows faster than anyone can
-              read it.
+              Checking links by hand takes too much time. The amount of information grows faster than anyone can read it.
             </p>
           </blockquote>
         </Reveal>

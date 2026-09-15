@@ -10,42 +10,37 @@ import {
   Label,
 } from "@/components/ui";
 
-/* Three-column tier ladder. The item lists below are the scope tiers
-   exactly as written in the PRD, unmoved. T0 is the only column that
-   describes the current build: the tick marks, the heading and the
-   status line all say so in text, never by colour alone. */
-
 const monoClass = "font-[family-name:var(--font-jetbrains)]";
 
 const T0: string[] = [
-  "CSV and text ingestion of FIR, CDR and transaction data",
-  "Rules plus basic NER entity extraction for person, phone, vehicle, location",
-  "Naive entity resolution (exact plus fuzzy) with a manual confirm and reject step",
-  "Graph construction and visualisation",
-  "Degree and betweenness centrality to flag highly connected and bridge nodes",
-  "Click a node to see the source records justifying every edge",
-  "SHA-256 hash per uploaded file written to an append-only demo log",
-  "Two-role login concept (investigator and admin) showing RBAC intent",
-  "Basic summary export with entities, graph image and evidence list",
+  "Upload CSV and text files for FIRs, call records, and transactions",
+  "Automatically find names, phones, vehicles, and locations",
+  "Suggest matches with human review and approval",
+  "Build and explore network connections visually",
+  "Highlight highly connected people and bridge connections",
+  "Click any connection to see the original document it came from",
+  "Create a secure, tamper-proof record of every uploaded file",
+  "Two user roles (Investigator and Admin) for basic access control",
+  "Export basic summary reports with connections and evidence lists",
 ];
 
 const T1: string[] = [
-  "OCR for scanned FIRs (Tesseract or PaddleOCR)",
-  "Multi-source entity resolution with confidence scoring",
-  "Rule-based anomaly detection for communication bursts and circular transactions",
-  "Timeline view and saved graph views",
-  "Real RBAC with case-level permissions",
-  "Encryption at rest and in transit with proper key management",
-  "A genuine permissioned ledger (Hyperledger Fabric) rather than a demo hash log",
+  "Read text from scanned documents and images",
+  "Match records across multiple sources with confidence scores",
+  "Automatically detect unusual patterns in communication and transactions",
+  "View connections on a timeline and save important views",
+  "Advanced permissions based on specific cases",
+  "Full data encryption for maximum security",
+  "Connect the security trail to a full, multi-department secure network",
 ];
 
 const T2: string[] = [
-  "Full multilingual and code-mixed NLP",
-  "Cross-jurisdiction case-similarity matching",
-  "Financial and communication anomaly detection at scale",
-  "Insider-threat monitoring",
-  "Federated cross-agency deployment with legal and security review",
-  "Integration with real CCTNS and ICJS class systems",
+  "Full support for multiple languages and mixed text",
+  "Automatically suggest similar cases from different jurisdictions",
+  "Find complex financial anomalies at a very large scale",
+  "Monitor for suspicious internal access to case data",
+  "Deploy across multiple agencies with full legal review",
+  "Connect directly to official CCTNS and ICJS databases",
 ];
 
 export default function Roadmap() {
@@ -58,22 +53,20 @@ export default function Roadmap() {
             Built now, and what comes after.
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#737373]">
-            T0 runs in the current build. T1 and T2 are stated as plans, never
-            presented as working features.
+            Phase 1 is currently active. Phases 2 and 3 are future plans.
           </p>
         </Reveal>
 
         <RevealGroup className="mt-14 grid grid-cols-1 gap-x-10 gap-y-14 md:mt-16 lg:grid-cols-3">
-          {/* T0. The only column describing software that exists today. */}
           <RevealItem>
             <div className="h-full border-t-2 border-[#ff3d00] pt-6">
               <p
                 className={`${monoClass} text-4xl font-bold tabular-nums track-tighter text-[#0a0a0a] md:text-5xl`}
               >
-                T0
+                Phase 1
               </p>
               <h3 className="mt-4 text-xl track-tight font-semibold text-[#0a0a0a] md:text-2xl">
-                Built and demoable
+                Active now
               </h3>
               <p
                 className={`${monoClass} mt-3 text-[11px] uppercase track-wider text-[#ff3d00]`}
@@ -102,19 +95,18 @@ export default function Roadmap() {
             </div>
           </RevealItem>
 
-          {/* T1. Planned, not built. No ticks, hairline rule. */}
           <RevealItem>
             <div className="h-full border-t border-[#d4d4d4] pt-6">
               <p
                 className={`${monoClass} text-4xl font-bold tabular-nums track-tighter text-[#737373] md:text-5xl`}
               >
-                T1
+                Phase 2
               </p>
               <h3 className="mt-4 text-xl track-tight font-semibold text-[#737373] md:text-2xl">
-                Next, weeks not hours
+                Next steps
               </h3>
               <p className="mt-3">
-                <Label>Not built yet</Label>
+                <Label>Planned</Label>
               </p>
 
               <ul className="mt-8 space-y-5">
@@ -127,19 +119,18 @@ export default function Roadmap() {
             </div>
           </RevealItem>
 
-          {/* T2. Longer horizon, needs real government data access. */}
           <RevealItem>
             <div className="h-full border-t border-[#d4d4d4] pt-6">
               <p
                 className={`${monoClass} text-4xl font-light tabular-nums track-tighter text-[#737373] md:text-5xl`}
               >
-                T2
+                Phase 3
               </p>
               <h3 className="mt-4 text-xl track-tight font-normal text-[#737373] md:text-2xl">
                 Production vision
               </h3>
               <p className="mt-3">
-                <Label>Not built yet</Label>
+                <Label>Planned</Label>
               </p>
 
               <ul className="mt-8 space-y-5">
@@ -160,8 +151,7 @@ export default function Roadmap() {
           <p
             className={`${monoClass} max-w-3xl text-[13px] leading-relaxed text-[#737373]`}
           >
-            The current ledger is a demo-scale SHA-256 hash chain that demonstrates
-            the tamper-evidence model, and a permissioned ledger is the T1 step.
+            The current security trail runs securely on local hardware. Connecting it to a multi-agency secure network is a Phase 2 step.
           </p>
         </Reveal>
       </Container>

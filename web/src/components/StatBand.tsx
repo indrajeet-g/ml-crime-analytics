@@ -5,26 +5,19 @@ import { motion, useReducedMotion } from "motion/react";
 import { Container, Label, Reveal, RevealGroup, RevealItem } from "@/components/ui";
 import net from "@/data/network.json";
 
-/* Flat numeric band. No cards, no boxes: the only structure is a
-   1px vertical rule between columns at md and up. Every value below
-   is read straight off net.stats, nothing is typed by hand. */
-
 const COUNT_MS = 800;
 
 const STATS: { value: number; label: string }[] = [
-  { value: net.stats.sourceRecords, label: "Source records ingested" },
-  { value: net.stats.nodes, label: "Entities resolved" },
-  { value: net.stats.edges, label: "Relationships mapped" },
-  { value: net.stats.communities, label: "Communities detected" },
+  { value: net.stats.sourceRecords, label: "Records processed" },
+  { value: net.stats.nodes, label: "Profiles matched" },
+  { value: net.stats.edges, label: "Connections found" },
+  { value: net.stats.communities, label: "Groups identified" },
 ];
 
-/* Cubic ease out, so the count decelerates into its final value. */
 function easeOut(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-/* useLayoutEffect warns during server render, so fall back to
-   useEffect on the server where it never actually runs. */
 const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 function Counter({ value }: { value: number }) {
@@ -32,18 +25,11 @@ function Counter({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const played = useRef(false);
 
-  /* The server renders the real number, so it is correct before
-     hydration and correct without JavaScript. Once hydrated with
-     motion allowed, drop it to zero before the browser paints. */
   useIsoLayoutEffect(() => {
     if (reduce || played.current || !ref.current) return;
     ref.current.textContent = "0";
   }, [reduce]);
 
-  /* One rAF loop writing to the DOM node directly. No per-frame
-     state, so React never re-renders while the number is running.
-     The frame id is kept so an unmount mid-count cancels the loop
-     instead of leaving it writing to a detached node. */
   const frame = useRef<number | null>(null);
 
   const start = useCallback(() => {
@@ -113,10 +99,9 @@ export default function StatBand() {
           </dl>
         </RevealGroup>
 
-        {/* The honesty line. This band must never read as live case volume. */}
         <Reveal delay={0.1}>
           <p className="mx-auto mt-14 max-w-2xl text-center text-base leading-relaxed text-[--color-muted-foreground]">
-            Figures from the synthetic evaluation dataset shipped with this repository. No real case data.
+            Figures shown above are from a sample dataset used for testing. No real case information is included in this demonstration.
           </p>
         </Reveal>
       </Container>

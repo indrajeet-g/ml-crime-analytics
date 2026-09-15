@@ -7,18 +7,18 @@ export default function HumanInTheLoop() {
   const steps = [
     {
       icon: Search,
-      title: "Proposed Link",
-      desc: "System flags potential connections",
+      title: "Suggested Match",
+      desc: "The system flags a possible connection",
     },
     {
       icon: User,
       title: "Human Review",
-      desc: "Investigator examines the evidence",
+      desc: "An investigator reviews the original evidence",
     },
     {
       icon: CheckCircle,
-      title: "Audited Decision",
-      desc: "Confirmed or rejected with reasoning",
+      title: "Final Decision",
+      desc: "The match is approved or rejected securely",
     },
   ];
 
@@ -28,10 +28,10 @@ export default function HumanInTheLoop() {
         <Reveal>
           <Eyebrow>Control</Eyebrow>
           <h2 className="mt-6 max-w-3xl text-4xl font-semibold leading-tight track-tighter md:text-5xl">
-            Investigator oversight at every decision boundary.
+            Built to support investigators, not replace them.
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#737373]">
-            Every automated insight remains a proposal until manually confirmed. Built with a strict philosophy of human-in-the-loop oversight for accountable intelligence.
+            NEXUS supports investigation. It does not make the final decision. Every suggested link is reviewed and approved by an investigator before it is added to the case.
           </p>
         </Reveal>
 

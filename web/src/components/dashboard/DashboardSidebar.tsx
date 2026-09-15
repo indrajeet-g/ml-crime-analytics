@@ -21,11 +21,11 @@ interface SidebarProps {
 
 const NAV_ITEMS = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Ingest Data", href: "/dashboard/ingest", icon: Upload },
-  { label: "Extract Entities", href: "/dashboard/extract", icon: ScanText },
-  { label: "Resolve Entities", href: "/dashboard/resolve", icon: GitMerge },
-  { label: "Network Explorer", href: "/dashboard/network", icon: Waypoints },
-  { label: "Evidence & Custody", href: "/dashboard/evidence", icon: ShieldCheck },
+  { label: "Upload Records", href: "/dashboard/ingest", icon: Upload },
+  { label: "Find Details", href: "/dashboard/extract", icon: ScanText },
+  { label: "Match Records", href: "/dashboard/resolve", icon: GitMerge },
+  { label: "Network View", href: "/dashboard/network", icon: Waypoints },
+  { label: "Evidence Trail", href: "/dashboard/evidence", icon: ShieldCheck },
   { label: "Reports", href: "/dashboard/reports", icon: FileBarChart },
 ];
 

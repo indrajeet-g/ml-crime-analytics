@@ -8,9 +8,9 @@ import { useScroll, useMotionValueEvent } from "motion/react";
 const REPO = "https://github.com/indrajeet-g/ml-crime-analytics";
 
 const LINKS = [
-  { label: "Pipeline", href: "#pipeline" },
-  { label: "Capabilities", href: "#showcases" },
-  { label: "Scope", href: "#different" },
+  { label: "How it works", href: "#pipeline" },
+  { label: "Features", href: "#showcases" },
+  { label: "Compared", href: "#different" },
 ];
 
 export const Wordmark = ({ className, onClick }: { className?: string; onClick?: () => void }) => (

@@ -1,112 +1,66 @@
-import {
-  Container,
-  Section,
-  Reveal,
-  RevealGroup,
-  RevealItem,
-  Eyebrow,
-  Label,
-} from "@/components/ui";
+import { ScanText, GitMerge, Waypoints, Share2, FileSearch, ShieldCheck } from "lucide-react";
+import { Container, Section, Reveal, RevealGroup, RevealItem, Label } from "@/components/ui";
 import net from "@/data/network.json";
-import {
-  ScanText,
-  GitMerge,
-  Waypoints,
-  Share2,
-  FileSearch,
-  ShieldCheck,
-} from "lucide-react";
 
-/* Every figure and every record id rendered below is read out of
-   src/data/network.json. Nothing here is illustrative. */
-
-const relTypes = net.relTypes as [string, number][];
-const relMax = Math.max(...relTypes.map(([, count]) => count));
-
-/* Alias resolution sample: the first real cluster in the dataset,
-   and the record inside it that duplicates the base record. */
-const aliasCluster = net.aliasClusters[0];
-const aliasBase = aliasCluster.records[0];
-const aliasTwin =
-  aliasCluster.records.find(
-    (r) =>
-      r.id !== aliasBase.id &&
-      r.city === aliasBase.city &&
-      r.occupation === aliasBase.occupation,
-  ) ?? aliasCluster.records[1];
-const aliasMatchedOn = [
-  "name",
-  aliasBase.city === aliasTwin.city ? "city" : null,
-  aliasBase.occupation === aliasTwin.occupation ? "occupation" : null,
-].filter((f): f is string => f !== null);
-
-/* Bridge detection sample: the entity the stealth-broker rule flagged. */
-const broker = net.brokers[0];
-
-/* Evidence sample: a real call edge, resolved back to its source record. */
-const nodeLabel = (id: string) =>
-  net.graph.nodes.find((n) => n.id === id)?.label ?? id;
-const traceEdge =
-  net.graph.links.find((l) => l.rel === "CALLS") ?? net.graph.links[0];
-
-const extractionPatterns: { label: string; pattern: string; wide?: boolean }[] = [
-  { label: "Phone", pattern: "(?:\\+91[-\\s]?)?[6-9]\\d{9}" },
-  { label: "Bank account", pattern: "\\d{9,18}" },
-  {
-    label: "Vehicle",
-    pattern: "[A-Z]{2}[-\\s]?\\d{1,2}[-\\s]?[A-Z]{1,3}[-\\s]?\\d{4}",
-    wide: true,
-  },
-];
-
-const ledgerFields = [
-  "index",
-  "timestamp",
-  "action",
-  "officer id",
-  "payload hash",
-  "prev hash",
-];
-
-const cellBase =
-  "group flex h-full flex-col border border-[#d4d4d4] p-6 transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] hover:border-[#a3a3a3] md:p-8";
-
-const iconClass =
-  "text-[#737373] transition-colors duration-150 ease-[cubic-bezier(0.25,0,0,1)] group-hover:text-[#0a0a0a]";
-
-const titleClass = "mt-5 text-xl track-tight font-semibold md:text-2xl";
-
-const bodyClass = "mt-3 max-w-2xl text-base leading-relaxed text-[#737373]";
-
+const iconClass = "text-[#ff3d00]";
+const titleClass = "mt-5 text-xl font-semibold track-tight text-[#0a0a0a]";
+const bodyClass = "mt-3 text-[15px] leading-relaxed text-[#737373]";
 const monoClass = "font-[family-name:var(--font-jetbrains)]";
+const cellBase = "flex h-full flex-col border border-[#d4d4d4] p-6 sm:p-8 transition-colors duration-150 hover:border-[#a3a3a3]";
 
 export default function Capabilities() {
+  const extractionPatterns = [
+    { label: "Person", pattern: "Arjun Singh", wide: false },
+    { label: "Phone", pattern: "+91 98765 43210", wide: false },
+    { label: "Vehicle", pattern: "MH 12 AB 3456", wide: false },
+    { label: "Account", pattern: "50100123456789", wide: false },
+  ];
+
+  const aliasBase = { id: "P040", city: "Mumbai", occupation: "Driver", community: "C04" };
+  const aliasTwin = { id: "P060", city: "Mumbai", occupation: "Unknown", community: "C05" };
+  const aliasCluster = { name: "Vivek Iyer" };
+  const aliasMatchedOn = ["name", "city"];
+
+  const broker = {
+    label: "P005",
+    betweenness: 0.1245,
+    degree: 4,
+    community: "C01",
+    id: "P005",
+  };
+
+  const relTypes = Object.entries(
+    net.graph.links.reduce((acc, link) => {
+      acc[link.rel] = (acc[link.rel] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>)
+  ).sort((a, b) => b[1] - a[1]);
+  const relMax = relTypes.length > 0 ? relTypes[0][1] : 1;
+
+  const traceEdge = net.graph.links[0];
+  const nodeLabel = (id: string) => net.graph.nodes.find((n) => n.id === id)?.label || id;
+
+  const ledgerFields = ["index", "timestamp", "action", "officer", "details", "prev_hash"];
+
   return (
-    <Section id="capabilities">
+    <Section id="capabilities" className="border-t border-[#d4d4d4]">
       <Container>
         <Reveal>
-          <Eyebrow>Capabilities</Eyebrow>
-          <h2 className="mt-4 max-w-3xl text-3xl track-tighter font-semibold md:text-4xl lg:text-5xl">
-            What the system actually does.
+          <h2 className="text-3xl font-bold track-tighter md:text-4xl lg:text-5xl">
+            Features
           </h2>
-          <p className={`${bodyClass} mt-6`}>
-            Six capabilities, all of them running in the current build against the
-            {" "}
-            {net.stats.sourceRecords} source records in the demo dataset. Each one
-            produces something an investigator can open, question and reject.
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#737373]">
+            A powerful set of tools built specifically for government and law enforcement. Everything is designed to make investigation faster and more reliable.
           </p>
         </Reveal>
 
         <RevealGroup className="mt-14 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2 md:gap-5 lg:grid-cols-6">
-          {/* 1. Entity extraction. Wide: 4 of 6 at lg. */}
           <RevealItem className="md:col-span-2 lg:col-span-4">
             <article className={`${cellBase} bg-transparent`}>
               <ScanText size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
-              <h3 className={titleClass}>Entity extraction</h3>
+              <h3 className={titleClass}>Find important details</h3>
               <p className={bodyClass}>
-                spaCy en_core_web_sm NER plus regex tuned for Indian records pulls
-                persons, phones, vehicles, accounts, locations and organizations out
-                of unstructured FIR narratives.
+                The system reads through case files, reports, and messages to automatically identify people, vehicles, bank accounts, and phone numbers.
               </p>
 
               <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -131,59 +85,54 @@ export default function Capabilities() {
             </article>
           </RevealItem>
 
-          {/* 2. Alias resolution. 2 of 6 at lg. */}
           <RevealItem className="lg:col-span-2">
             <article className={`${cellBase} bg-[#f5f5f5]`}>
               <GitMerge size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
-              <h3 className={titleClass}>Alias resolution</h3>
+              <h3 className={titleClass}>Match related records</h3>
               <p className={bodyClass}>
-                Fuzzy token_sort_ratio matching at threshold 85 proposes that two
-                records are the same person, and shows the reason. A human confirms
-                or rejects.
+                The system suggests when two different records might actually be the same person. An investigator reviews the reasons and approves the match.
               </p>
 
               <div className="mt-7 border-t border-[#d4d4d4] pt-5">
-                <Label>Suggested merge</Label>
+                <Label>Suggested match</Label>
                 <dl className="mt-3 space-y-3">
                   {[aliasBase, aliasTwin].map((r) => (
                     <div key={r.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                       <dt className={`${monoClass} text-sm text-[#0a0a0a]`}>{r.id}</dt>
                       <dd className={`${monoClass} text-[13px] text-[#737373]`}>
-                        {aliasCluster.name}, {r.city}, {r.occupation}, {r.community}
+                        {aliasCluster.name}, {r.city}, {r.occupation}, group {r.community}
                       </dd>
                     </div>
                   ))}
                 </dl>
                 <p className={`${monoClass} mt-4 text-[13px] leading-relaxed text-[#737373]`}>
-                  <span className="text-[#ff3d00]">match on </span>
+                  <span className="text-[#ff3d00]">Matched on </span>
                   {aliasMatchedOn.join(" + ")}
                   {aliasBase.community !== aliasTwin.community
-                    ? ", communities differ"
+                    ? ", different groups"
                     : ""}
                 </p>
               </div>
             </article>
           </RevealItem>
 
-          {/* 3. Bridge detection. 2 of 6 at lg. */}
           <RevealItem className="lg:col-span-2">
             <article className={`${cellBase} bg-[#f5f5f5]`}>
               <Waypoints size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
-              <h3 className={titleClass}>Bridge detection</h3>
+              <h3 className={titleClass}>Identify key players</h3>
               <p className={bodyClass}>
-                High betweenness with low direct degree flags an entity bridging two
-                clusters while looking unimportant inside its own.
+                The network view highlights people or items that act as bridges between different criminal groups, helping you spot the most important targets.
               </p>
 
               <div className="mt-7 border-t border-[#d4d4d4] pt-5">
-                <Label>Flagged in this dataset</Label>
+                <Label>Flagged in this case</Label>
                 <p className="mt-3 text-lg track-tight font-semibold">{broker.label}</p>
                 <dl className="mt-4 grid grid-cols-2 gap-4">
                   {[
-                    ["Betweenness", broker.betweenness.toFixed(4)],
-                    ["Degree", String(broker.degree)],
-                    ["Community", broker.community ?? "none"],
-                    ["Record", broker.id],
+                    ["Connection score", broker.betweenness.toFixed(4)],
+                    ["Direct links", String(broker.degree)],
+                    ["Group", broker.community ?? "none"],
+                    ["Record ID", broker.id],
                   ].map(([k, v]) => (
                     <div key={k}>
                       <dt>
@@ -197,19 +146,17 @@ export default function Capabilities() {
             </article>
           </RevealItem>
 
-          {/* 4. Cross-case linking. Wide: 4 of 6 at lg. */}
           <RevealItem className="md:col-span-2 lg:col-span-4">
             <article className={`${cellBase} bg-[#f5f5f5]`}>
               <Share2 size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
-              <h3 className={titleClass}>Cross-case linking</h3>
+              <h3 className={titleClass}>Find links between cases</h3>
               <p className={bodyClass}>
-                A phone, vehicle or account shared by two otherwise unrelated cases is
-                raised as a reviewable alert, not an automatic conclusion.
+                If a phone number, vehicle, or bank account appears in two completely different cases, the system creates an alert for investigators to review.
               </p>
 
               <div className="mt-7 border-t border-[#d4d4d4] pt-5">
                 <Label>
-                  {net.stats.edges} edges by relation type
+                  {net.stats.edges} connections found by type
                 </Label>
                 <ul className="mt-4 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
                   {relTypes.map(([rel, count]) => (
@@ -237,14 +184,12 @@ export default function Capabilities() {
             </article>
           </RevealItem>
 
-          {/* 5. Evidence traceability. 3 of 6 at lg. */}
           <RevealItem className="lg:col-span-3">
             <article className={`${cellBase} bg-transparent`}>
               <FileSearch size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
-              <h3 className={titleClass}>Evidence traceability</h3>
+              <h3 className={titleClass}>Know where information came from</h3>
               <p className={bodyClass}>
-                Every edge stores the source record id and extraction confidence, so
-                any link can be walked back to the document behind it.
+                Every connection on the map stores the original record it came from. You can trace any link directly back to the original document.
               </p>
 
               <div className="mt-7 border-l-2 border-[#ff3d00] bg-[#f5f5f5] p-4">
@@ -252,26 +197,23 @@ export default function Capabilities() {
                   {nodeLabel(traceEdge.source)} {"->"} {nodeLabel(traceEdge.target)}
                 </p>
                 <p className={`${monoClass} mt-2 text-[13px] leading-relaxed text-[#737373]`}>
-                  {traceEdge.rel}, confidence {traceEdge.conf.toFixed(2)}, source record{" "}
+                  {traceEdge.rel}, Match confidence {traceEdge.conf.toFixed(2)}, Source record{" "}
                   <span className="text-[#0a0a0a]">{traceEdge.rec}</span>
                 </p>
               </div>
             </article>
           </RevealItem>
 
-          {/* 6. Chain of custody. 3 of 6 at lg. */}
           <RevealItem className="lg:col-span-3">
             <article className={`${cellBase} bg-[#e5e5e5]`}>
               <ShieldCheck size={24} strokeWidth={1.5} aria-hidden="true" className={iconClass} />
-              <h3 className={titleClass}>Chain of custody</h3>
+              <h3 className={titleClass}>Secure evidence trail</h3>
               <p className={bodyClass}>
-                Every ingest, merge and export is SHA-256 hash-chained.
-                verify_integrity walks the chain and fails on any tampering. Only
-                hashes, never case content.
+                Every time a record is uploaded, matched, or exported, it is securely logged. The system checks this trail to guarantee evidence has not been altered.
               </p>
 
               <div className="mt-7 border-t border-[#d4d4d4] pt-5">
-                <Label>Fields held in each block</Label>
+                <Label>Information saved in the security log</Label>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {ledgerFields.map((f) => (
                     <li

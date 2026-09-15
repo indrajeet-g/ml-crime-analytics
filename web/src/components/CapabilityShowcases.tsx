@@ -220,33 +220,33 @@ function ChainOfCustodyDemo() {
 
 const SHOWCASES = [
   {
-    title: "Entity Extraction",
-    desc: "Unstructured text parsed into structured entities automatically.",
+    title: "Find Details",
+    desc: "Automatically identifies names, phones, and vehicles in text.",
     demo: <EntityExtractionDemo />,
   },
   {
-    title: "Entity Resolution",
-    desc: "Fuzzy matching merges fragmented records into unified profiles.",
+    title: "Match Records",
+    desc: "Suggests joining records that likely belong to the same person.",
     demo: <EntityResolutionDemo />,
   },
   {
-    title: "Network Intelligence",
-    desc: "Graph analysis surfaces hidden intermediaries and bridge nodes.",
+    title: "Find Connections",
+    desc: "Highlights people who connect different criminal groups.",
     demo: <MiniGraphDemo />,
   },
   {
-    title: "Cross-Case Linking",
-    desc: "Isolated incidents connected via shared vehicles and phones.",
+    title: "Links Across Cases",
+    desc: "Connects completely separate cases through shared phones or vehicles.",
     demo: <CrossCaseDemo />,
   },
   {
-    title: "Evidence Trail",
-    desc: "Every graph edge maintains a pointer to its source document.",
+    title: "Evidence Source",
+    desc: "Every connection shows exactly which document it came from.",
     demo: <EvidenceTrailDemo />,
   },
   {
-    title: "Chain of Custody",
-    desc: "Actions are cryptographically hashed to ensure auditability.",
+    title: "Secure Evidence Trail",
+    desc: "Creates a secure, tamper-proof record of every action.",
     demo: <ChainOfCustodyDemo />,
   },
 ];

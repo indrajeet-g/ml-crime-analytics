@@ -6,21 +6,20 @@ import { Reveal, RevealGroup, RevealItem, Label } from "@/components/ui";
 import netData from "@/data/network.json";
 
 const QUICK_ACTIONS = [
-  { title: "Ingest Data", desc: "Upload FIRs, CDRs, and reports", icon: Upload, href: "/dashboard/ingest" },
-  { title: "Extract Entities", desc: "Run NLP pipelines on raw text", icon: ScanText, href: "/dashboard/extract" },
-  { title: "Resolve Entities", desc: "Merge and deduplicate aliases", icon: GitMerge, href: "/dashboard/resolve" },
-  { title: "Network Explorer", desc: "Visualize and query the graph", icon: Waypoints, href: "/dashboard/network" },
-  { title: "Evidence & Custody", desc: "Verify blockchain integrity", icon: ShieldCheck, href: "/dashboard/evidence" },
-  { title: "Reports", desc: "Generate case summaries", icon: FileBarChart, href: "/dashboard/reports" },
+  { title: "Upload Records", desc: "Upload case files, FIRs, and reports", icon: Upload, href: "/dashboard/ingest" },
+  { title: "Find Details", desc: "Automatically read documents to find important people and items", icon: ScanText, href: "/dashboard/extract" },
+  { title: "Match Records", desc: "Review and approve suggested matches", icon: GitMerge, href: "/dashboard/resolve" },
+  { title: "Network View", desc: "See connections between cases and people", icon: Waypoints, href: "/dashboard/network" },
+  { title: "Evidence Trail", desc: "Check the secure log of all actions", icon: ShieldCheck, href: "/dashboard/evidence" },
+  { title: "Reports", desc: "Generate simple case summaries", icon: FileBarChart, href: "/dashboard/reports" },
 ];
 
 export default function DashboardOverviewPage() {
-  // Use data from network.json, default to fixed values if needed
   const stats = [
-    { label: "SOURCE RECORDS", value: 500 },
-    { label: "ENTITIES", value: netData.stats.nodes || 287 },
-    { label: "RELATIONSHIPS", value: netData.stats.edges || 480 },
-    { label: "COMMUNITIES", value: netData.stats.communities || 8 },
+    { label: "RECORDS PROCESSED", value: 500 },
+    { label: "PROFILES MATCHED", value: netData.stats.nodes || 287 },
+    { label: "CONNECTIONS FOUND", value: netData.stats.edges || 480 },
+    { label: "GROUPS IDENTIFIED", value: netData.stats.communities || 8 },
   ];
 
   return (
@@ -28,7 +27,7 @@ export default function DashboardOverviewPage() {
       <Reveal>
         <h2 className="text-3xl font-semibold tracking-tighter md:text-4xl">Platform Overview</h2>
         <p className="mt-4 max-w-2xl text-[#737373] leading-relaxed">
-          Welcome to the NEXUS dashboard. Start by ingesting new data or explore the existing intelligence graph.
+          Welcome to the NEXUS dashboard. Start by uploading new records or exploring connections in existing cases.
         </p>
       </Reveal>
 

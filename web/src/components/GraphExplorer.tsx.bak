@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
-import { Search, X, Network, FileText, BrainCircuit, Activity, Eye, EyeOff, Filter, ArrowRight } from "lucide-react";
+import { Search, X, Network, FileText } from "lucide-react";
 import { Container, Section, Reveal, Label, entityColor } from "@/components/ui";
 import net from "@/data/network.json";
 
@@ -143,13 +143,6 @@ export default function GraphExplorer() {
   const [selected, setSelected] = useState<string | null>(null);
   const [started, setStarted] = useState(false);
 
-  const [focusMode, setFocusMode] = useState<"Selected" | "Direct" | "2 Hops" | "All">("All");
-  const [hideUnrelated, setHideUnrelated] = useState(false);
-  const [priorities, setPriorities] = useState<Record<string, "PRIMARY" | "SECONDARY" | "OTHER">>({});
-  const [priorityFilter, setPriorityFilter] = useState<"All" | "Primary" | "Secondary" | "Other">("All");
-  const [showAgent, setShowAgent] = useState(false);
-
-
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const railRef = useRef<HTMLDivElement | null>(null);
@@ -166,12 +159,8 @@ export default function GraphExplorer() {
   const viewRef = useRef({
     types: types as Record<string, boolean>,
     q: "",
-        bridges: false,
+    bridges: false,
     sel: -1,
-    focusMode,
-    hideUnrelated,
-    priorities,
-    priorityFilter
   });
 
   const measure = useCallback(() => {
@@ -247,49 +236,14 @@ export default function GraphExplorer() {
       const nd = NODES[i];
       const typeOn = v.types[nd.type] !== false;
       const bridgeOn = !v.bridges || nd.betweenness > BRIDGE_CUTOFF;
-      
-      const prio = v.priorities[nd.id] || "OTHER";
-      const prioMatch = v.priorityFilter === "All" || 
-                       (v.priorityFilter === "Primary" && prio === "PRIMARY") ||
-                       (v.priorityFilter === "Secondary" && prio === "SECONDARY") ||
-                       (v.priorityFilter === "Other" && prio === "OTHER");
-
       const m =
         v.q.length > 0 &&
         (nd.label.toLowerCase().includes(v.q) || nd.id.toLowerCase().includes(v.q));
       hit[i] = m ? 1 : 0;
-      act[i] = typeOn && bridgeOn && prioMatch && (v.q.length === 0 || m) ? 1 : 0;
+      act[i] = typeOn && bridgeOn && (v.q.length === 0 || m) ? 1 : 0;
     }
 
     const sel = v.sel;
-    // Focus logic
-    const hops = new Int8Array(N);
-    hops.fill(-1);
-    if (sel >= 0) {
-      hops[sel] = 0;
-      for (let e = 0; e < EDGES.length; e++) {
-        if (EDGES[e].s === sel) hops[EDGES[e].t] = 1;
-        if (EDGES[e].t === sel) hops[EDGES[e].s] = 1;
-      }
-      if (v.focusMode === "2 Hops") {
-        const hop1 = [];
-        for(let i=0; i<N; i++) if(hops[i]===1) hop1.push(i);
-        for (let e = 0; e < EDGES.length; e++) {
-          if (hop1.includes(EDGES[e].s) && hops[EDGES[e].t] === -1) hops[EDGES[e].t] = 2;
-          if (hop1.includes(EDGES[e].t) && hops[EDGES[e].s] === -1) hops[EDGES[e].s] = 2;
-        }
-      }
-      
-      if (v.hideUnrelated && v.focusMode !== "All") {
-        for(let i=0; i<N; i++) {
-          if (v.focusMode === "Selected" && hops[i] !== 0) act[i] = 0;
-          if (v.focusMode === "Direct" && hops[i] < 0) act[i] = 0;
-          if (v.focusMode === "2 Hops" && hops[i] < 0) act[i] = 0;
-        }
-      }
-    }
-
-
     const neighbours: number[] = [];
 
     ctx.lineWidth = 1;
@@ -345,14 +299,7 @@ export default function GraphExplorer() {
 
     for (let i = 0; i < N; i++) {
       if (!act[i]) continue;
-      const prio = v.priorities[NODES[i].id] || "OTHER";
-      if (prio === "PRIMARY") {
-        ctx.fillStyle = "#ff0000"; // Strong red
-      } else if (prio === "SECONDARY") {
-        ctx.fillStyle = "#d97706"; // Amber
-      } else {
-        ctx.fillStyle = entityColor(NODES[i].type);
-      }
+      ctx.fillStyle = entityColor(NODES[i].type);
       ctx.beginPath();
       ctx.arc(sx[i], sy[i], radiusOf(NODES[i].degree), 0, Math.PI * 2);
       ctx.fill();
@@ -486,13 +433,9 @@ export default function GraphExplorer() {
       q: query.trim().toLowerCase(),
       bridges: bridgesOnly,
       sel: selected ? (INDEX.get(selected) ?? -1) : -1,
-      focusMode,
-      hideUnrelated,
-      priorities,
-      priorityFilter
     };
     draw();
-  }, [types, query, bridgesOnly, selected, focusMode, hideUnrelated, priorities, priorityFilter, draw]);
+  }, [types, query, bridgesOnly, selected, draw]);
 
   const pick = useCallback((clientX: number, clientY: number) => {
     const canvas = canvasRef.current;
@@ -721,19 +664,6 @@ export default function GraphExplorer() {
                     <p className="mt-1.5 font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#737373]">
                       {selectedNode.id}
                     </p>
-                    
-                    <div className="mt-4 flex flex-col gap-2">
-                      <Label>Investigation Priority</Label>
-                      <select 
-                        value={priorities[selectedNode.id] || "OTHER"}
-                        onChange={(e) => setPriorities(p => ({...p, [selectedNode.id]: e.target.value as any}))}
-                        className="text-sm border border-[#d4d4d4] bg-white px-2 py-1.5 font-[family-name:var(--font-mono)] outline-none focus:border-[#ff3d00]"
-                      >
-                        <option value="PRIMARY">PRIMARY</option>
-                        <option value="SECONDARY">SECONDARY</option>
-                        <option value="OTHER">OTHER / UNCLASSIFIED</option>
-                      </select>
-                    </div>
                   </div>
                   <button
                     type="button"
@@ -770,22 +700,6 @@ export default function GraphExplorer() {
                   ))}
                 </dl>
 
-                <div className="border-b border-[#d4d4d4] p-5 lg:px-6 bg-white">
-                  <div className="flex items-center gap-2 mb-3">
-                    <BrainCircuit size={16} className="text-[#ff3d00]" />
-                    <Label>Why this matters</Label>
-                  </div>
-                  <p className="text-sm text-[#0a0a0a] leading-relaxed">
-                    <strong>Possible connection:</strong> This entity is directly connected to {selectedNode.degree} records and acts as a bridge in the network.
-                  </p>
-                  <button 
-                    onClick={() => setShowAgent(true)}
-                    className="mt-4 w-full border border-[#0a0a0a] bg-transparent py-2 text-xs font-bold uppercase tracking-wider text-[#0a0a0a] transition-colors hover:bg-[#0a0a0a] hover:text-[#fafafa]"
-                  >
-                    View Full Analysis
-                  </button>
-                </div>
-
                 <div className="flex items-baseline justify-between gap-3 px-5 pb-3 pt-5 lg:px-6">
                   <Label>Connections</Label>
                   <span className="font-[family-name:var(--font-jetbrains)] text-[11px] tabular-nums text-[#737373]">
@@ -819,10 +733,6 @@ export default function GraphExplorer() {
                         <p className="mt-2 font-[family-name:var(--font-jetbrains)] text-[11px] uppercase track-wider text-[#737373]">
                           {link.rel}
                         </p>
-                        <div className="mt-3 pt-3 border-t border-[#f0f0f0]">
-                          <span className="block text-xs font-semibold text-[#0a0a0a]">Shared Link Found</span>
-                          <span className="block mt-1 text-xs text-[#737373]">Connected through {link.rel.replace(/_/g, ' ').toLowerCase()} in case evidence.</span>
-                        </div>
                         <div className="mt-3 flex items-center gap-3 border-l-2 border-[#ff3d00] bg-[#f5f5f5] py-2.5 pl-3">
                           <FileText
                             className="h-4 w-4 shrink-0 text-[#737373]"

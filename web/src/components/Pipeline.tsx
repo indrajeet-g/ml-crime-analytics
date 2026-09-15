@@ -10,10 +10,6 @@ import {
 
 import { Container, Section, Reveal, RevealGroup, RevealItem } from "@/components/ui";
 
-/* Vertical numbered rail. The six stages below are the real pipeline
-   implemented in Python in this repo, in execution order. Footnotes name
-   the actual library or method so the claim is checkable, not decorative. */
-
 type Stage = {
   n: string;
   title: string;
@@ -25,47 +21,44 @@ type Stage = {
 const STAGES: Stage[] = [
   {
     n: "01",
-    title: "Ingest",
-    body: "CSV, JSON and plain-text records, tagged by source type, hashed on arrival.",
-    note: "csv / json / txt loaders, source type on every record",
+    title: "Upload Records",
+    body: "Upload case files and reports. The system securely records exactly when they arrive and where they came from.",
+    note: "Supports standard text and data formats",
     Icon: Inbox,
   },
   {
     n: "02",
-    title: "Extract",
-    body:
-      "spaCy NER plus regex tuned for Indian phone, vehicle and account formats.",
-    note: "spacy en_core_web_sm + regex (phone, vehicle, bank account)",
+    title: "Find Details",
+    body: "The system automatically reads the text to find people, phone numbers, vehicles, and bank accounts.",
+    note: "Detects Indian phone, vehicle and account formats",
     Icon: ScanText,
   },
   {
     n: "03",
-    title: "Resolve",
-    body:
-      "Fuzzy name matching proposes merges. A human confirms or rejects. Nothing auto-merges.",
-    note: "thefuzz token_sort_ratio, threshold 85, merge suggested only",
+    title: "Match Records",
+    body: "The system suggests records that might belong to the same person. An investigator must review and approve these matches.",
+    note: "Suggests possible matches for human review",
     Icon: GitMerge,
   },
   {
     n: "04",
-    title: "Build",
-    body: "A NetworkX graph where every edge carries its source record and confidence.",
-    note: "networkx, edge attrs: relation, weight, timestamps, record id",
+    title: "Build the Network",
+    body: "Connections are drawn between records, creating a full network map. Every connection shows the source record it came from.",
+    note: "Connects records across different cases",
     Icon: Waypoints,
   },
   {
     n: "05",
-    title: "Analyse",
-    body:
-      "Betweenness, PageRank and degree surface bridges that look unimportant locally.",
-    note: "networkx betweenness_centrality, pagerank, degree",
+    title: "Find Connections",
+    body: "The system highlights people or items that act as bridges between different groups, helping you spot key players.",
+    note: "Identifies the most connected items in the network",
     Icon: Activity,
   },
   {
     n: "06",
-    title: "Attest",
-    body: "Every ingest, merge and export is written to a SHA-256 hash chain.",
-    note: "hashlib sha256, block: index, action, officer id, prev hash",
+    title: "Verify Evidence",
+    body: "Every uploaded record and approved match is securely logged, creating a permanent trail of who changed what, and when.",
+    note: "Creates a tamper-proof record of every action",
     Icon: ShieldCheck,
   },
 ];
@@ -76,17 +69,14 @@ export default function Pipeline() {
       <Container>
         <Reveal>
           <h2 className="max-w-3xl text-3xl font-bold track-tighter md:text-4xl lg:text-5xl">
-            From raw record to reviewable lead.
+            How NEXUS processes information.
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[--color-muted-foreground]">
-            Six stages. Each one keeps its source record, and every proposed link
-            stays a proposal until an officer confirms it.
+            Six steps. Each step keeps track of the original source record, and every suggested connection stays a proposal until an investigator confirms it.
           </p>
         </Reveal>
 
         <div className="relative mt-16 md:mt-20">
-          {/* The rail itself. Hidden on mobile, where the number stacks above
-              the title instead. Sits at the centre of the number column. */}
           <div
             aria-hidden="true"
             className="absolute top-0 bottom-0 left-12 hidden w-px bg-[--color-border] md:block"

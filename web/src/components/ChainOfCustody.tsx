@@ -273,22 +273,22 @@ export default function ChainOfCustody() {
         : "text-[--color-foreground]";
 
   const statusText = failed
-    ? "UNAVAILABLE, SHA-256 could not run in this browser context"
+    ? "UNAVAILABLE: Security check could not run"
     : !ready
-      ? `HASHING, building ${SEED.length} blocks`
+      ? `PROCESSING: Securing ${SEED.length} records`
       : result === null
-        ? `READY, ${SEED.length} blocks linked, not yet verified`
+        ? `READY: ${SEED.length} records logged, not yet checked`
         : result.ok
-          ? `PASS, chain intact, ${result.checked} of ${SEED.length} blocks recomputed`
-          : `FAIL, chain breaks at block ${pad2(result.brokenAt ?? 0)}, ${result.reason}`;
+          ? `PASS: Evidence is secure and unchanged`
+          : `FAIL: Evidence has been altered at block ${pad2(result.brokenAt ?? 0)}`;
 
   return (
     <div id="custody" className="px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-8">
       
         <Reveal>
-          <Eyebrow>Chain of custody</Eyebrow>
+          <Eyebrow>Secure evidence trail</Eyebrow>
           <h2 className="mt-4 max-w-3xl text-3xl font-semibold track-tighter md:text-4xl lg:text-5xl">
-            Every action leaves a mark it cannot erase.
+            Every action is securely recorded.
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[--color-muted-foreground]">
             The ledger stores hashes and event metadata, never raw case data. Names,
@@ -385,7 +385,7 @@ export default function ChainOfCustody() {
                     <p
                       className={`${mono} mt-4 text-[13px] leading-relaxed text-[--color-muted-foreground]`}
                     >
-                      action field edited after the block was sealed
+                      action was edited after being securely logged
                     </p>
                   )}
 
@@ -393,7 +393,7 @@ export default function ChainOfCustody() {
                     <p
                       className={`${mono} mt-4 border-t border-[--color-accent] pt-3 text-[13px] leading-relaxed text-[--color-accent]`}
                     >
-                      HASH MISMATCH, the chain breaks at this block
+                      ERROR: Evidence has been altered at this block
                     </p>
                   )}
                 </article>
@@ -413,7 +413,7 @@ export default function ChainOfCustody() {
                 className={`${btnBase} border-[--color-foreground] text-[--color-foreground] hover:bg-[--color-foreground] hover:text-[--color-background]`}
               >
                 <Hash size={16} strokeWidth={1.5} aria-hidden="true" />
-                Verify integrity
+                Check security trail
               </button>
 
               {tampered ? (
@@ -424,7 +424,7 @@ export default function ChainOfCustody() {
                   className={`${btnBase} border-[--color-border] text-[--color-muted-foreground] hover:border-[--color-foreground] hover:text-[--color-foreground]`}
                 >
                   <RotateCcw size={16} strokeWidth={1.5} aria-hidden="true" />
-                  Restore block {pad2(TAMPER_INDEX)}
+                  Fix tampered block {pad2(TAMPER_INDEX)}
                 </button>
               ) : (
                 <button
@@ -434,7 +434,7 @@ export default function ChainOfCustody() {
                   className={`${btnBase} border-[--color-border] text-[--color-muted-foreground] hover:border-[--color-foreground] hover:text-[--color-foreground]`}
                 >
                   <FileWarning size={16} strokeWidth={1.5} aria-hidden="true" />
-                  Tamper with block {pad2(TAMPER_INDEX)}
+                  Simulate tampered block {pad2(TAMPER_INDEX)}
                 </button>
               )}
             </div>

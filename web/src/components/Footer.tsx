@@ -3,14 +3,12 @@ import { Container, Reveal } from "@/components/ui";
 
 const REPO = "https://github.com/indrajeet-g/ml-crime-analytics";
 
-/* Anchors are checked against the ids the sections actually render.
-   Adding a link here without the matching id is how footers rot. */
 const SECTIONS = [
   { label: "The problem", href: "#problem" },
-  { label: "Pipeline", href: "#pipeline" },
-  { label: "Capabilities", href: "#capabilities" },
-  { label: "In practice", href: "#showcases" },
-  { label: "Differentiation", href: "#different" },
+  { label: "How it works", href: "#pipeline" },
+  { label: "Features", href: "#capabilities" },
+  { label: "Demos", href: "#showcases" },
+  { label: "Compared", href: "#different" },
   { label: "Responsible use", href: "#responsible" },
   { label: "Scope", href: "#roadmap" },
 ];
@@ -36,8 +34,7 @@ export default function Footer() {
               </span>
 
               <p className="foot__tagline">
-                Explainable criminal network intelligence. Every link it draws
-                carries the source record it was extracted from.
+                Bring information from different records together. Find connections across cases. Know exactly where every piece of evidence came from.
               </p>
 
               <p className="foot__est">Smart India Hackathon 2026</p>

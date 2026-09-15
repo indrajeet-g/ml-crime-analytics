@@ -22,22 +22,21 @@ const display = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ml-crime-analytics.vercel.app"),
-  title: "NEXUS | Criminal Network Intelligence and Evidence Audit",
+  title: "NEXUS | Investigation and Evidence Platform",
   description:
-    "An explainable, human-in-the-loop platform that turns fragmented FIRs, call records and transaction data into a searchable criminal-network graph, with a tamper-evident chain of custody.",
+    "A platform that helps investigators connect information from FIRs, call records, and transactions in one place, while keeping a secure record of where every piece of evidence came from.",
   keywords: [
-    "criminal network analysis",
-    "link analysis",
+    "investigation software",
+    "police",
     "NCRB",
-    "chain of custody",
-    "entity resolution",
-    "graph analytics",
+    "evidence tracking",
+    "record matching",
     "Smart India Hackathon",
   ],
   openGraph: {
-    title: "NEXUS, Criminal Network Intelligence Platform",
+    title: "NEXUS | Investigation and Evidence Platform",
     description:
-      "Fragmented records into a searchable criminal-network graph. Every link traceable to its source. Every action hash-chained.",
+      "Bring information from different records together. Find connections across cases. Know exactly where every piece of evidence came from.",
     type: "website",
   },
   robots: { index: true, follow: true },
@@ -48,7 +47,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} ${display.variable}`}>
-      <body>
+      <body className="overflow-x-hidden antialiased">
         <div className="grain" aria-hidden="true" />
         {children}
       </body>
