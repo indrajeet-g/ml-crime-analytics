@@ -658,6 +658,43 @@ export default function GraphExplorer() {
                     {BRIDGE_COUNT}
                   </span>
                 </button>
+
+                <label className="flex min-h-[44px] items-center gap-2 border border-[#d4d4d4] px-3 text-[#737373]">
+                  <span className="font-[family-name:var(--font-jetbrains)] text-[11px] uppercase tracking-wider">
+                    Priority
+                  </span>
+                  <select
+                    value={priorityFilter}
+                    onChange={(e) => setPriorityFilter(e.target.value as typeof priorityFilter)}
+                    className="bg-transparent font-[family-name:var(--font-jetbrains)] text-[11px] uppercase tracking-wider text-[#0a0a0a] outline-none"
+                  >
+                    <option value="All">All</option>
+                    <option value="Primary">Primary</option>
+                    <option value="Secondary">Secondary</option>
+                    <option value="Other">Unclassified</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-[#d4d4d4] pt-3">
+                <span className="font-[family-name:var(--font-jetbrains)] text-[10px] uppercase tracking-wider text-[#737373]">
+                  Legend
+                </span>
+                <span className="flex items-center gap-1.5 text-[11px] text-[#737373]">
+                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#ff0000" }} /> Primary
+                </span>
+                <span className="flex items-center gap-1.5 text-[11px] text-[#737373]">
+                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#d97706" }} /> Secondary
+                </span>
+                <span className="flex items-center gap-1.5 text-[11px] text-[#737373]">
+                  <span className="h-2.5 w-2.5 rounded-full border border-[#a3a3a3]" /> Node size = connection count
+                </span>
+                <span className="flex items-center gap-1.5 text-[11px] text-[#737373]">
+                  <span className="inline-block h-[2px] w-4" style={{ backgroundColor: "#ff3d00" }} /> Link to selected entity
+                </span>
+                <span className="flex items-center gap-1.5 text-[11px] text-[#737373]">
+                  <span className="inline-block h-[1px] w-4 bg-[#0a0a0a] opacity-35" /> Other connection
+                </span>
               </div>
             </div>
 
@@ -734,6 +771,37 @@ export default function GraphExplorer() {
                         <option value="OTHER">OTHER / UNCLASSIFIED</option>
                       </select>
                     </div>
+
+                    <div className="mt-4 flex flex-col gap-2">
+                      <Label>Neighborhood focus</Label>
+                      <div className="flex flex-wrap gap-1.5">
+                        {(["All", "Selected", "Direct", "2 Hops"] as const).map((mode) => (
+                          <button
+                            key={mode}
+                            type="button"
+                            aria-pressed={focusMode === mode}
+                            onClick={() => setFocusMode(mode)}
+                            className={`border px-2.5 py-1.5 text-[11px] font-[family-name:var(--font-mono)] uppercase tracking-wider transition-colors ${
+                              focusMode === mode
+                                ? "border-[#ff3d00] text-[#ff3d00]"
+                                : "border-[#d4d4d4] text-[#737373] hover:text-[#0a0a0a]"
+                            }`}
+                          >
+                            {mode}
+                          </button>
+                        ))}
+                      </div>
+                      {focusMode !== "All" && (
+                        <label className="mt-1 flex items-center gap-2 text-xs text-[#737373]">
+                          <input
+                            type="checkbox"
+                            checked={hideUnrelated}
+                            onChange={(e) => setHideUnrelated(e.target.checked)}
+                          />
+                          Hide everything outside this neighborhood
+                        </label>
+                      )}
+                    </div>
                   </div>
                   <button
                     type="button"
@@ -776,14 +844,41 @@ export default function GraphExplorer() {
                     <Label>Why this matters</Label>
                   </div>
                   <p className="text-sm text-[#0a0a0a] leading-relaxed">
-                    <strong>Possible connection:</strong> This entity is directly connected to {selectedNode.degree} records and acts as a bridge in the network.
+                    <strong>Possible connection:</strong> This entity is directly connected to{" "}
+                    {selectedNode.degree} direct connections
+                    {selectedNode.isBroker
+                      ? ", and a betweenness score high enough relative to that connection count to be flagged as a possible network bridge, it may link groups that otherwise wouldn't be connected."
+                      : selectedNode.betweenness > 0
+                        ? `, with a bridge score of ${selectedNode.betweenness.toFixed(4)}, below the threshold used to flag stealth brokers, so this entity's influence is mostly local.`
+                        : " and no measurable bridging role in the current graph."}
                   </p>
-                  <button 
-                    onClick={() => setShowAgent(true)}
+                  <button
+                    onClick={() => setShowAgent((p) => !p)}
                     className="mt-4 w-full border border-[#0a0a0a] bg-transparent py-2 text-xs font-bold uppercase tracking-wider text-[#0a0a0a] transition-colors hover:bg-[#0a0a0a] hover:text-[#fafafa]"
                   >
-                    View Full Analysis
+                    {showAgent ? "Hide full analysis" : "View Full Analysis"}
                   </button>
+
+                  {showAgent && (
+                    <div className="mt-4 border-t border-[#d4d4d4] pt-4">
+                      <dl className="grid grid-cols-2 gap-y-2 text-xs">
+                        <dt className="text-[#737373]">PageRank (global influence)</dt>
+                        <dd className="text-right font-[family-name:var(--font-mono)]">{selectedNode.pagerank.toFixed(5)}</dd>
+                        <dt className="text-[#737373]">Betweenness (bridge score)</dt>
+                        <dd className="text-right font-[family-name:var(--font-mono)]">{selectedNode.betweenness.toFixed(4)}</dd>
+                        <dt className="text-[#737373]">Direct connections</dt>
+                        <dd className="text-right font-[family-name:var(--font-mono)]">{selectedNode.degree}</dd>
+                        <dt className="text-[#737373]">Community</dt>
+                        <dd className="text-right font-[family-name:var(--font-mono)]">{selectedNode.community ?? "Unassigned"}</dd>
+                      </dl>
+                      <p className="mt-3 text-[11px] leading-relaxed text-[#737373]">
+                        Ranked #{TOP.findIndex((n) => n.id === selectedNode.id) + 1 || "-"} by bridge score among
+                        the {TOP.length} most central entities in this graph. These are structural
+                        signals from the connection pattern alone, they indicate where to look
+                        next, not a finding of wrongdoing.
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-baseline justify-between gap-3 px-5 pb-3 pt-5 lg:px-6">
