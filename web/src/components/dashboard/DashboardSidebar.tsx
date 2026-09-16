@@ -43,23 +43,25 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar. Same dark rail as the public nav (#0a0a0a / #262626 / #a3a3a3),
+          so the black frame reads as one identity from the landing page into
+          the dashboard rather than switching palette at the login wall. */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-[#d4d4d4] bg-[#f5f5f5] transition-transform duration-300 ease-[cubic-bezier(0.25,0,0,1)] lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-[#262626] bg-[#0a0a0a] transition-transform duration-300 ease-[cubic-bezier(0.25,0,0,1)] lg:static lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#d4d4d4] px-6">
-          <Link 
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#262626] px-6">
+          <Link
             href="/dashboard"
             className="font-[family-name:var(--font-mono)] text-xl font-bold uppercase tracking-widest text-[#ff3d00]"
           >
             NEXUS
           </Link>
-          <button 
-            type="button" 
-            className="lg:hidden text-[#737373] hover:text-[#0a0a0a]"
+          <button
+            type="button"
+            className="lg:hidden text-[#a3a3a3] hover:text-white"
             onClick={onClose}
           >
             <X size={20} />
@@ -80,13 +82,13 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     onClick={() => onClose()}
                     className={`group flex items-center gap-3 border-l-2 px-3 py-2 text-sm font-medium transition-colors ${
                       isActive
-                        ? "border-[#ff3d00] bg-[#e5e5e5] text-[#0a0a0a]"
-                        : "border-transparent text-[#737373] hover:bg-[#e5e5e5] hover:text-[#0a0a0a]"
+                        ? "border-[#ff3d00] bg-white/5 text-white"
+                        : "border-transparent text-[#a3a3a3] hover:bg-white/5 hover:text-white"
                     }`}
                   >
-                    <Icon 
-                      size={18} 
-                      className={isActive ? "text-[#ff3d00]" : "text-[#737373] group-hover:text-[#0a0a0a]"} 
+                    <Icon
+                      size={18}
+                      className={isActive ? "text-[#ff3d00]" : "text-[#a3a3a3] group-hover:text-white"}
                     />
                     {item.label}
                   </Link>
@@ -97,10 +99,10 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-[#d4d4d4] p-4">
+        <div className="border-t border-[#262626] p-4">
           <Link
             href="/"
-            className="flex w-full items-center justify-center gap-2 border border-[#d4d4d4] bg-transparent px-4 py-2.5 text-sm font-semibold uppercase tracking-wider text-[#737373] transition-colors hover:border-[#0a0a0a] hover:text-[#0a0a0a]"
+            className="flex w-full items-center justify-center gap-2 border border-[#262626] bg-transparent px-4 py-2.5 text-sm font-semibold uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-white/30 hover:bg-white/5 hover:text-white"
           >
             <ArrowLeft size={16} />
             Back to Site
