@@ -3,14 +3,40 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { UploadCloud, FileText, CheckCircle2, ArrowRight } from "lucide-react";
-import { Reveal, Label, OutlineLink, PrimaryLink } from "@/components/ui";
+import { motion, useReducedMotion } from "motion/react";
+import { Reveal, Label, OutlineLink, PrimaryLink, entityColor } from "@/components/ui";
+import { StatusTag } from "@/components/dashboard/Viz";
 
 const SOURCE_TYPES = ["FIR", "CDR", "Transaction", "Vehicle Registry", "Field Report"];
 
+/* kind drives the row marker colour and maps to the same entity palette
+   used in the network view, so a CDR row and a phone node read as the
+   same family of thing. status is the parse result, not decoration. */
 const SAMPLE_DATA = [
-  { id: "FIR-2026-042", date: "2026-03-14", preview: "Complainant Rohan Joshi of Sanganer..." },
-  { id: "CDR-98111-X", date: "2026-03-14", preview: "9811100001 -> 9876543210 (124s)" },
-  { id: "TRX-40217", date: "2026-03-15", preview: "INR 45,000.00 from AC 402177889012" },
+  {
+    id: "FIR-2026-042",
+    date: "2026-03-14",
+    preview: "Complainant Rohan Joshi of Sanganer...",
+    kind: "CASE",
+    entities: 6,
+    status: "confirmed" as const,
+  },
+  {
+    id: "CDR-98111-X",
+    date: "2026-03-14",
+    preview: "9811100001 -> 9876543210 (124s)",
+    kind: "PHONE",
+    entities: 2,
+    status: "confirmed" as const,
+  },
+  {
+    id: "TRX-40217",
+    date: "2026-03-15",
+    preview: "INR 45,000.00 from AC 402177889012",
+    kind: "ACCOUNT",
+    entities: 1,
+    status: "review" as const,
+  },
 ];
 
 export default function IngestPage() {
@@ -18,6 +44,7 @@ export default function IngestPage() {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [hasFile, setHasFile] = useState(false);
+  const reduce = useReducedMotion();
 
   const handleSimulateUpload = () => {
     setIsUploading(true);
@@ -101,18 +128,44 @@ export default function IngestPage() {
                   <table className="w-full text-left text-sm">
                     <thead className="bg-[#e5e5e5] text-[#404040]">
                       <tr>
-                        <th className="px-6 py-3 font-medium">Record ID</th>
-                        <th className="px-6 py-3 font-medium">Date</th>
-                        <th className="px-6 py-3 font-medium">Preview</th>
+                        <th scope="col" className="px-6 py-3 font-medium">Record ID</th>
+                        <th scope="col" className="px-6 py-3 font-medium">Date</th>
+                        <th scope="col" className="px-6 py-3 font-medium">Preview</th>
+                        <th scope="col" className="px-6 py-3 font-medium text-right">Entities</th>
+                        <th scope="col" className="px-6 py-3 font-medium text-right">Parse</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#d4d4d4]">
-                      {SAMPLE_DATA.map((row) => (
-                        <tr key={row.id} className="hover:bg-[#e5e5e5]/50">
-                          <td className="px-6 py-4 font-[family-name:var(--font-mono)]">{row.id}</td>
+                      {SAMPLE_DATA.map((row, i) => (
+                        <motion.tr
+                          key={row.id}
+                          initial={reduce ? false : { opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: i * 0.07, ease: [0.25, 0, 0, 1] }}
+                          className="hover:bg-[#e5e5e5]/50"
+                        >
+                          <td className="px-6 py-4 font-[family-name:var(--font-mono)]">
+                            <span className="flex items-center gap-2.5">
+                              <span
+                                aria-hidden="true"
+                                className="inline-block h-2.5 w-2.5 shrink-0"
+                                style={{ backgroundColor: entityColor(row.kind) }}
+                                title={row.kind}
+                              />
+                              {row.id}
+                            </span>
+                          </td>
                           <td className="px-6 py-4">{row.date}</td>
                           <td className="px-6 py-4 text-[#737373]">{row.preview}</td>
-                        </tr>
+                          <td className="px-6 py-4 text-right font-[family-name:var(--font-mono)] tabular-nums">
+                            {row.entities}
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <StatusTag status={row.status}>
+                              {row.status === "confirmed" ? "Parsed" : "Review"}
+                            </StatusTag>
+                          </td>
+                        </motion.tr>
                       ))}
                     </tbody>
                   </table>
